@@ -130,7 +130,7 @@ if (isset($_POST['login'])) {
                                 </div>
                             </div>
                             <div class="form-group col-6 text-right">
-                                <a href="reset-password.html">Reset Password</a>
+                                <a href="reset.php">Reset Password</a>
                             </div>
                         </div>
                         <button type="submit" name="login" class="btn btn-light btn-block">Sign In</button>

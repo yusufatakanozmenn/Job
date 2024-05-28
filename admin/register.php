@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username_err) && empty($email_err) && empty($password_err) && empty($role_err)) {
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
-        
+
         if ($stmt = $connection->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param("ssss", $username, $email, $password_hashed, $role);
@@ -105,32 +105,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <form action="register.php" method="POST" novalidate>
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="text"
-                                        class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : '' ?>"
-                                        value="<?php echo htmlspecialchars($username); ?>" name="username"
-                                        id="username">
+                                    <input type="text" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : '' ?>" value="<?php echo htmlspecialchars($username); ?>" name="username" id="username">
                                     <span class="invalid-feedback"><?php echo $username_err; ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="text"
-                                        class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : '' ?>"
-                                        value="<?php echo htmlspecialchars($email); ?>" name="email" id="email">
+                                    <input type="text" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : '' ?>" value="<?php echo htmlspecialchars($email); ?>" name="email" id="email">
                                     <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password"
-                                        class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : '' ?>"
-                                        value="<?php echo htmlspecialchars($password); ?>" name="password"
-                                        id="password">
+                                    <input type="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : '' ?>" value="<?php echo htmlspecialchars($password); ?>" name="password" id="password">
                                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="role" class="form-label">Role</label>
-                                    <input type="text"
-                                        class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : '' ?>"
-                                        value="<?php echo htmlspecialchars($role); ?>" name="role" id="role">
+                                    <input type="text" class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : '' ?>" value="<?php echo htmlspecialchars($role); ?>" name="role" id="role">
                                     <span class="invalid-feedback"><?php echo $role_err; ?></span>
                                 </div>
                                 <input type="submit" name="register" value="Submit" class="btn btn-primary">
