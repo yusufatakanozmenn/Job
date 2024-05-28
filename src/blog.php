@@ -52,7 +52,7 @@
                                         <img src="../assets/images/blog-1-720x480.jpg" alt="">
                                     </div>
                                     <div class="down-content">
-                                        <a href="blog-details.html">
+                                        <a href="blog-details.php">
                                             <h4>Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit</h4>
                                         </a>
 
