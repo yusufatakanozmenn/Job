@@ -28,7 +28,12 @@ if (isset($_POST['login'])) {
             setcookie("auth[username]", $row["username"], time() + (60 * 60), "/", "", true, true);
             setcookie("auth[role]", $row["role"], time() + (60 * 60), "/", "", true, true);
 
-            header('Location: ../src/index.php');
+            // Check the user's role and redirect accordingly
+            if ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'IK') {
+                header('Location: index.php');
+            } else if ($_SESSION['role'] == 'employee') {
+                header('Location: ../src/index.php');
+            }
             exit;
         } else {
             $login_error = "Incorrect username or password";

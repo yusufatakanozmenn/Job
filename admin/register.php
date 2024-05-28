@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <option value="IK" <?php echo ($role === 'IK') ? 'selected' : ''; ?>>IK</option>
                                         <option value="Admin" <?php echo ($role === 'Admin') ? 'selected' : ''; ?>>Admin
                                         </option>
-                                        <option value="Calisan" <?php echo ($role === 'Calisan') ? 'selected' : ''; ?>>
+                                        <option value="Calisan" <?php echo ($role === 'Employee') ? 'selected' : ''; ?>>
                                             Calisan</option>
                                     </select>
                                     <span class="invalid-feedback"><?php echo $role_err; ?></span>

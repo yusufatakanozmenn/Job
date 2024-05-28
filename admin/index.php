@@ -156,35 +156,29 @@
                             <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar" /></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item user-details">
-                                <a href="javaScript:void();">
-                                    <div class="media">
-                                        <div class="avatar">
-                                            <img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar" />
+                            <?php if ($_COOKIE["auth"]["role"] == 'admin') : ?>
+                                <li class="dropdown-item user-details">
+                                    <a href="javaScript:void();">
+                                        <div class="media">
+                                            <div class="avatar">
+                                                <img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar" />
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="mt-2 user-title"><?php echo $_COOKIE["auth"]["username"]; ?></h6>
+                                                <p class="user-subtitle"><?php echo $_COOKIE["auth"]["email"]; ?></p>
+                                            </div>
                                         </div>
-                                        <div class="media-body">
-                                            <h6 class="mt-2 user-title">Sarajhon Mccoy</h6>
-                                            <p class="user-subtitle">mccoy@example.com</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item">
-                                <i class="icon-envelope mr-2"></i> Inbox
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item">
-                                <i class="icon-wallet mr-2"></i> Account
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item">
-                                <i class="icon-settings mr-2"></i> Setting
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            <li class="dropdown-item">
-                                <i class="icon-power mr-2"></i> Logout
-                            </li>
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item">
+                                    <a href="profile.php"><i class="icon-settings mr-2"></i> Profile</a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item">
+                                    <a href="logout.php"><i class="icon-power mr-2"></i> Logout</a>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                     </li>
                 </ul>
@@ -541,49 +535,11 @@
         </a>
         <!--End Back To Top Button-->
 
-        <!--Start footer-->
         <footer class="footer">
             <div class="container">
-                <div class="text-center">Copyright © 2018 Dashtreme Admin</div>
+                <div class="text-center">Copyright © 2024 Yusuf Atakan Özmen</div>
             </div>
         </footer>
-        <!--End footer-->
-
-        <!--start color switcher-->
-        <div class="right-sidebar">
-            <div class="switcher-icon">
-                <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
-            </div>
-            <div class="right-sidebar-content">
-                <p class="mb-0">Gaussion Texture</p>
-                <hr />
-
-                <ul class="switcher">
-                    <li id="theme1"></li>
-                    <li id="theme2"></li>
-                    <li id="theme3"></li>
-                    <li id="theme4"></li>
-                    <li id="theme5"></li>
-                    <li id="theme6"></li>
-                </ul>
-
-                <p class="mb-0">Gradient Background</p>
-                <hr />
-
-                <ul class="switcher">
-                    <li id="theme7"></li>
-                    <li id="theme8"></li>
-                    <li id="theme9"></li>
-                    <li id="theme10"></li>
-                    <li id="theme11"></li>
-                    <li id="theme12"></li>
-                    <li id="theme13"></li>
-                    <li id="theme14"></li>
-                    <li id="theme15"></li>
-                </ul>
-            </div>
-        </div>
-        <!--end color switcher-->
     </div>
     <!--End wrapper-->
 
