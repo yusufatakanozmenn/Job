@@ -33,6 +33,11 @@
                 </li>
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <?php if (isset($_COOKIE["auth"])) : ?>
+                    <?php if ($_COOKIE["auth"]["role"] == "Admin" || $_COOKIE["auth"]["role"] == "IK") : ?>
+                    <li class="nav-item">
+                        <a href="../admin/index.php" class="nav-link">Dashboard</a>
+                    </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a href="../admin/logout.php" class="nav-link">Logout</a>
                     </li>
