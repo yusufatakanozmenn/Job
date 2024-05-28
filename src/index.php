@@ -22,15 +22,13 @@
         <?php include '../includes/_navbar.php'; ?>
     </header>
 
-    <!-- Page Content -->
     <!-- Banner Starts Here -->
     <div class="main-banner header-text">
         <div class="container-fluid">
             <div class="owl-banner owl-carousel">
                 <div class="item">
-                    <img src="../assets/images/product-1-720x480.jpg" alt="">
+                    <img src="../assets/images/product-5-720x480.jpg" alt="" />
                     <div class="item-content">
-
                         <div class="main-content">
                             <div class="meta-category">
                                 <span>$60 000</span>
@@ -41,17 +39,15 @@
                             </a>
 
                             <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical </li>
+                                <li><i class="fa fa-briefcase"></i> Medical</li>
                                 <li><i class="fa fa-user"></i> Health Jobs</li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
                 <div class="item">
-                    <img src="../assets/images/product-2-720x480.jpg" alt="">
+                    <img src="../assets/images/product-5-720x480.jpg" alt="" />
                     <div class="item-content">
-
                         <div class="main-content">
                             <div class="meta-category">
                                 <span>$60 000</span>
@@ -62,17 +58,15 @@
                             </a>
 
                             <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical </li>
+                                <li><i class="fa fa-briefcase"></i> Medical</li>
                                 <li><i class="fa fa-user"></i> Health Jobs</li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
                 <div class="item">
-                    <img src="../assets/images/product-3-720x480.jpg" alt="">
+                    <img src="../assets/images/product-6-720x480.jpg" alt="" />
                     <div class="item-content">
-
                         <div class="main-content">
                             <div class="meta-category">
                                 <span>$60 000</span>
@@ -83,17 +77,15 @@
                             </a>
 
                             <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical </li>
+                                <li><i class="fa fa-briefcase"></i> Medical</li>
                                 <li><i class="fa fa-user"></i> Health Jobs</li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
                 <div class="item">
-                    <img src="../assets/images/product-4-720x480.jpg" alt="">
+                    <img src="../assets/images/product-5-720x480.jpg" alt="" />
                     <div class="item-content">
-
                         <div class="main-content">
                             <div class="meta-category">
                                 <span>$60 000</span>
@@ -104,17 +96,15 @@
                             </a>
 
                             <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical </li>
+                                <li><i class="fa fa-briefcase"></i> Medical</li>
                                 <li><i class="fa fa-user"></i> Health Jobs</li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
                 <div class="item">
-                    <img src="../assets/images/product-5-720x480.jpg" alt="">
+                    <img src="../assets/images/product-6-720x480.jpg" alt="" />
                     <div class="item-content">
-
                         <div class="main-content">
                             <div class="meta-category">
                                 <span>$60 000</span>
@@ -125,15 +115,14 @@
                             </a>
 
                             <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical </li>
+                                <li><i class="fa fa-briefcase"></i> Medical</li>
                                 <li><i class="fa fa-user"></i> Health Jobs</li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
                 <div class="item">
-                    <img src="../assets/images/product-6-720x480.jpg" alt="">
+                    <img src="../assets/images/product-6-720x480.jpg" alt="" />
                     <div class="item-content">
                         <div class="main-content">
                             <div class="meta-category">
@@ -145,7 +134,7 @@
                             </a>
 
                             <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical </li>
+                                <li><i class="fa fa-briefcase"></i> Medical</li>
                                 <li><i class="fa fa-user"></i> Health Jobs</li>
                             </ul>
                         </div>
@@ -165,7 +154,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                                <img src="../assets/images/product-4-720x480.jpg" alt="">
+                                <img src="../assets/images/product-5-720x480.jpg" alt="">
                             </div>
                             <div class="down-content">
                                 <span>$60 000</span>

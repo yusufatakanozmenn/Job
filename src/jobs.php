@@ -4,13 +4,14 @@ require_once '../libs/ayar.php';
 require_once '../libs/vars.php';
 
 // İş ilanlarını veritabanından çekme
-if (isset($_POST['type'], $_POST['min_salary'], $_POST['max_salary'])) {
-    $type = $_POST['type']; // Kullanıcının seçtiği iş türü
-    $min_salary = $_POST['min_salary']; // Kullanıcının belirttiği minimum maaş
-    $max_salary = $_POST['max_salary']; // Kullanıcının belirttiği maksimum maaş
-
-    $stmt = $connection->prepare("SELECT * FROM jobs WHERE type = ? AND salary BETWEEN ? AND ?");
-    $stmt->bind_param("sii", $type, $min_salary, $max_salary);
+if (isset($_POST['type'])) {
+    $type = $_POST['type'];
+    $stmt = $connection->prepare("SELECT * FROM jobs WHERE type = ?");
+    $stmt->bind_param("s", $type);
+} else if (isset($_POST['search'])) {
+    $search = $_POST['search'];
+    $stmt = $connection->prepare("SELECT * FROM jobs WHERE title LIKE ?");
+    $stmt->bind_param("s", $search);
 } else {
     $stmt = $connection->prepare("SELECT * FROM jobs");
 }
@@ -75,32 +76,32 @@ $result = $stmt->get_result();
                             // İş ilanlarını döngü ile görüntüleme
                             while ($row = $result->fetch_assoc()) {
                             ?>
-                            <div class="col-sm-4">
-                                <div class="blog-post">
-                                    <div class="blog-thumb">
-                                        <!-- İş ilanı resmi buraya gelecek -->
-                                        <img src="../assets/images/<?php echo $row['img']; ?>" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <span>$<?php echo $row['salary']; ?></span>
-                                        <a href="job-details.html">
-                                            <h4><?php echo $row['title']; ?></h4>
-                                        </a>
-                                        <p><?php echo $row['description']; ?></p>
-                                        <div class="post-options">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <ul class="post-tags">
-                                                        <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.php?id=<?php echo $row['id']; ?>">View
-                                                                Job</a></li>
-                                                    </ul>
+                                <div class="col-sm-4">
+                                    <div class="blog-post">
+                                        <div class="blog-thumb">
+                                            <!-- İş ilanı resmi buraya gelecek -->
+                                            <img src="../assets/images/<?php echo $row['img']; ?>" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <span><?php echo $row['city']; ?></span>
+                                            <a href="job-details.html">
+                                                <h4><?php echo $row['title']; ?></h4>
+                                            </a>
+                                            <p><?php echo $row['description']; ?></p>
+                                            <div class="post-options">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <ul class="post-tags">
+                                                            <li><i class="fa fa-bullseye"></i></li>
+                                                            <li><a href="job-details.php?id=<?php echo $row['id']; ?>">View
+                                                                    Job</a></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             <?php
                             }
                             ?>
@@ -128,14 +129,14 @@ $result = $stmt->get_result();
     <script src="../assets/js/accordions.js"></script>
 
     <script language="text/Javascript">
-    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-    function clearField(t) { //declaring the array outside of the
-        if (!cleared[t.id]) { // function makes it static and global
-            cleared[t.id] = 1; // you could use true and false, but that's more typing
-            t.value = ''; // with more chance of typos
-            t.style.color = '#fff';
+        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+        function clearField(t) { //declaring the array outside of the
+            if (!cleared[t.id]) { // function makes it static and global
+                cleared[t.id] = 1; // you could use true and false, but that's more typing
+                t.value = ''; // with more chance of typos
+                t.style.color = '#fff';
+            }
         }
-    }
     </script>
 
 </body>
