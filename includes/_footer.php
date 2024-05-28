@@ -12,8 +12,8 @@
             <div class="col-lg-12">
                 <div class="copyright-text">
                     <p>
-                        Copyright © 2020 Company Name
-                        | Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a>
+                        Copyright © 2024 Company Name
+                        | Template by: <a href="https://www.yusufatakanozmen.com/">Yusuf Atakan Özmen</a>
                     </p>
                 </div>
             </div>
