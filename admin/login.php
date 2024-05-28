@@ -1,23 +1,46 @@
 <?php
 require_once '../libs/ayar.php';
+require_once '../libs/vars.php';
+
+session_start();
+
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-    $result = $connection->query($sql);
+
+    // Prepared statement to prevent SQL injection
+    $stmt = $connection->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['role'] = $row['role'];
-        header('Location: ../src/index.php');
-        exit;
+
+        // Verify the hashed password
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['role'] = $row['role'];
+
+            // Regenerate session ID to prevent session fixation
+            session_regenerate_id(true);
+
+            setcookie("auth[username]", $row["username"], time() + (60 * 60), "/", "", true, true);
+            setcookie("auth[role]", $row["role"], time() + (60 * 60), "/", "", true, true);
+
+            header('Location: ../src/index.php');
+            exit;
+        } else {
+            $login_error = "Incorrect username or password";
+        }
     } else {
-        echo "Kullanıcı adı veya şifre hatalı";
+        $login_error = "Incorrect username or password";
     }
+
+    $stmt->close();
 }
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +50,7 @@ if (isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>İşe Alım Login</title>
+    <title>Dashtreme Admin - Free Dashboard for Bootstrap 4 by Codervent</title>
     <!-- loader-->
     <link href="./assets/css/pace.min.css" rel="stylesheet" />
     <script src="./assets/js/pace.min.js"></script>
@@ -41,7 +64,6 @@ if (isset($_POST['login'])) {
     <link href="./assets/css/icons.css" rel="stylesheet" type="text/css" />
     <!-- Custom Style-->
     <link href="./assets/css/app-style.css" rel="stylesheet" />
-
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -67,42 +89,70 @@ if (isset($_POST['login'])) {
                 <div></div>
             </div>
         </div>
-
-        <div class="row">
-
-            <div class="col-12">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <form action="login.php" method="POST">
-
-                            <div class="mb-3">
-                                <label for="username" class="form-label">username</label>
-                                <input type="text" class="form-control" name="username" id="username">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">password</label>
-                                <input type="password" class="form-control" name="password" id="password">
-                            </div>
-
-                            <input type="submit" name="login" value="Submit" class="btn btn-primary">
-
-                        </form>
+        <div class="card card-authentication1 mx-auto my-5">
+            <div class="card-body">
+                <div class="card-content p-2">
+                    <div class="text-center">
+                        <img src="./assets/images/logo-icon.png" alt="logo icon">
                     </div>
+                    <div class="card-title text-uppercase text-center py-3">Sign In</div>
+                    <form action="login.php" method="POST">
+                        <div class="form-group">
+                            <label for="username" class="sr-only">Username</label>
+                            <div class="position-relative has-icon-right">
+                                <input type="text" id="username" name="username" class="form-control input-shadow"
+                                    placeholder="Enter Username" required>
+                                <div class="form-control-position">
+                                    <i class="icon-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="sr-only">Password</label>
+                            <div class="position-relative has-icon-right">
+                                <input type="password" id="password" name="password" class="form-control input-shadow"
+                                    placeholder="Enter Password" required>
+                                <div class="form-control-position">
+                                    <i class="icon-lock"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        if (isset($login_error)) {
+                            echo "<div class='alert alert-danger text-center'>{$login_error}</div>";
+                        }
+                        ?>
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <div class="icheck-material-white">
+                                    <input type="checkbox" id="user-checkbox" checked="" />
+                                    <label for="user-checkbox">Remember me</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-6 text-right">
+                                <a href="reset-password.html">Reset Password</a>
+                            </div>
+                        </div>
+                        <button type="submit" name="login" class="btn btn-light btn-block">Sign In</button>
+
+
+                        <!-- <div class="form-row mt-4">
+                            <div class="form-group mb-0 col-6">
+                                <button type="button" class="btn btn-light btn-block"><i class="fa fa-facebook-square"></i> Facebook</button>
+                            </div>
+                            <div class="form-group mb-0 col-6 text-right">
+                                <button type="button" class="btn btn-light btn-block"><i class="fa fa-twitter-square"></i> Twitter</button>
+                            </div>
+                        </div> -->
+
+                    </form>
                 </div>
-
             </div>
-
+            <div class="card-footer text-center py-3">
+                <p class="text-warning mb-0">Do not have an account? <a href="register.php"> Sign Up here</a></p>
+            </div>
         </div>
 
-
-
-        <!--Start Back To Top Button-->
-        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-        <!--End Back To Top Button-->
 
 
     </div>
