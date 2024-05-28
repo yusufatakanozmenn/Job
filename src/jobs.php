@@ -1,3 +1,26 @@
+<?php
+// Veritabanı bağlantısı ve gerekli dosyaların dahil edilmesi
+require_once '../libs/ayar.php';
+require_once '../libs/vars.php';
+
+// İş ilanlarını veritabanından çekme
+if (isset($_POST['type'], $_POST['min_salary'], $_POST['max_salary'])) {
+    $type = $_POST['type']; // Kullanıcının seçtiği iş türü
+    $min_salary = $_POST['min_salary']; // Kullanıcının belirttiği minimum maaş
+    $max_salary = $_POST['max_salary']; // Kullanıcının belirttiği maksimum maaş
+
+    $stmt = $connection->prepare("SELECT * FROM jobs WHERE type = ? AND salary BETWEEN ? AND ?");
+    $stmt->bind_param("sii", $type, $min_salary, $max_salary);
+} else {
+    $stmt = $connection->prepare("SELECT * FROM jobs");
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,169 +69,31 @@
         <div class="container">
             <div class="all-blog-posts">
                 <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                        <form action="#">
-                            <h4 style="margin-bottom: 15px">Type</h4>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Contract (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Full time (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Internship (5)</span>
-                                </label>
-                            </div>
-
-                            <br>
-
-                            <h4 style="margin-bottom: 15px">Category</h4>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Accounting / Finance / Insurance Jobs (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Accounting / Finance / Insurance Jobs (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Accounting / Finance / Insurance Jobs (5)</span>
-                                </label>
-                            </div>
-
-                            <br>
-
-                            <h4 style="margin-bottom: 15px">Career levels</h4>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Entry Level (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Entry Level (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Entry Level (5)</span>
-                                </label>
-                            </div>
-
-                            <br>
-
-                            <h4 style="margin-bottom: 15px">Education levels</h4>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Associate Degree (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Associate Degree (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>Associate Degree (5)</span>
-                                </label>
-                            </div>
-
-                            <br>
-
-
-                            <h4 style="margin-bottom: 15px">Years of experience</h4>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>&lt; 1 (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>&lt; 1 (5)</span>
-                                </label>
-                            </div>
-
-                            <div>
-                                <label>
-                                    <input type="checkbox">
-
-                                    <span>&lt; 1 (5)</span>
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="col-md-8 col-xs-12">
+                    <div class="col-md-12 col-xs-12">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <?php
+                            // İş ilanlarını döngü ile görüntüleme
+                            while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <div class="col-sm-4">
                                 <div class="blog-post">
                                     <div class="blog-thumb">
-                                        <img src="../assets/images/product-1-720x480.jpg" alt="">
+                                        <!-- İş ilanı resmi buraya gelecek -->
+                                        <img src="../assets/images/<?php echo $row['img']; ?>" alt="">
                                     </div>
                                     <div class="down-content">
-                                        <span>$60 000</span>
+                                        <span>$<?php echo $row['salary']; ?></span>
                                         <a href="job-details.html">
-                                            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+                                            <h4><?php echo $row['title']; ?></h4>
                                         </a>
-                                        <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer
-                                            auctor a mauris sit amet eleifend.</p>
+                                        <p><?php echo $row['description']; ?></p>
                                         <div class="post-options">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <ul class="post-tags">
                                                         <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.php">View Job</a></li>
+                                                        <li><a href="job-details.php?id=<?php echo $row['id']; ?>">View
+                                                                Job</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -216,131 +101,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="blog-post">
-                                    <div class="blog-thumb">
-                                        <img src="../assets/images/product-2-720x480.jpg" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <span>$60 000</span>
-                                        <a href="job-details.html">
-                                            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                                        </a>
-                                        <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer
-                                            auctor a mauris sit amet eleifend.</p>
-                                        <div class="post-options">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <ul class="post-tags">
-                                                        <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.html">View Job</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="blog-post">
-                                    <div class="blog-thumb">
-                                        <img src="../assets/images/product-3-720x480.jpg" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <span>$60 000</span>
-                                        <a href="job-details.html">
-                                            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                                        </a>
-                                        <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer
-                                            auctor a mauris sit amet eleifend.</p>
-                                        <div class="post-options">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <ul class="post-tags">
-                                                        <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.html">View Job</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="blog-post">
-                                    <div class="blog-thumb">
-                                        <img src="../assets/images/product-4-720x480.jpg" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <span>$60 000</span>
-                                        <a href="job-details.html">
-                                            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                                        </a>
-                                        <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer
-                                            auctor a mauris sit amet eleifend.</p>
-                                        <div class="post-options">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <ul class="post-tags">
-                                                        <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.html">View Job</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="blog-post">
-                                    <div class="blog-thumb">
-                                        <img src="../assets/images/product-5-720x480.jpg" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <span>$60 000</span>
-                                        <a href="job-details.html">
-                                            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                                        </a>
-                                        <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer
-                                            auctor a mauris sit amet eleifend.</p>
-                                        <div class="post-options">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <ul class="post-tags">
-                                                        <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.html">View Job</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="blog-post">
-                                    <div class="blog-thumb">
-                                        <img src="../assets/images/product-6-720x480.jpg" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <span>$60 000</span>
-                                        <a href="job-details.html">
-                                            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                                        </a>
-                                        <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer
-                                            auctor a mauris sit amet eleifend.</p>
-                                        <div class="post-options">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <ul class="post-tags">
-                                                        <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.html">View Job</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -365,14 +128,14 @@
     <script src="../assets/js/accordions.js"></script>
 
     <script language="text/Javascript">
-        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-        function clearField(t) { //declaring the array outside of the
-            if (!cleared[t.id]) { // function makes it static and global
-                cleared[t.id] = 1; // you could use true and false, but that's more typing
-                t.value = ''; // with more chance of typos
-                t.style.color = '#fff';
-            }
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) { //declaring the array outside of the
+        if (!cleared[t.id]) { // function makes it static and global
+            cleared[t.id] = 1; // you could use true and false, but that's more typing
+            t.value = ''; // with more chance of typos
+            t.style.color = '#fff';
         }
+    }
     </script>
 
 </body>
