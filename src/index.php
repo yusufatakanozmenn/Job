@@ -1,3 +1,35 @@
+<?php
+// Veritabanı bağlantısı için gerekli bilgileri ekleyin
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "jobs";
+
+try {
+    // PDO kullanarak veritabanı bağlantısını oluştur
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Veritabanından verileri çek
+    $sql = "SELECT * FROM jobs";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Veritabanından en son eklenen iş ilanlarını çek
+    $sql_latest = "SELECT * FROM jobs ORDER BY date DESC LIMIT 6";
+    $stmt_latest = $conn->prepare($sql_latest);
+    $stmt_latest->execute();
+    $latest_jobs = $stmt_latest->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
+$conn = null;
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,122 +58,55 @@
     <div class="main-banner header-text">
         <div class="container-fluid">
             <div class="owl-banner owl-carousel">
+                <?php if ($latest_jobs) : ?>
+                <?php foreach ($latest_jobs as $job) : ?>
                 <div class="item">
-                    <img src="../assets/images/product-5-720x480.jpg" alt="" />
+                    <img src="<?php echo '../admin/uploads/' . $job['img']; ?>" alt="" />
                     <div class="item-content">
                         <div class="main-content">
                             <div class="meta-category">
-                                <span>$60 000</span>
+                                <span><?php echo htmlspecialchars($job['sector']); ?></span>
                             </div>
 
-                            <a href="job-details.html">
-                                <h4>Lorem ipsum dolor sit amet.</h4>
+                            <a href="job-details.php?id=<?php echo $job['id']; ?>">
+                                <h4><?php echo htmlspecialchars($job['title']); ?></h4>
                             </a>
 
                             <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical</li>
-                                <li><i class="fa fa-user"></i> Health Jobs</li>
+                                <li><i class="fa fa-briefcase"></i> <?php echo htmlspecialchars($job['description']); ?>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="item">
-                    <img src="../assets/images/product-5-720x480.jpg" alt="" />
-                    <div class="item-content">
-                        <div class="main-content">
-                            <div class="meta-category">
-                                <span>$60 000</span>
-                            </div>
+                <?php endforeach; ?>
+                <?php else : ?>
+                <p>No jobs available.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <!-- Banner Ends Here -->
 
-                            <a href="job-details.html">
-                                <h4>Lorem ipsum dolor sit amet.</h4>
+
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+        <section class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-content">
+                            <h4>about us</h4>
+                            <a href="about.php">
+                                <h2>more about us!</h2>
                             </a>
-
-                            <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical</li>
-                                <li><i class="fa fa-user"></i> Health Jobs</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../assets/images/product-6-720x480.jpg" alt="" />
-                    <div class="item-content">
-                        <div class="main-content">
-                            <div class="meta-category">
-                                <span>$60 000</span>
-                            </div>
-
-                            <a href="job-details.html">
-                                <h4>Lorem ipsum dolor sit amet.</h4>
-                            </a>
-
-                            <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical</li>
-                                <li><i class="fa fa-user"></i> Health Jobs</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../assets/images/product-5-720x480.jpg" alt="" />
-                    <div class="item-content">
-                        <div class="main-content">
-                            <div class="meta-category">
-                                <span>$60 000</span>
-                            </div>
-
-                            <a href="job-details.html">
-                                <h4>Lorem ipsum dolor sit amet.</h4>
-                            </a>
-
-                            <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical</li>
-                                <li><i class="fa fa-user"></i> Health Jobs</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../assets/images/product-6-720x480.jpg" alt="" />
-                    <div class="item-content">
-                        <div class="main-content">
-                            <div class="meta-category">
-                                <span>$60 000</span>
-                            </div>
-
-                            <a href="job-details.html">
-                                <h4>Lorem ipsum dolor sit amet.</h4>
-                            </a>
-
-                            <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical</li>
-                                <li><i class="fa fa-user"></i> Health Jobs</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../assets/images/product-6-720x480.jpg" alt="" />
-                    <div class="item-content">
-                        <div class="main-content">
-                            <div class="meta-category">
-                                <span>$60 000</span>
-                            </div>
-
-                            <a href="job-details.html">
-                                <h4>Lorem ipsum dolor sit amet.</h4>
-                            </a>
-
-                            <ul class="post-info">
-                                <li><i class="fa fa-briefcase"></i> Medical</li>
-                                <li><i class="fa fa-user"></i> Health Jobs</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
     <!-- Banner Ends Here -->
 
@@ -151,24 +116,26 @@
                 <h2 class="text-center">Featured Jobs</h2>
                 <br>
                 <div class="row">
+                    <?php if ($jobs) : ?>
+                    <?php foreach ($jobs as $job) : ?>
                     <div class="col-md-4 col-sm-6">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                                <img src="../assets/images/product-5-720x480.jpg" alt="">
+                                <img src="<?php echo '../admin/uploads/' . $job['img']; ?>" alt="">
                             </div>
                             <div class="down-content">
-                                <span>$60 000</span>
-                                <a href="jobs.html">
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+                                <span><?php echo htmlspecialchars($job['sector']); ?></span>
+                                <a href="job-details.php?id=<?php echo $job['id']; ?>">
+                                    <h4><?php echo htmlspecialchars($job['title']); ?></h4>
                                 </a>
-                                <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a
-                                    mauris sit amet eleifend.</p>
+                                <p><?php echo htmlspecialchars($job['description']); ?></p>
                                 <div class="post-options">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <ul class="post-tags">
                                                 <li><i class="fa fa-bullseye"></i></li>
-                                                <li><a href="job-details.html">View Job</a></li>
+                                                <li><a href="job-details.php?id=<?php echo $job['id']; ?>">View Job</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -176,56 +143,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="../assets/images/product-5-720x480.jpg" alt="">
-                            </div>
-                            <div class="down-content">
-                                <span>$60 000</span>
-                                <a href="jobs.html">
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                                </a>
-                                <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a
-                                    mauris sit amet eleifend.</p>
-                                <div class="post-options">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <ul class="post-tags">
-                                                <li><i class="fa fa-bullseye"></i></li>
-                                                <li><a href="job-details.html">View Job</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="../assets/images/product-6-720x480.jpg" alt="">
-                            </div>
-                            <div class="down-content">
-                                <span>$60 000</span>
-                                <a href="jobs.html">
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                                </a>
-                                <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a
-                                    mauris sit amet eleifend.</p>
-                                <div class="post-options">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <ul class="post-tags">
-                                                <li><i class="fa fa-bullseye"></i></li>
-                                                <li><a href="job-details.html">View Job</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
+                    <?php else : ?>
+                    <p>No jobs available.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -341,14 +262,14 @@
     <script src="../assets/js/accordions.js"></script>
 
     <script language="text/Javascript">
-        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-        function clearField(t) { //declaring the array outside of the
-            if (!cleared[t.id]) { // function makes it static and global
-                cleared[t.id] = 1; // you could use true and false, but that's more typing
-                t.value = ''; // with more chance of typos
-                t.style.color = '#fff';
-            }
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) { //declaring the array outside of the
+        if (!cleared[t.id]) { // function makes it static and global
+            cleared[t.id] = 1; // you could use true and false, but that's more typing
+            t.value = ''; // with more chance of typos
+            t.style.color = '#fff';
         }
+    }
     </script>
 
 </body>

@@ -10,54 +10,74 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Mevcut about kaydını al
+    $sql = "SELECT * FROM about LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $about = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Form gönderildiyse veriyi güncelle
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['text'], $_FILES['image'])) {
+        if (isset($_POST['text'])) {
             $text = $_POST['text'];
-            $image = $_FILES['image'];
-            $imageName = $image['name'];
-            $imageTmpName = $image['tmp_name'];
-            $imageSize = $image['size'];
-            $imageError = $image['error'];
-            $imageType = $image['type'];
 
-            $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
-            $allowed = array('jpg', 'jpeg', 'png', 'gif');
+            // Yeni bir resim yüklendi mi kontrol et
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+                $image = $_FILES['image'];
+                $imageName = $image['name'];
+                $imageTmpName = $image['tmp_name'];
+                $imageSize = $image['size'];
+                $imageError = $image['error'];
+                $imageType = $image['type'];
 
-            if (in_array($imageExt, $allowed)) {
-                if ($imageError === 0) {
-                    if ($imageSize < 5000000) {
-                        // Hedef dizini kontrol edin ve yoksa oluşturun
-                        $uploadDir = 'uploads/';
-                        if (!is_dir($uploadDir)) {
-                            mkdir($uploadDir, 0777, true);
-                        }
+                $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+                $allowed = array('jpg', 'jpeg', 'png', 'gif');
 
-                        $imageNewName = uniqid('', true) . "." . $imageExt;
-                        $imageDestination = $uploadDir . $imageNewName;
-
-                        if (move_uploaded_file($imageTmpName, $imageDestination)) {
-                            $sql = "INSERT INTO about (text, image_path) VALUES (:text, :image_path)";
-                            $stmt = $conn->prepare($sql);
-                            $stmt->bindParam(':text', $text);
-                            $stmt->bindParam(':image_path', $imageDestination);
-                            $stmt->execute();
-
-                            echo "About section updated successfully";
-                            header ("Location: index.php");
-                        } else {
-                            echo "Failed to upload image. Please try again later.";
-                        }
-                    } else {
-                        echo "Image size is too big! Please upload an image smaller than 5MB.";
-                    }
+                if (!in_array($imageExt, $allowed)) {
+                    header("Location: update_about.php?error=Invalid file type! Only JPG, JPEG, PNG, and GIF files are allowed.");
+                    exit;
+                } elseif ($imageSize >= 5000000) {
+                    header("Location: update_about.php?error=Image size is too big!");
+                    exit;
                 } else {
-                    echo "Error uploading image: " . $imageError;
+                    $imageNewName = uniqid('', true) . "." . $imageExt;
+                    $imageDestination = '../admin/uploads/' . $imageNewName;
+
+                    if (move_uploaded_file($imageTmpName, $imageDestination)) {
+                        // Eski resmi sil
+                        if ($about['image_path']) {
+                            unlink($about['image_path']);
+                        }
+
+                        // Veritabanını güncelle
+                        $sql = "UPDATE about SET text = :text, image_path = :image_path WHERE id = :id";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bindParam(':text', $text);
+                        $stmt->bindParam(':image_path', $imageDestination);
+                        $stmt->bindParam(':id', $about['id']);
+                        $stmt->execute();
+
+                        header("Location: update_about.php?success=About section updated successfully.");
+                        exit;
+                    } else {
+                        header("Location: update_about.php?error=Failed to upload image.");
+                        exit;
+                    }
                 }
             } else {
-                echo "Invalid file type! Please upload an image with JPG, JPEG, PNG, or GIF format.";
+                // Sadece metin güncellenirse
+                $sql = "UPDATE about SET text = :text WHERE id = :id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':text', $text);
+                $stmt->bindParam(':id', $about['id']);
+                $stmt->execute();
+
+                header("Location: update_about.php?success=About section updated successfully.");
+                exit;
             }
         } else {
-            echo "All form fields are required.";
+            header("Location: update_about.php?error=Text field is required.");
+            exit;
         }
     }
 } catch (PDOException $e) {
@@ -98,6 +118,21 @@ $conn = null;
     <link href="./assets/css/sidebar-menu.css" rel="stylesheet" />
     <!-- Custom Style-->
     <link href="./assets/css/app-style.css" rel="stylesheet" />
+    <script>
+    window.onload = function() {
+        // URL parametrelerini kontrol et
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('success');
+        const errorMessage = urlParams.get('error');
+
+        // Eğer hata veya başarı mesajı varsa göster
+        if (successMessage) {
+            alert(successMessage);
+        } else if (errorMessage) {
+            alert(errorMessage);
+        }
+    }
+    </script>
 </head>
 
 
@@ -121,28 +156,33 @@ $conn = null;
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Create About</h1>
+                        <h1>Update About</h1>
                         <div class="card">
                             <div class="card-body">
-                                <form action="create_about.php" method="post" enctype="multipart/form-data">
+                                <form action="update_about.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <label for="text"
                                             class="col-lg-3 col-form-label form-control-label">Text:</label>
                                         <div class="col-lg-9">
                                             <textarea name="text" id="text" cols="30" rows="10"
-                                                class="form-control"></textarea>
+                                                class="form-control"><?php echo htmlspecialchars($about['text']); ?></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="image"
-                                            class="col-lg-3 col-form-label form-control-label">Image:</label>
+                                        <label for="image" class="col-lg-3 col-form-label form-control-label">Current
+                                            Image:</label>
                                         <div class="col-lg-9">
+                                            <?php if ($about['image_path']) : ?>
+                                            <img src="<?php echo $about['image_path']; ?>" alt="Current Image"
+                                                style="max-width: 200px;"><br><br>
+                                            <?php endif; ?>
+                                            <label for="image">Upload New Image:</label><br>
                                             <input type="file" name="image" id="image" class="form-control-file">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Create</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </div>
                                 </form>
@@ -153,13 +193,6 @@ $conn = null;
             </div>
             <!-- End container-fluid-->
         </div>
-
-
-
-
-
-
-
         <!--End content-wrapper-->
         <!--Start Back To Top Button-->
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>

@@ -2,7 +2,9 @@
 require_once '../libs/ayar.php';
 require_once '../libs/vars.php';
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
@@ -105,7 +107,8 @@ if (isset($_POST['login'])) {
                         <div class="form-group">
                             <label for="username" class="sr-only">Username</label>
                             <div class="position-relative has-icon-right">
-                                <input type="text" id="username" name="username" class="form-control input-shadow" placeholder="Enter Username" required>
+                                <input type="text" id="username" name="username" class="form-control input-shadow"
+                                    placeholder="Enter Username" required>
                                 <div class="form-control-position">
                                     <i class="icon-user"></i>
                                 </div>
@@ -114,7 +117,8 @@ if (isset($_POST['login'])) {
                         <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
                             <div class="position-relative has-icon-right">
-                                <input type="password" id="password" name="password" class="form-control input-shadow" placeholder="Enter Password" required>
+                                <input type="password" id="password" name="password" class="form-control input-shadow"
+                                    placeholder="Enter Password" required>
                                 <div class="form-control-position">
                                     <i class="icon-lock"></i>
                                 </div>

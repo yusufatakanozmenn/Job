@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";
 $username = "root";
@@ -10,55 +12,48 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['text'], $_FILES['image'])) {
-            $text = $_POST['text'];
-            $image = $_FILES['image'];
-            $imageName = $image['name'];
-            $imageTmpName = $image['tmp_name'];
-            $imageSize = $image['size'];
-            $imageError = $image['error'];
-            $imageType = $image['type'];
+   
+    // İş ilanı id'sini al
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
 
-            $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
-            $allowed = array('jpg', 'jpeg', 'png', 'gif');
+        // İş ilanını veritabanından seç
+        $stmt = $conn->prepare("SELECT * FROM jobs WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $job = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (in_array($imageExt, $allowed)) {
-                if ($imageError === 0) {
-                    if ($imageSize < 5000000) {
-                        // Hedef dizini kontrol edin ve yoksa oluşturun
-                        $uploadDir = 'uploads/';
-                        if (!is_dir($uploadDir)) {
-                            mkdir($uploadDir, 0777, true);
-                        }
-
-                        $imageNewName = uniqid('', true) . "." . $imageExt;
-                        $imageDestination = $uploadDir . $imageNewName;
-
-                        if (move_uploaded_file($imageTmpName, $imageDestination)) {
-                            $sql = "INSERT INTO about (text, image_path) VALUES (:text, :image_path)";
-                            $stmt = $conn->prepare($sql);
-                            $stmt->bindParam(':text', $text);
-                            $stmt->bindParam(':image_path', $imageDestination);
-                            $stmt->execute();
-
-                            echo "About section updated successfully";
-                            header ("Location: index.php");
-                        } else {
-                            echo "Failed to upload image. Please try again later.";
-                        }
-                    } else {
-                        echo "Image size is too big! Please upload an image smaller than 5MB.";
-                    }
-                } else {
-                    echo "Error uploading image: " . $imageError;
-                }
-            } else {
-                echo "Invalid file type! Please upload an image with JPG, JPEG, PNG, or GIF format.";
-            }
-        } else {
-            echo "All form fields are required.";
+        if (!$job) {
+            // İş ilanı bulunamazsa, kullanıcıyı iş listesine yönlendir
+            header("Location: jobs_list.php");
+            exit();
         }
+    } else {
+        // Eğer id belirtilmemişse, kullanıcıyı iş listesine yönlendir
+        header("Location: jobs_list.php");
+        exit();
+    }
+
+    // Form gönderildiğinde
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Formdan gelen verileri al
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $sector = $_POST['sector'];
+        $city = $_POST['city'];
+
+        // Veritabanında iş ilanını güncelle
+        $stmt = $conn->prepare("UPDATE jobs SET title = :title, description = :description, sector = :sector, city = :city WHERE id = :id");
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':sector', $sector);
+        $stmt->bindParam(':city', $city);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        // İş ilanı başarıyla güncellendiyse, kullanıcıyı iş listesine yönlendir
+        header("Location: jobs_list.php");
+        exit();
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -66,7 +61,6 @@ try {
 
 $conn = null;
 ?>
-
 
 
 <!DOCTYPE html>
@@ -78,7 +72,7 @@ $conn = null;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Create About</title>
+    <title>Edit Job</title>
     <!-- loader-->
     <link href="./assets/css/pace.min.css" rel="stylesheet" />
     <script src="./assets/js/pace.min.js"></script>
@@ -121,28 +115,53 @@ $conn = null;
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Create About</h1>
+                        <h2>Edit Job</h2>
                         <div class="card">
                             <div class="card-body">
-                                <form action="create_about.php" method="post" enctype="multipart/form-data">
+                                <form method="POST">
                                     <div class="form-group row">
-                                        <label for="text"
-                                            class="col-lg-3 col-form-label form-control-label">Text:</label>
+                                        <label for="title"
+                                            class="col-lg-3 col-form-label form-control-label">Title:</label>
                                         <div class="col-lg-9">
-                                            <textarea name="text" id="text" cols="30" rows="10"
-                                                class="form-control"></textarea>
+                                            <input type="text" class="form-control" id="title" name="title"
+                                                value="<?php echo $job['title']; ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="description"
+                                            class="col-lg-3 col-form-label form-control-label">Description:</label>
+                                        <div class="col-lg-9">
+                                            <textarea class="form-control" id="description" name="description" cols="30"
+                                                rows="10" required><?php echo $job['description']; ?></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="sector"
+                                            class="col-lg-3 col-form-label form-control-label">Sector:</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="sector" name="sector"
+                                                value="<?php echo $job['sector']; ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="city"
+                                            class="col-lg-3 col-form-label form-control-label">City:</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="city" name="city"
+                                                value="<?php echo $job['city']; ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="image"
                                             class="col-lg-3 col-form-label form-control-label">Image:</label>
                                         <div class="col-lg-9">
-                                            <input type="file" name="image" id="image" class="form-control-file">
+                                            <input type="file" id="image" name="image" class="form-control-file"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Create</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </div>
                                 </form>
@@ -151,7 +170,6 @@ $conn = null;
                     </div>
                 </div>
             </div>
-            <!-- End container-fluid-->
         </div>
 
 

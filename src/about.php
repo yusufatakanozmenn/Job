@@ -1,3 +1,28 @@
+<?php
+// Veritabanı bağlantısı için gerekli bilgileri ekleyin
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "jobs";
+
+try {
+    // PDO kullanarak veritabanı bağlantısını oluştur
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Veritabanından verileri çek
+    $sql = "SELECT * FROM about";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $about = $stmt->fetch(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
+$conn = null;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,37 +64,19 @@
             </div>
         </section>
     </div>
-
     <!-- Banner Ends Here -->
-
 
     <section class="about-us">
         <div class="container">
 
             <div class="row">
                 <div class="col-lg-12">
-                    <img src="../assets/images/about-fullscreen-1-1920x700.jpg" alt="">
-                    <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipisicing elit</a>. Eveniet earum totam,
-                        maiores tenetur reprehenderit eius et deserunt sequi veniam commodi! Asperiores laborum facere
-                        ratione numquam minima odio aut ut autem placeat illo, sint! Quia aut alias ipsam, velit esse
-                        ullam iusto facere! <a href="#">Maxime</a> autem similique, sit voluptatum culpa deserunt cumque
-                        harum ab amet esse sequi suscipit facere, maiores error veritatis nihil facilis laborum
-                        distinctio quidem deleniti, aperiam iusto? Dicta dolorem cum labore sint obcaecati illo saepe
-                        ratione modi nostrum natus.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, provident fugit veniam culpa
-                        soluta cumque assumenda rerum modi ut accusantium dolorem omnis sapiente et minima maiores vitae
-                        inventore aperiam facilis doloremque esse officiis nobis aut ex velit? Repellat sequi
-                        voluptatem, hic aspernatur assumenda quam animi mollitia culpa vel alias laudantium architecto,
-                        incidunt voluptatum doloremque sit tempore explicabo recusandae perferendis quia et nisi rerum,
-                        quod accusantium. Excepturi reprehenderit itaque temporibus iste possimus numquam unde enim
-                        ratione distinctio, facilis, culpa, consectetur dolores.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur alias sunt sapiente quidem
-                        repudiandae temporibus consequuntur, molestiae laborum. Hic alias et, deserunt provident
-                        voluptatibus voluptatem molestias repudiandae odit distinctio dolore officiis esse nulla
-                        aspernatur iste odio quidem sint corrupti impedit at quam obcaecati quas, eaque libero! Totam
-                        repudiandae, culpa animi.</p>
+                    <?php if ($about) : ?>
+                    <img src="<?php echo '../admin/' . $about['image_path']; ?>" alt="">
+                    <p><?php echo $about['text']; ?></p>
+                    <?php else : ?>
+                    <p>About section is not available.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -103,14 +110,14 @@
     <script src="../assets/js/accordions.js"></script>
 
     <script language="text/Javascript">
-        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-        function clearField(t) { //declaring the array outside of the
-            if (!cleared[t.id]) { // function makes it static and global
-                cleared[t.id] = 1; // you could use true and false, but that's more typing
-                t.value = ''; // with more chance of typos
-                t.style.color = '#fff';
-            }
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) { //declaring the array outside of the
+        if (!cleared[t.id]) { // function makes it static and global
+            cleared[t.id] = 1; // you could use true and false, but that's more typing
+            t.value = ''; // with more chance of typos
+            t.style.color = '#fff';
         }
+    }
     </script>
 
 </body>

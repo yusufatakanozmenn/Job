@@ -2,7 +2,10 @@
 require_once '../libs/ayar.php';
 require_once '../libs/vars.php';
 
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Kullanıcı oturumu kontrolü
 if (!isset($_SESSION['username'])) {
@@ -95,7 +98,8 @@ $stmt->close();
                                 <p class="card-text">Some quick example text to build on the card title and make up the
                                     bulk of the card's content.</p>
                                 <div class="icon-block">
-                                    <a href="javascript:void();"> <i class="fa fa-linkedin bg-linkedin text-white"></i></a>
+                                    <a href="javascript:void();"> <i
+                                            class="fa fa-linkedin bg-linkedin text-white"></i></a>
                                 </div>
                             </div>
 
@@ -109,10 +113,14 @@ $stmt->close();
                             <div class="card-body">
                                 <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
                                     <li class="nav-item">
-                                        <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link active"><i class="icon-user"></i> <span class="hidden-xs">Profile</span></a>
+                                        <a href="javascript:void();" data-target="#profile" data-toggle="pill"
+                                            class="nav-link active"><i class="icon-user"></i> <span
+                                                class="hidden-xs">Profile</span></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link"><i class="icon-note"></i> <span class="hidden-xs">Edit</span></a>
+                                        <a href="javascript:void();" data-target="#edit" data-toggle="pill"
+                                            class="nav-link"><i class="icon-note"></i> <span
+                                                class="hidden-xs">Edit</span></a>
                                     </li>
                                 </ul>
                                 <div class="tab-content p-3">
@@ -137,19 +145,24 @@ $stmt->close();
                                     <div class="tab-pane" id="edit">
                                         <form action="update_profile.php" method="POST">
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                                                <label
+                                                    class="col-lg-3 col-form-label form-control-label">Username</label>
                                                 <div class="col-lg-9">
-                                                    <input class="form-control" type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" readonly>
+                                                    <input class="form-control" type="text" name="username"
+                                                        value="<?php echo htmlspecialchars($user['username']); ?>"
+                                                        readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-3 col-form-label form-control-label">Email</label>
                                                 <div class="col-lg-9">
-                                                    <input class="form-control" type="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>">
+                                                    <input class="form-control" type="email" name="email"
+                                                        value="<?php echo htmlspecialchars($user['email']); ?>">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                                                <label
+                                                    class="col-lg-3 col-form-label form-control-label">Password</label>
                                                 <div class="col-lg-9">
                                                     <input class="form-control" type="password" name="password">
                                                 </div>

@@ -8,10 +8,11 @@
     <ul class="sidebar-menu do-nicescrol">
         <li class="sidebar-header">MAIN NAVIGATION</li>
         <li>
-            <a href="create_job.php">
-                <i class="zmdi zmdi-assignment"></i> <span>Create Jobs</span>
+            <a href="jobs_list.php">
+                <i class="zmdi zmdi-assignment"></i> <span>Jobs</span>
             </a>
         </li>
+
 
         <li>
             <a href="profile.php">
@@ -19,7 +20,7 @@
             </a>
         </li>
         <li>
-            <a href="create_about.php">
+            <a href="update_about.php">
                 <i class="zmdi zmdi-account"></i> <span>About</span>
             </a>
         </li>
