@@ -5,68 +5,87 @@ $username = "root";
 $password = "";
 $dbname = "jobs";
 
-// Form gönderildiğinde çalışacak kodlar
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Formdan gelen verileri alın
-    $name = $_POST['name'];
-    $position = $_POST['position'];
-    $social_media = $_POST['social_media'];
-    
-    // Resim dosyasını alın
-    $image = $_FILES['image'];
-    $imageName = $image['name'];
-    $imageTmpName = $image['tmp_name'];
-    $imageSize = $image['size'];
-    $imageError = $image['error'];
-    $imageType = $image['type'];
+try {
+    // PDO kullanarak veritabanı bağlantısını oluştur
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Resim dosyasını yüklemek için izin verilen dosya türleri
-    $allowed = array('jpg', 'jpeg', 'png', 'gif');
-    $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+    // Mevcut team kaydını al
+    $sql = "SELECT * FROM team LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $team = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Resim dosyasının uzantısını kontrol edin
-    if (in_array($imageExt, $allowed)) {
-        // Resim yükleme hatası kontrolü
-        if ($imageError === 0) {
-            // Resim dosya boyutunu kontrol edin (maksimum 5MB)
-            if ($imageSize < 5000000) {
-                // Resmin yeni adını oluşturun
-                $imageNewName = uniqid('', true) . "." . $imageExt;
-                $imageDestination = 'uploads/' . $imageNewName;
+    // Form gönderildiyse veriyi güncelle
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['text'])) {
+            $text = $_POST['text'];
 
-                // Resmi hedef klasöre taşıyın
-                if (move_uploaded_file($imageTmpName, $imageDestination)) {
-                    // Veritabanına ekibinizi ekleyin
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
+            // Yeni bir resim yüklendi mi kontrol et
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+                $image = $_FILES['image'];
+                $imageName = $image['name'];
+                $imageTmpName = $image['tmp_name'];
+                $imageSize = $image['size'];
+                $imageError = $image['error'];
+                $imageType = $image['type'];
 
-                    $sql = "INSERT INTO team (name, position, social_media, image_path) VALUES ('$name', '$position', '$social_media', '$imageDestination')";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "<script>alert('Team member added successfully!');</script>";
-                        header("Location: ../src/team.php");
-                    } else {
-                        echo "<script>alert('Error: " . $sql . "<br>" . $conn->error . "');</script>";
-                    }
+                $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+                $allowed = array('jpg', 'jpeg', 'png', 'gif');
 
-                    $conn->close();
+                if (!in_array($imageExt, $allowed)) {
+                    header("Location: update_team.php?error=Invalid file type! Only JPG, JPEG, PNG, and GIF files are allowed.");
+                    exit;
+                } elseif ($imageSize >= 5000000) {
+                    header("Location: update_team.php?error=Image size is too big!");
+                    exit;
                 } else {
-                    echo "<script>alert('Failed to upload image.');</script>";
+                    $imageNewName = uniqid('', true) . "." . $imageExt;
+                    $imageDestination = '../admin/uploads/' . $imageNewName;
+
+                    if (move_uploaded_file($imageTmpName, $imageDestination)) {
+                        // Eski resmi sil
+                        if ($team['image_path']) {
+                            unlink($team['image_path']);
+                        }
+
+                        // Veritabanını güncelle
+                        $sql = "UPDATE team SET text = :text, image_path = :image_path WHERE id = :id";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bindParam(':text', $text);
+                        $stmt->bindParam(':image_path', $imageDestination);
+                        $stmt->bindParam(':id', $team['id']);
+                        $stmt->execute();
+
+                        header("Location: update_team.php?success=team section updated successfully.");
+                        exit;
+                    } else {
+                        header("Location: update_team.php?error=Failed to upload image.");
+                        exit;
+                    }
                 }
             } else {
-                echo "<script>alert('Image size is too big!');</script>";
+                // Sadece metin güncellenirse
+                $sql = "UPDATE team SET text = :text WHERE id = :id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':text', $text);
+                $stmt->bindParam(':id', $team['id']);
+                $stmt->execute();
+
+                header("Location: update_team.php?success=team section updated successfully.");
+                exit;
             }
         } else {
-            echo "<script>alert('Error uploading image: " . $imageError . "');</script>";
+            header("Location: update_team.php?error=Text field is required.");
+            exit;
         }
-    } else {
-        echo "<script>alert('Invalid file type!');</script>";
     }
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }
+
+$conn = null;
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Create Team</title>
+    <title>Edit Team Member</title>
     <!-- loader-->
     <link href="./assets/css/pace.min.css" rel="stylesheet" />
     <script src="./assets/js/pace.min.js"></script>
@@ -99,9 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="./assets/css/app-style.css" rel="stylesheet" />
 </head>
 
-
 <body class="bg-theme bg-theme1">
-
 
     <!-- Start wrapper-->
     <div id="wrapper">
@@ -119,15 +136,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Add Team Member</h1>
+                        <h1>Edit Team Member</h1>
                         <div class="card">
                             <div class="card-body">
-                                <form action="create_team.php" method="post" enctype="multipart/form-data">
+                                <form action="update_team.php" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" value="<?php echo $team['id']; ?>">
+                                    <input type="hidden" name="old_image_path"
+                                        value="<?php echo $team['image_path']; ?>">
                                     <div class="form-group row">
                                         <label for="name"
                                             class="col-lg-3 col-form-label form-control-label">Name:</label>
                                         <div class="col-lg-9">
-                                            <input type="text" id="name" name="name" class="form-control" required>
+                                            <input type="text" id="name" name="name" class="form-control"
+                                                value="<?php echo $team['name']; ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -135,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             class="col-lg-3 col-form-label form-control-label">Position:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="position" name="position" class="form-control"
-                                                required>
+                                                value="<?php echo $team['position']; ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -143,7 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             class="col-lg-3 col-form-label form-control-label">Social Media:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="social_media" name="social_media"
-                                                class="form-control" required>
+                                                class="form-control" value="<?php echo $team['social_media']; ?>"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -151,12 +173,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             class="col-lg-3 col-form-label form-control-label">Image:</label>
                                         <div class="col-lg-9">
                                             <input type="file" id="image" name="image" accept="image/*"
-                                                class="form-control-file" required>
+                                                class="form-control-file">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Add Team Member</button>
+                                            <button type="submit" class="btn btn-primary">Update Team Member</button>
+                                            <a href="team_list.php" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                 </form>
@@ -166,6 +189,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </div>
+
+
+
 
 
 

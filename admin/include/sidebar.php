@@ -12,7 +12,11 @@
                 <i class="zmdi zmdi-assignment"></i> <span>Jobs</span>
             </a>
         </li>
-
+        <li>
+            <a href="team_list.php">
+                <i class="zmdi zmdi-accounts"></i> <span>Team List</span>
+            </a>
+        </li>
 
         <li>
             <a href="profile.php">
