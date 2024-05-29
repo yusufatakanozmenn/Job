@@ -16,8 +16,9 @@
 
         <ul class="navbar-nav align-items-center right-nav-link">
             <li class="nav-item dropdown-lg">
-                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
-                    <i class="fa fa-envelope-open-o"></i></a>
+                <a class="nav-link waves-effect btn btn-primary" href="../src/index.php">
+                    <i class="fa fa-home"></i> Sayfaya Git
+                </a>
             </li>
             <li class="nav-item dropdown-lg">
                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
@@ -45,8 +46,7 @@
                     <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar" /></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <?php if ($_COOKIE["auth"]["role"] == 'admin') : ?>
-                        <li class="dropdown-item user-details">
+                    <?php if (in_array($_COOKIE["auth"]["role"], ['admin', 'IK'])) : ?> <li class="dropdown-item user-details">
                             <a href="javaScript:void();">
                                 <div class="media">
                                     <div class="avatar">
@@ -61,7 +61,7 @@
                         </li>
                         <li class="dropdown-divider"></li>
                         <li class="dropdown-item">
-                            <a href="profile.php"><i class="icon-settings mr-2"></i> Profile</a>
+                            <a href="profile.php"><i class="zmdi zmdi-account mr-2"></i> Profile</a>
                         </li>
                         <li class="dropdown-divider"></li>
                         <li class="dropdown-item">

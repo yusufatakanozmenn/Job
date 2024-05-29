@@ -641,8 +641,9 @@ body.bg-theme15 {
 .right-nav-link a.nav-link {
     padding-right: .8rem !important;
     padding-left: .8rem !important;
-    font-size: 20px;
-    color: #ffffff;
+    font-size: 15px;
+    color: #f1f1f1;
+    border-radius: 20px;
 }
 
 /* Dropdown Menu */
