@@ -18,6 +18,11 @@
                 <i class="zmdi zmdi-account"></i> <span>Profile</span>
             </a>
         </li>
+        <li>
+            <a href="create_about.php">
+                <i class="zmdi zmdi-account"></i> <span>About</span>
+            </a>
+        </li>
     </ul>
 
 
