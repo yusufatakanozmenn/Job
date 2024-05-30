@@ -6,21 +6,14 @@
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
-        <li class="sidebar-header">MAIN NAVIGATION</li>
-        <li>
-            <a href="jobs_list.php">
-                <i class="zmdi zmdi-assignment"></i> <span>Jobs</span>
-            </a>
-        </li>
-        <li>
-            <a href="team_list.php">
-                <i class="zmdi zmdi-accounts"></i> <span>Team List</span>
-            </a>
-        </li>
-
         <li>
             <a href="profile.php">
                 <i class="zmdi zmdi-account"></i> <span>Profile</span>
+            </a>
+        </li>
+        <li>
+            <a href="jobs_list.php">
+                <i class="zmdi zmdi-assignment"></i> <span>Jobs</span>
             </a>
         </li>
         <li>
@@ -28,6 +21,19 @@
                 <i class="zmdi zmdi-account"></i> <span>About</span>
             </a>
         </li>
+        <li>
+            <a href="team_list.php">
+                <i class="zmdi zmdi-accounts"></i> <span>Team List</span>
+            </a>
+        </li>
+        <li>
+            <a href="blog_list.php">
+                <i class="zmdi zmdi-accounts"></i> <span> Blog List</span>
+            </a>
+        </li>
+
+
+
     </ul>
 
 

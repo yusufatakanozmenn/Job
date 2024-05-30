@@ -1,6 +1,5 @@
 <?php
 require_once '../libs/ayar.php';
-require_once '../libs/vars.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
