@@ -1,3 +1,28 @@
+<?php
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "jobs";
+
+try {
+    // Create database connection using PDO
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Fetch all team members
+    $sql = "SELECT * FROM team";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $teamMembers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
+$conn = null;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,81 +63,31 @@
             </div>
         </section>
     </div>
-
     <!-- Banner Ends Here -->
-
 
     <section class="blog-posts grid-system">
         <div class="container">
             <div class="all-blog-posts">
                 <div class="row">
+                    <?php foreach ($teamMembers as $member) { ?>
                     <div class="col-md-3 col-sm-4">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                                <img src="../assets/images/team-image-1-646x680.jpg" alt="">
+                                <img src="../admin/<?php echo $member['image_path']; ?>" alt="">
                             </div>
                             <div class="down-content">
-                                <span>CEO</span>
-                                <h4>John Doe</h4>
+                                <span><?php echo $member['position']; ?></span>
+                                <h4><?php echo $member['name']; ?></h4>
+                                <?php if (!empty($member['social_media'])) { ?>
                                 <ul class="post-info">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-twitter"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="<?php echo $member['social_media']; ?>"><i
+                                                class="fa fa-linkedin"></i></a></li>
                                 </ul>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-3 col-sm-4">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="../assets/images/team-image-2-646x680.jpg" alt="">
-                            </div>
-                            <div class="down-content">
-                                <span>Support</span>
-                                <h4>Jane Smith</h4>
-                                <ul class="post-info">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-twitter"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-4">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="../assets/images/team-image-3-646x680.jpg" alt="">
-                            </div>
-                            <div class="down-content">
-                                <span>Support</span>
-                                <h4>Samanta Green</h4>
-                                <ul class="post-info">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-twitter"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-4">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="../assets/images/team-image-4-646x680.jpg" alt="">
-                            </div>
-                            <div class="down-content">
-                                <span>Support</span>
-                                <h4>Mark Dawn</h4>
-                                <ul class="post-info">
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-twitter"></i></a> &nbsp;</li>
-                                    <li>&nbsp; <a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -132,14 +107,14 @@
     <script src="../assets/js/accordions.js"></script>
 
     <script language="text/Javascript">
-        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-        function clearField(t) { //declaring the array outside of the
-            if (!cleared[t.id]) { // function makes it static and global
-                cleared[t.id] = 1; // you could use true and false, but that's more typing
-                t.value = ''; // with more chance of typos
-                t.style.color = '#fff';
-            }
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) { //declaring the array outside of the
+        if (!cleared[t.id]) { // function makes it static and global
+            cleared[t.id] = 1; // you could use true and false, but that's more typing
+            t.value = ''; // with more chance of typos
+            t.style.color = '#fff';
         }
+    }
     </script>
 
 </body>
