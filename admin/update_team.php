@@ -1,27 +1,30 @@
 <?php
-// Veritabanı bağlantısı için gerekli bilgileri ekleyin
+// Database connection details
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "jobs";
 
 try {
-    // PDO kullanarak veritabanı bağlantısını oluştur
+    // Create database connection using PDO
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Mevcut team kaydını al
-    $sql = "SELECT * FROM team LIMIT 1";
+    $id = $_GET['id']; // Get the ID from the URL
+    $sql = "SELECT * FROM team WHERE id = :id";
     $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
     $team = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Form gönderildiyse veriyi güncelle
+    // If form is submitted, update the data
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['text'])) {
-            $text = $_POST['text'];
+        if (isset($_POST['name']) && isset($_POST['position']) && isset($_POST['social_media'])) {
+            $name = $_POST['name'];
+            $position = $_POST['position'];
+            $social_media = $_POST['social_media'];
 
-            // Yeni bir resim yüklendi mi kontrol et
+            // Check if a new image is uploaded
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
                 $image = $_FILES['image'];
                 $imageName = $image['name'];
@@ -34,49 +37,53 @@ try {
                 $allowed = array('jpg', 'jpeg', 'png', 'gif');
 
                 if (!in_array($imageExt, $allowed)) {
-                    header("Location: update_team.php?error=Invalid file type! Only JPG, JPEG, PNG, and GIF files are allowed.");
+                    header("Location: update_team.php?id=$id&error=Invalid file type! Only JPG, JPEG, PNG, and GIF files are allowed.");
                     exit;
                 } elseif ($imageSize >= 5000000) {
-                    header("Location: update_team.php?error=Image size is too big!");
+                    header("Location: update_team.php?id=$id&error=Image size is too big!");
                     exit;
                 } else {
                     $imageNewName = uniqid('', true) . "." . $imageExt;
                     $imageDestination = '../admin/uploads/' . $imageNewName;
 
                     if (move_uploaded_file($imageTmpName, $imageDestination)) {
-                        // Eski resmi sil
+                        // Delete old image if exists
                         if ($team['image_path']) {
                             unlink($team['image_path']);
                         }
 
-                        // Veritabanını güncelle
-                        $sql = "UPDATE team SET text = :text, image_path = :image_path WHERE id = :id";
+                        // Update the database
+                        $sql = "UPDATE team SET name = :name, position = :position, social_media = :social_media, image_path = :image_path WHERE id = :id";
                         $stmt = $conn->prepare($sql);
-                        $stmt->bindParam(':text', $text);
+                        $stmt->bindParam(':name', $name);
+                        $stmt->bindParam(':position', $position);
+                        $stmt->bindParam(':social_media', $social_media);
                         $stmt->bindParam(':image_path', $imageDestination);
-                        $stmt->bindParam(':id', $team['id']);
+                        $stmt->bindParam(':id', $id);
                         $stmt->execute();
 
-                        header("Location: update_team.php?success=team section updated successfully.");
+                        header("Location: team_list.php");
                         exit;
                     } else {
-                        header("Location: update_team.php?error=Failed to upload image.");
+                        header("Location: update_team.php?id=$id&error=Failed to upload image.");
                         exit;
                     }
                 }
             } else {
-                // Sadece metin güncellenirse
-                $sql = "UPDATE team SET text = :text WHERE id = :id";
+                // If only text is updated
+                $sql = "UPDATE team SET name = :name, position = :position, social_media = :social_media WHERE id = :id";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':text', $text);
-                $stmt->bindParam(':id', $team['id']);
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':position', $position);
+                $stmt->bindParam(':social_media', $social_media);
+                $stmt->bindParam(':id', $id);
                 $stmt->execute();
 
-                header("Location: update_team.php?success=team section updated successfully.");
+                header("Location: team_list.php");
                 exit;
             }
         } else {
-            header("Location: update_team.php?error=Text field is required.");
+            header("Location: update_team.php?id=$id&error=Name, Position and Social Media fields are required.");
             exit;
         }
     }
@@ -139,7 +146,14 @@ $conn = null;
                         <h1>Edit Team Member</h1>
                         <div class="card">
                             <div class="card-body">
-                                <form action="update_team.php" method="post" enctype="multipart/form-data">
+                                <?php if (isset($_GET['error'])) { ?>
+                                <div class="alert alert-danger"><?php echo $_GET['error']; ?></div>
+                                <?php } ?>
+                                <?php if (isset($_GET['success'])) { ?>
+                                <div class="alert alert-success"><?php echo $_GET['success']; ?></div>
+                                <?php } ?>
+                                <form action="update_team.php?id=<?php echo $team['id']; ?>" method="post"
+                                    enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?php echo $team['id']; ?>">
                                     <input type="hidden" name="old_image_path"
                                         value="<?php echo $team['image_path']; ?>">
@@ -190,21 +204,11 @@ $conn = null;
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
         <!--End content-wrapper-->
         <!--Start Back To Top Button-->
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
         <!--End Back To Top Button-->
 
-        <!--Start footer-->
         <!--Start footer-->
         <footer class="footer">
             <div class="container">
@@ -212,11 +216,9 @@ $conn = null;
             </div>
         </footer>
         <!--End footer-->
-        <!--End footer-->
 
     </div>
     <!--End wrapper-->
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="./assets/js/jquery.min.js"></script>
