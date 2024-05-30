@@ -1,3 +1,25 @@
+<?php
+// Veritabanı bağlantısı için gerekli bilgileri ekleyin
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "jobs";
+
+try {
+    // PDO kullanarak veritabanı bağlantısını oluştur
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Veritabanından iletişim bilgilerini çek
+    $stmt = $conn->prepare("SELECT * FROM contact_info LIMIT 1");
+    $stmt->execute();
+    $contact = $stmt->fetch(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +33,7 @@
         href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
         rel="stylesheet">
 
-    <title>PHPJabbers.com | Free Job Agency Website Template</title>
+    <title>Contact</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +43,7 @@
     <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/owl.css">
+
 </head>
 
 <body>
@@ -63,7 +86,6 @@
     <section class="contact-us">
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-12">
                     <div class="down-contact">
                         <div class="row">
@@ -118,16 +140,12 @@
                                     <div class="content">
                                         <ul>
                                             <li>
-                                                <h5>+1 333 4040 5566</h5>
+                                                <h5><?php echo $contact['phone_number']; ?></h5>
                                                 <span>PHONE NUMBER</span>
                                             </li>
                                             <li>
-                                                <h5>contact@company.com</h5>
+                                                <h5><?php echo $contact['email_address']; ?></h5>
                                                 <span>EMAIL ADDRESS</span>
-                                            </li>
-                                            <li>
-                                                <h5>212 Barrington Court New York</h5>
-                                                <span>STREET ADDRESS</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -136,12 +154,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-12">
                     <div id="map">
-                        <iframe
-                            src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            width="100%" height="450px" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <?php echo $contact['google_maps_embed']; ?>
                     </div>
                 </div>
 

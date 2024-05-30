@@ -193,7 +193,7 @@ $conn = null;
                                 <img src="<?php echo '../admin/uploads/' . $post['img']; ?>" alt="">
                             </div>
                             <div class="down-content">
-                                <a href="blog-details.php">
+                                <a href="blog-details.php?id=<?php echo $post['id']; ?>">
                                     <h3><?php echo $post['title']; ?></h3>
                                 </a>
                                 <p><?php echo substr($post['content'], 0, 70) . (strlen($post['content']) > 70 ? '...' : ''); ?>

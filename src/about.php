@@ -15,6 +15,11 @@ try {
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $about = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+     // Veritabanından iletişim bilgilerini çek
+     $stmt = $conn->prepare("SELECT * FROM contact_info LIMIT 1");
+     $stmt->execute();
+     $contact = $stmt->fetch(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -83,10 +88,9 @@ $conn = null;
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="social-icons">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="<?php echo $contact['facebook_link']; ?>"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="<?php echo $contact['twitter_link']; ?>"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="<?php echo $contact['linkedin_link']; ?>"><i class="fa fa-linkedin"></i></a></li>
                     </ul>
                 </div>
             </div>

@@ -31,6 +31,11 @@
                 <i class="zmdi zmdi-accounts"></i> <span> Blog List</span>
             </a>
         </li>
+        <li>
+            <a href="update_contact.php">
+                <i class="zmdi zmdi-accounts"></i> <span>Contact</span>
+            </a>
+        </li>
 
 
 

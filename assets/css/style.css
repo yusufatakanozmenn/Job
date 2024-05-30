@@ -886,10 +886,10 @@ footer ul.social-icons li:last-child::after {
 }
 
 footer ul.social-icons li a {
-	font-size: 14px;
+	font-size: 20px;
 	text-transform: uppercase;
-	color: #fff;
-	font-weight: 500;
+	color: #f1f1f1;
+	font-weight: 700;
 	letter-spacing: 0.25px;
 	transition: all .3s;
 }
