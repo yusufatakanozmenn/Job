@@ -16,7 +16,7 @@
 
         <ul class="navbar-nav align-items-center right-nav-link">
             <li class="nav-item dropdown-lg">
-                <a class="nav-link waves-effect btn btn-primary" href="../src/index.php">
+                <a class="nav-link waves-effect btn btn-primary" target="_blank" href="../src/index.php">
                     <i class="fa fa-home"></i> Sayfaya Git
                 </a>
             </li>

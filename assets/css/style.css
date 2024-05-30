@@ -446,11 +446,12 @@ header .navbar {
 
 .blog-posts .blog-post {
 	margin-bottom: 30px;
-	height: 400px; /* Set the fixed height for each blog post */
+	height: 550px; /* Set the fixed height for each blog post */
 	overflow: hidden; /* Hide overflow content */
 	display: flex;
 	flex-direction: column;
 }
+
 
 .blog-posts .blog-thumb img {
 	width: 100%;

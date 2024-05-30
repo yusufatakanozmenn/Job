@@ -22,6 +22,11 @@ try {
     $stmt_latest->execute();
     $latest_jobs = $stmt_latest->fetchAll(PDO::FETCH_ASSOC);
 
+     // Veritabanından blog gönderilerini çek
+     $stmt = $conn->prepare("SELECT * FROM blog_posts");
+     $stmt->execute();
+     $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
@@ -61,7 +66,7 @@ $conn = null;
                 <?php if ($latest_jobs) : ?>
                 <?php foreach ($latest_jobs as $job) : ?>
                 <div class="item">
-                    <img src="<?php echo '../admin/uploads/' . $job['img']; ?>" alt="" />
+                    <img src="<?php echo '../admin/' . $job['img']; ?>" alt="" />
                     <div class="item-content">
                         <div class="main-content">
                             <div class="meta-category">
@@ -121,7 +126,7 @@ $conn = null;
                     <div class="col-md-4 col-sm-6">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                                <img src="<?php echo '../admin/uploads/' . $job['img']; ?>" alt="">
+                                <img src="<?php echo '../admin/' . $job['img']; ?>" alt="">
                             </div>
                             <div class="down-content">
                                 <span><?php echo htmlspecialchars($job['sector']); ?></span>
@@ -164,7 +169,7 @@ $conn = null;
                             </div>
                             <div class="col-lg-4">
                                 <div class="main-button">
-                                    <a href="contact.html">Contact Us</a>
+                                    <a href="contact.php">Contact Us</a>
                                 </div>
                             </div>
                         </div>
@@ -180,69 +185,27 @@ $conn = null;
                 <h2 class="text-center">Blog</h2>
                 <br>
                 <div class="row">
+                    <?php foreach ($posts as $post): ?>
+
                     <div class="col-md-4 col-sm-6">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                                <img src="../assets/images/blog-1-720x480.jpg" alt="">
+                                <img src="<?php echo '../admin/uploads/' . $post['img']; ?>" alt="">
                             </div>
                             <div class="down-content">
-                                <a href="blog-details.html">
-                                    <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h4>
+                                <a href="blog-details.php">
+                                    <h3><?php echo $post['title']; ?></h3>
                                 </a>
-
-                                <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a
-                                    mauris sit amet eleifend.</p>
-
+                                <p><?php echo substr($post['content'], 0, 70) . (strlen($post['content']) > 70 ? '...' : ''); ?>
+                                </p>
                                 <ul class="post-info">
-                                    <li><a href="#">John Doe</a></li>
-                                    <li><a href="#">10.07.2020 10:20</a></li>
-                                    <li><a href="#"><i class="fa fa-comments" title="Comments"></i> 12</a></li>
+                                    <li><?php echo $post['author_id']; ?></li>
+                                    <li><?php echo $post['created_at']; ?></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="../assets/images/blog-2-720x480.jpg" alt="">
-                            </div>
-                            <div class="down-content">
-                                <a href="blog-details.html">
-                                    <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h4>
-                                </a>
-
-                                <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a
-                                    mauris sit amet eleifend.</p>
-
-                                <ul class="post-info">
-                                    <li><a href="#">John Doe</a></li>
-                                    <li><a href="#">10.07.2020 10:20</a></li>
-                                    <li><a href="#"><i class="fa fa-comments" title="Comments"></i> 12</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="../assets/images/blog-3-720x480.jpg" alt="">
-                            </div>
-                            <div class="down-content">
-                                <a href="blog-details.html">
-                                    <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h4>
-                                </a>
-
-                                <p>Nullam nibh mi, tincidunt sed sapien ut, rutrum hendrerit velit. Integer auctor a
-                                    mauris sit amet eleifend.</p>
-
-                                <ul class="post-info">
-                                    <li><a href="#">John Doe</a></li>
-                                    <li><a href="#">10.07.2020 10:20</a></li>
-                                    <li><a href="#"><i class="fa fa-comments" title="Comments"></i> 12</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
