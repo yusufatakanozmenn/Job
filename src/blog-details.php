@@ -1,3 +1,42 @@
+<?php
+// Veritabanı bağlantısı için gerekli bilgileri ekleyin
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "jobs";
+
+try {
+    // PDO kullanarak veritabanı bağlantısını oluştur
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Blog ID'sini URL parametresinden al
+    $blog_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+    // Blog gönderisini veritabanından çek
+    $stmt = $conn->prepare("SELECT * FROM blog_posts WHERE id = :id");
+    $stmt->bindParam(':id', $blog_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $blog_post = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$blog_post) {
+        // Eğer blog gönderisi bulunamazsa, hata mesajı göster
+        die("Blog post not found.");
+    }
+
+    // Yorumları veritabanından çek
+    $stmt = $conn->prepare("SELECT * FROM comments WHERE blog_id = :blog_id ORDER BY date DESC");
+    $stmt->bindParam(':blog_id', $blog_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,15 +46,7 @@
 
 <body>
 
-    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-    <!-- ***** Preloader End ***** -->
+
 
     <header class="">
         <?php include '../includes/_navbar.php'; ?>
@@ -30,7 +61,7 @@
                     <div class="col-lg-12">
                         <div class="text-content">
                             <h4>Post Details</h4>
-                            <h2>Single blog post</h2>
+                            <h2><?php echo htmlspecialchars($blog_post['title']); ?></h2>
                         </div>
                     </div>
                 </div>
@@ -48,28 +79,22 @@
                             <div class="col-lg-12">
                                 <div class="blog-post">
                                     <div class="blog-thumb">
-                                        <img src="../assets/images/blog-fullscreen-1-1920x700.jpg" alt="">
+                                        <img src="<?php echo '../admin/uploads/' . $blog_post['img']; ?>" alt="">
                                     </div>
                                     <div class="down-content">
-                                        <a href="blog-details.html">
-                                            <h4>Aenean pulvinar gravida sem nec</h4>
+                                        <a href="blog-details.php?id=<?php echo $blog_post['id']; ?>">
+                                            <h4><?php echo htmlspecialchars($blog_post['title']); ?></h4>
                                         </a>
                                         <ul class="post-info">
-                                            <li><a href="#">John Doe</a></li>
-                                            <li><a href="#">10.07.2020 10:20</a></li>
-                                            <li><a href="#"><i class="fa fa-comments" title="Comments"></i> 12</a></li>
+                                            <li><a href="#"><?php echo htmlspecialchars($blog_post['author_id']); ?></a>
+                                            </li>
+                                            <li><a
+                                                    href="#"><?php echo htmlspecialchars($blog_post['created_at']); ?></a>
+                                            </li>
+                                            <li><a href="#"><i class="fa fa-comments" title="Comments"></i>
+                                                    <?php echo count($comments); ?></a></li>
                                         </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a
-                                                href="#">Praesentium doloribus</a>, corporis repellat sequi, voluptatem
-                                            facere, aliquam in consectetur odit debitis id maiores. Rem nobis incidunt
-                                            quod veniam, sapiente voluptas omnis ut consequuntur animi laborum ipsam
-                                            debitis corporis suscipit aperiam quo dolorum voluptates, culpa consectetur,
-                                            id accusamus explicabo laboriosam aut. Aut omnis dolorum, tempore culpa, cum
-                                            dignissimos? Voluptatem accusamus obcaecati ad. <br><br> Lorem ipsum dolor
-                                            sit amet, consectetur adipisicing elit. Deleniti eaque vitae at. Modi
-                                            beatae, dignissimos neque sequi incidunt, voluptatum iure eligendi totam,
-                                            quibusdam, nesciunt obcaecati architecto tenetur voluptatem distinctio
-                                            magni.</p>
+                                        <p><?php echo nl2br(htmlspecialchars($blog_post['content'])); ?></p>
                                         <div class="post-options">
                                             <div class="row">
                                                 <div class="col-6">
@@ -78,10 +103,13 @@
                                                 <div class="col-6">
                                                     <ul class="post-share">
                                                         <li><i class="fa fa-share-alt"></i></li>
-                                                        <li><a href="#">Facebook</a>,</li>
-                                                        <li><a href="#"> Twitter</a></li>
+                                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode('http://localhost.com/blog-details.php?id=' . $post['id']); ?>"
+                                                                target="_blank">Facebook</a>,</li>
+                                                        <li><a href="https://twitter.com/intent/tweet?url=<?php echo urlencode('http://localhost.com/blog-details.php?id=' . $post['id']); ?>"
+                                                                target="_blank">Twitter</a></li>
                                                     </ul>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -90,55 +118,22 @@
                             <div class="col-lg-12">
                                 <div class="sidebar-item comments">
                                     <div class="sidebar-heading">
-                                        <h2>4 comments</h2>
+                                        <h2><?php echo count($comments); ?> comments</h2>
                                     </div>
                                     <div class="content">
                                         <ul>
+                                            <?php foreach ($comments as $comment) { ?>
                                             <li>
                                                 <div class="author-thumb">
                                                     <img src="../assets/images/comment-author-01.jpg" alt="">
                                                 </div>
                                                 <div class="right-content">
-                                                    <h4>Charles Kate<span>May 16, 2020</span></h4>
-                                                    <p>Fusce ornare mollis eros. Duis et diam vitae justo fringilla
-                                                        condimentum eu quis leo. Vestibulum id turpis porttitor sapien
-                                                        facilisis scelerisque. Curabitur a nisl eu lacus convallis
-                                                        eleifend posuere id tellus.</p>
+                                                    <h4><?php echo htmlspecialchars($comment['author']); ?><span><?php echo htmlspecialchars($comment['date']); ?></span>
+                                                    </h4>
+                                                    <p><?php echo nl2br(htmlspecialchars($comment['comment'])); ?></p>
                                                 </div>
                                             </li>
-                                            <li class="replied">
-                                                <div class="author-thumb">
-                                                    <img src="../assets/images/comment-author-02.jpg" alt="">
-                                                </div>
-                                                <div class="right-content">
-                                                    <h4>Thirteen Man<span>May 20, 2020</span></h4>
-                                                    <p>In porta urna sed venenatis sollicitudin. Praesent urna sem,
-                                                        pulvinar vel mattis eget.</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="author-thumb">
-                                                    <img src="../assets/images/comment-author-03.jpg" alt="">
-                                                </div>
-                                                <div class="right-content">
-                                                    <h4>Belisimo Mama<span>May 16, 2020</span></h4>
-                                                    <p>Nullam nec pharetra nibh. Cras tortor nulla, faucibus id
-                                                        tincidunt in, ultrices eget ligula. Sed vitae suscipit ligula.
-                                                        Vestibulum id turpis volutpat, lobortis turpis ac, molestie
-                                                        nibh.</p>
-                                                </div>
-                                            </li>
-                                            <li class="replied">
-                                                <div class="author-thumb">
-                                                    <img src="../assets/images/comment-author-02.jpg" alt="">
-                                                </div>
-                                                <div class="right-content">
-                                                    <h4>Thirteen Man<span>May 22, 2020</span></h4>
-                                                    <p>Mauris sit amet justo vulputate, cursus massa congue, vestibulum
-                                                        odio. Aenean elit nunc, gravida in erat sit amet, feugiat
-                                                        viverra leo.</p>
-                                                </div>
-                                            </li>
+                                            <?php } ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -149,17 +144,18 @@
                                         <h2>Your comment</h2>
                                     </div>
                                     <div class="content">
-                                        <form id="comment" action="#" method="post">
+                                        <form id="comment" action="../admin/add_comment.php" method="post">
+                                            <input type="hidden" name="blog_id" value="<?php echo $blog_id; ?>">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-12">
                                                     <fieldset>
-                                                        <input name="name" type="text" id="name" placeholder="Your name"
-                                                            required="">
+                                                        <input name="author" type="text" id="author"
+                                                            placeholder="Your name" required="">
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-md-6 col-sm-12">
                                                     <fieldset>
-                                                        <input name="email" type="text" id="email"
+                                                        <input name="email" type="email" id="email"
                                                             placeholder="Your email" required="">
                                                     </fieldset>
                                                 </div>
@@ -171,7 +167,7 @@
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <fieldset>
-                                                        <textarea name="message" rows="6" id="message"
+                                                        <textarea name="comment" rows="6" id="comment"
                                                             placeholder="Type your comment" required=""></textarea>
                                                     </fieldset>
                                                 </div>
@@ -207,20 +203,20 @@
                                     </div>
                                     <div class="content">
                                         <ul>
-                                            <li><a href="blog-details.html">
-                                                    <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
-                                                    <span>May 31, 2020</span>
-                                                </a></li>
-                                            <li><a href="blog-details.html">
-                                                    <h5>Suspendisse et metus nec libero ultrices varius eget in risus
-                                                    </h5>
-                                                    <span>May 28, 2020</span>
-                                                </a></li>
-                                            <li><a href="blog-details.html">
-                                                    <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit,
-                                                        numquam.</h5>
-                                                    <span>May 14, 2020</span>
-                                                </a></li>
+                                            <!-- Recent Posts Loop -->
+                                            <?php
+                                            $stmt = $conn->prepare("SELECT * FROM blog_posts ORDER BY created_at DESC LIMIT 5");
+                                            $stmt->execute();
+                                            $recent_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                            foreach ($recent_posts as $recent) {
+                                                echo '<li><a href="blog-details.php?id=' . $recent['id'] . '">';
+                                                echo '<h4>' . htmlspecialchars($recent['title']) . '</h4>';
+                                                echo '<p>' . htmlspecialchars($recent['content']) . '</p>';
+                                                echo '<span>' . htmlspecialchars($recent['created_at']) . '</span>';
+                                                echo '</a></li>';
+                                            }
+                                            ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -233,12 +229,9 @@
     </section>
     <?php include '../includes/_footer.php'; ?>
 
-
-
     <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 
     <!-- Additional Scripts -->
     <script src="../assets/js/custom.js"></script>
@@ -246,7 +239,6 @@
     <script src="../assets/js/slick.js"></script>
     <script src="../assets/js/isotope.js"></script>
     <script src="../assets/js/accordions.js"></script>
-
 
     <script language="text/Javascript">
     cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
@@ -258,8 +250,6 @@
         }
     }
     </script>
-
-
 </body>
 
 </html>
