@@ -28,7 +28,6 @@ try {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,7 +88,7 @@ try {
                             <h2>
                                 <i class="fa fa-map-marker"></i> <?php echo htmlspecialchars($jobs_post['city']); ?>
                                 &nbsp;&nbsp;
-                                <i class="fa fa-calendar"></i><?php echo htmlspecialchars($jobs_post['date']); ?>
+                                <i class="fa fa-calendar"></i> <?php echo htmlspecialchars($jobs_post['date']); ?>
                                 &nbsp;&nbsp;
                                 <i class="fa fa-file"></i> <?php echo htmlspecialchars($jobs_post['sector']); ?>
                             </h2>
@@ -105,13 +104,74 @@ try {
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="main-button">
-                                <a href="#">Apply for this Job</a>
+                                <button style="width: 150px; height: 40px; color:white; background-color: #023863;"
+                                    onclick="document.getElementById('applyForm').style.display='block'">Apply for
+                                    this Job</button>
                             </div>
                         </div>
                     </div>
 
                     <br>
                     <br><br>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-us" id="applyForm" style="display:none;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="sidebar-item contact-form">
+                        <div class="sidebar-heading">
+                            <h2>Application Form</h2>
+                        </div>
+                        <div class="content">
+                            <form action="apply.php" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="job_id" value="<?php echo $jobs_id; ?>">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <fieldset>
+                                            <input name="name" type="text" id="name" placeholder="Your Name"
+                                                required="">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <fieldset>
+                                            <input name="email" type="email" id="email" placeholder="Your Email"
+                                                required="">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <fieldset>
+                                            <input name="phone" type="text" id="phone" placeholder="Your Phone"
+                                                required="">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <fieldset>
+                                            <input name="resume" type="file" id="resume" accept=".pdf,.doc,.docx"
+                                                required="">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12">
+                                        <fieldset>
+                                            <textarea name="cover_letter" rows="6" id="cover_letter"
+                                                placeholder="Cover Letter" required=""></textarea>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fieldset>
+                                            <button type="submit" id="form-submit" class="main-button">Submit
+                                                Application</button>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </form>
+                            <button onclick="document.getElementById('applyForm').style.display='none'"
+                                class="main-button">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,8 +197,6 @@ try {
                             <p><?php echo htmlspecialchars($jobs_post['description']); ?></p>
 
                             <br>
-
-
                         </div>
                     </div>
                 </div>
@@ -179,15 +237,13 @@ try {
                                 <br>
 
                                 <strong>
-                                    <a href="http://www.cannonguards.com/">http://www.example.com/</a>
+                                    <a href="http://www.example.com/">http://www.example.com/</a>
                                 </strong>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
