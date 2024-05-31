@@ -20,7 +20,12 @@ $resume = $_FILES['resume'];
 
 // Özgeçmişi yüklemek için hedef dizin
 $target_dir = "../admin/uploads/";
-$target_file = $target_dir . basename($resume["name"]);
+
+// Dosya ismini hashle
+$file_info = pathinfo($resume["name"]);
+$hashed_filename = hash('sha256', basename($resume["name"])) . '.' . $file_info['extension'];
+
+$target_file = $target_dir . $hashed_filename;
 move_uploaded_file($resume["tmp_name"], $target_file);
 
 // Başvuru tarihini al
