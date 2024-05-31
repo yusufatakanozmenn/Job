@@ -84,7 +84,7 @@ $result = $stmt->get_result();
                                     </div>
                                     <div class="down-content">
                                         <span><?php echo $row['city']; ?></span>
-                                        <a href="job-details.html">
+                                        <a href="job-details.php?id=<?php echo $row['id']; ?>">
                                             <h4><?php echo $row['title']; ?></h4>
                                         </a>
                                         <p><?php echo $row['description']; ?></p>

@@ -15,11 +15,14 @@ try {
         // Form verilerini doğrula ve al
         $title = htmlspecialchars(trim($_POST['title']));
         $description = htmlspecialchars(trim($_POST['description']));
+        $email = htmlspecialchars(trim($_POST['email']));
+        $company_name = htmlspecialchars(trim($_POST['company_name']));
         $sector = htmlspecialchars(trim($_POST['sector']));
         $city = htmlspecialchars(trim($_POST['city']));
-
         
-        session_start();
+
+       include '../libs/vars.php'; // include the variables
+       
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 8;
         // Resim dosyasını kontrol et
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -41,12 +44,14 @@ try {
                     // Dosyayı belirtilen hedefe taşı
                     if (move_uploaded_file($imageTempName, $imageDestination)) {
                         // Veritabanına iş ilanı eklemek için SQL sorgusunu hazırla
-                        $sql = "INSERT INTO jobs (title, description, sector, city, user_id, img) 
-                                VALUES (:title, :description, :sector, :city, :user_id, :img)";
+                        $sql = "INSERT INTO jobs (title, description, email, company_name, sector, city, user_id, img) 
+                                VALUES (:title, :description, :email, :company_name, :sector, :city, :user_id, :img)";
                         // PDO sorgusunu hazırla ve bağlı parametreleri ayarla
                         $stmt = $conn->prepare($sql);
                         $stmt->bindParam(':title', $title);
                         $stmt->bindParam(':description', $description);
+                        $stmt->bindParam(':email', $email);
+                        $stmt->bindParam(':company_name', $company_name);
                         $stmt->bindParam(':sector', $sector);
                         $stmt->bindParam(':city', $city);
                         $stmt->bindParam(':user_id', $user_id);
@@ -149,6 +154,21 @@ $conn = null;
                                         <div class="col-lg-9">
                                             <textarea id="description" name="description" cols="30" rows="10"
                                                 class="form-control" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email"
+                                            class="col-lg-3 col-form-label form-control-label">Email:</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" id="email" name="email" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="company_name"
+                                            class="col-lg-3 col-form-label form-control-label">Company Name:</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" id="company_name" name="company_name"
+                                                class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">

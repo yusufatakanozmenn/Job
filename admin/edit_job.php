@@ -39,13 +39,18 @@ try {
         // Formdan gelen verileri al
         $title = $_POST['title'];
         $description = $_POST['description'];
+        $email = $_POST['email'];
+        $company_name = $_POST['company_name'];
         $sector = $_POST['sector'];
         $city = $_POST['city'];
+    
 
         // Veritabanında iş ilanını güncelle
-        $stmt = $conn->prepare("UPDATE jobs SET title = :title, description = :description, sector = :sector, city = :city WHERE id = :id");
+        $stmt = $conn->prepare("UPDATE jobs SET title = :title, description = :description, email = :email, company_name = :company_name, sector = :sector, city = :city WHERE id = :id");
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':company_name', $company_name);
         $stmt->bindParam(':sector', $sector);
         $stmt->bindParam(':city', $city);
         $stmt->bindParam(':id', $id);
@@ -133,6 +138,23 @@ $conn = null;
                                         <div class="col-lg-9">
                                             <textarea class="form-control" id="description" name="description" cols="30"
                                                 rows="10" required><?php echo $job['description']; ?></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email"
+                                            class="col-lg-3 col-form-label form-control-label">Email:</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                value="<?php echo $job['email']; ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="company_name"
+                                            class="col-lg-3 col-form-label form-control-label">Company Name:</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="company_name"
+                                                name="company_name" value="<?php echo $job['company_name']; ?>"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
