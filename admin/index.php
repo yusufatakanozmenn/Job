@@ -1,3 +1,10 @@
+<?php
+include '../libs/vars.php';
+include 'admin_check.php';
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -120,7 +127,8 @@
                                 Site Traffic
                                 <div class="card-action">
                                     <div class="dropdown">
-                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
+                                            data-toggle="dropdown">
                                             <i class="icon-options"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
@@ -182,7 +190,8 @@
                                 Weekly sales
                                 <div class="card-action">
                                     <div class="dropdown">
-                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
+                                            data-toggle="dropdown">
                                             <i class="icon-options"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
@@ -246,7 +255,8 @@
                                 Recent Order Tables
                                 <div class="card-action">
                                     <div class="dropdown">
-                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
+                                            data-toggle="dropdown">
                                             <i class="icon-options"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
@@ -275,7 +285,8 @@
                                         <tr>
                                             <td>Iphone 5</td>
                                             <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img" alt="product img" />
+                                                <img src="https://via.placeholder.com/110x110" class="product-img"
+                                                    alt="product img" />
                                             </td>
                                             <td>#9405822</td>
                                             <td>$ 1250.00</td>
@@ -291,7 +302,8 @@
                                         <tr>
                                             <td>Earphone GL</td>
                                             <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img" alt="product img" />
+                                                <img src="https://via.placeholder.com/110x110" class="product-img"
+                                                    alt="product img" />
                                             </td>
                                             <td>#9405820</td>
                                             <td>$ 1500.00</td>
@@ -307,7 +319,8 @@
                                         <tr>
                                             <td>HD Hand Camera</td>
                                             <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img" alt="product img" />
+                                                <img src="https://via.placeholder.com/110x110" class="product-img"
+                                                    alt="product img" />
                                             </td>
                                             <td>#9405830</td>
                                             <td>$ 1400.00</td>
@@ -323,7 +336,8 @@
                                         <tr>
                                             <td>Clasic Shoes</td>
                                             <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img" alt="product img" />
+                                                <img src="https://via.placeholder.com/110x110" class="product-img"
+                                                    alt="product img" />
                                             </td>
                                             <td>#9405825</td>
                                             <td>$ 1200.00</td>
@@ -339,7 +353,8 @@
                                         <tr>
                                             <td>Hand Watch</td>
                                             <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img" alt="product img" />
+                                                <img src="https://via.placeholder.com/110x110" class="product-img"
+                                                    alt="product img" />
                                             </td>
                                             <td>#9405840</td>
                                             <td>$ 1800.00</td>
@@ -355,7 +370,8 @@
                                         <tr>
                                             <td>Clasic Shoes</td>
                                             <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img" alt="product img" />
+                                                <img src="https://via.placeholder.com/110x110" class="product-img"
+                                                    alt="product img" />
                                             </td>
                                             <td>#9405825</td>
                                             <td>$ 1200.00</td>

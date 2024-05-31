@@ -1,4 +1,6 @@
 <?php
+include '../libs/vars.php';
+include 'admin_check.php';
 // Database connection details
 $servername = "localhost";
 $username = "root";

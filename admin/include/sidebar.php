@@ -17,6 +17,11 @@
             </a>
         </li>
         <li>
+            <a href="jobs_apply_list.php">
+                <i class="zmdi zmdi-assignment"></i> <span>Job Applications</span>
+            </a>
+        </li>
+        <li>
             <a href="update_about.php">
                 <i class="zmdi zmdi-account"></i> <span>About</span>
             </a>

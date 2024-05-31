@@ -1,17 +1,8 @@
 <?php
 require_once '../libs/ayar.php';
-require_once '../libs/vars.php';
+include '../libs/vars.php';
+include 'admin_check.php';
 
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Kullanıcı oturumu kontrolü
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit;
-}
 
 // Oturumdaki kullanıcı adını al
 $username = $_SESSION['username'];

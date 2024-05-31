@@ -25,6 +25,8 @@ if (isset($_POST['login'])) {
 
             // Regenerate session ID to prevent session fixation
             session_regenerate_id(true);
+            $_SESSION['admin_logged_in'] = true;
+
 
             setcookie("auth[username]", $row["username"], time() + (60 * 60), "/", "", true, true);
             setcookie("auth[role]", $row["role"], time() + (60 * 60), "/", "", true, true);

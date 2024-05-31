@@ -1,5 +1,6 @@
 <?php
-session_start();
+include '../libs/vars.php';
+include 'admin_check.php';
 
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";

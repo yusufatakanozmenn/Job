@@ -1,6 +1,7 @@
 <?php
 require_once '../libs/ayar.php';
-require_once '../libs/vars.php';
+include '../libs/vars.php';
+include 'admin_check.php';
 
 session_start();
 

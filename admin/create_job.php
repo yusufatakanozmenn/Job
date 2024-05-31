@@ -1,4 +1,6 @@
 <?php
+include '../libs/vars.php';
+include 'admin_check.php';
 // Veritabanı bağlantısı için gerekli bilgiler
 $servername = "localhost";
 $username = "root";

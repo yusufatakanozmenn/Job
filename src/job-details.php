@@ -160,16 +160,18 @@ try {
                                                 placeholder="Cover Letter" required=""></textarea>
                                         </fieldset>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 d-flex justify-content-between">
                                         <fieldset>
                                             <button type="submit" id="form-submit" class="main-button">Submit
                                                 Application</button>
                                         </fieldset>
+                                        <button onclick="document.getElementById('applyForm').style.display='none'"
+                                            class="main-button">Close</button>
                                     </div>
+
                                 </div>
                             </form>
-                            <button onclick="document.getElementById('applyForm').style.display='none'"
-                                class="main-button">Close</button>
+
                         </div>
                     </div>
                 </div>
