@@ -1,6 +1,10 @@
 <?php
 // Veritabanı bağlantısını içeri aktarın
 require_once '../libs/ayar.php';
+require '../vendor/autoload.php'; // PHPMailer yüklemesi
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Form gönderildiğinde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -34,8 +38,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $param_email = $email;
                     // Sorguyu çalıştırın
                     if ($stmt->execute()) {
-                        // Şifre sıfırlama başarılı
-                        echo "Yeni şifre oluşturuldu: $new_password";
+                        // PHPMailer ile e-posta gönderin
+                        $mail = new PHPMailer(true);
+                        try {
+                            //Server settings
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com'; // Gmail SMTP sunucusu
+                            $mail->SMTPAuth = true;
+                            $mail->Username = 'yusufatakanozmen06@gmail.com'; // Gmail kullanıcı adınız
+                            $mail->Password = 'qxtd blss sirz znoz'; // Uygulama şifresi
+                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Güvenlik türü
+                            $mail->Port = 587; // TCP portu
+                            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Alternatif olarak, port 465 için
+                            // $mail->Port = 465;
+
+                            //Recipients
+                            $mail->setFrom('no-reply@jobs.com', 'jobs');
+                            $mail->addAddress($email); // Kullanıcının e-posta adresi
+
+                            //Content
+                            $mail->isHTML(true);
+                            $mail->Subject = 'Yeni Sifreniz';
+                            $mail->Body = "Yeni şifreniz: $new_password";
+
+                            $mail->send();
+                            echo 'Yeni şifre e-posta adresinize gönderildi.';
+                            header("Location: login.php");
+                        } catch (Exception $e) {
+                            echo "E-posta gönderilemedi. Mailer Error: {$mail->ErrorInfo}";
+                        }
                     } else {
                         echo "Şifre sıfırlama başarısız.";
                     }

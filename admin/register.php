@@ -1,5 +1,9 @@
 <?php
 require "../libs/ayar.php";
+require '../vendor/autoload.php'; // PHPMailer yüklemesi
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 $username = $email = $password = $role = "";
 $username_err = $email_err = $password_err = $role_err = "";
@@ -52,6 +56,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
+                // Send email
+                $mail = new PHPMailer(true);
+                try {
+                    //Server settings
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com'; // Gmail SMTP sunucusu
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'yusufatakanozmen06@gmail.com'; // Gmail kullanıcı adınız
+                    $mail->Password = 'qxtd blss sirz znoz'; // Gmail uygulama şifreniz
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+
+                    //Recipients
+                    $mail->setFrom('no-reply@jobs.com', 'jobs');
+                    $mail->addAddress($email); // Kullanıcının e-posta adresi
+
+                    //Content
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Kayıt Başarılı';
+                    $mail->Body = "Merhaba $username,<br><br>Kayıt işleminiz başarıyla tamamlandı.<br><br>Rolünüz: $role";
+
+                    $mail->send();
+                    echo 'Kayıt başarılı, e-posta gönderildi.';
+                } catch (Exception $e) {
+                    echo "Kayıt başarılı ancak e-posta gönderilemedi. Mailer Error: {$mail->ErrorInfo}";
+                }
+
                 // Redirect to login page
                 header('Location: login.php');
                 exit;
