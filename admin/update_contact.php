@@ -183,31 +183,23 @@ $conn = null;
         <!--End Back To Top Button-->
 
         <!--Start footer-->
-        <!--Start footer-->
-        <footer class="footer">
-            <div class="container">
-                <div class="text-center">Copyright © 2024 Yusuf Atakan Özmen</div>
-            </div>
-        </footer>
+        <?php include 'include/footer.php'; ?>
         <!--End footer-->
-        <!--End footer-->
-
-    </div>
-    <!--End wrapper-->
+        <!--End wrapper-->
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="./assets/js/jquery.min.js"></script>
-    <script src="./assets/js/popper.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="./assets/js/jquery.min.js"></script>
+        <script src="./assets/js/popper.min.js"></script>
+        <script src="./assets/js/bootstrap.min.js"></script>
 
-    <!-- simplebar js -->
-    <script src="./assets/plugins/simplebar/js/simplebar.js"></script>
-    <!-- sidebar-menu js -->
-    <script src="./assets/js/sidebar-menu.js"></script>
+        <!-- simplebar js -->
+        <script src="./assets/plugins/simplebar/js/simplebar.js"></script>
+        <!-- sidebar-menu js -->
+        <script src="./assets/js/sidebar-menu.js"></script>
 
-    <!-- Custom scripts -->
-    <script src="./assets/js/app-script.js"></script>
+        <!-- Custom scripts -->
+        <script src="./assets/js/app-script.js"></script>
 
 </body>
 

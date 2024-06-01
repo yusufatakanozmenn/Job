@@ -207,13 +207,7 @@ $conn = null;
         <!--End Back To Top Button-->
 
         <!--Start footer-->
-        <!--Start footer-->
-        <footer class="footer">
-            <div class="container">
-                <div class="text-center">Copyright © 2024 Yusuf Atakan Özmen</div>
-            </div>
-        </footer>
-        <!--End footer-->
+        <?php include 'include/footer.php'; ?>
         <!--End footer-->
 
     </div>

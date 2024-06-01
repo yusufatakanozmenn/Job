@@ -1,3 +1,11 @@
+<?php
+require_once '../libs/ayar.php';
+// Bildirimleri çekme
+$query = "SELECT * FROM notifications WHERE is_read = 0 ORDER BY created_at DESC LIMIT 5";
+$result = mysqli_query($connection, $query);
+$notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
+?>
+
 <header class="topbar-nav">
     <nav class="navbar navbar-expand fixed-top">
         <ul class="navbar-nav mr-auto align-items-center">
@@ -23,7 +31,12 @@
             <li class="nav-item dropdown-lg">
                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
                     href="javascript:void();">
-                    <i class="fa fa-bell-o"></i></a>
+                    <i class="fa fa-bell-o"></i>
+                    <span class="badge badge-pill badge-danger" id="notification-count">0</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div id="notification-list"></div>
+                </div>
             </li>
             <li class="nav-item language">
                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
@@ -80,3 +93,31 @@
         </ul>
     </nav>
 </header>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    function fetchNotifications() {
+        $.ajax({
+            url: 'notifications_api.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                if (data.length > 0) {
+                    data.forEach(function(notification) {
+                        alert(notification.message);
+                    });
+                }
+            }
+        });
+    }
+
+    // Sayfa yüklendiğinde bildirimleri getir
+    fetchNotifications();
+
+    // Her 60 saniyede bir bildirimleri kontrol et
+    setInterval(fetchNotifications, 60000);
+});
+</script>

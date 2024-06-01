@@ -149,6 +149,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <!--wrapper-->
+
+    <!--Start footer-->
+    <?php include 'include/footer.php'; ?>
+    <!--End footer-->
+
     <!-- Bootstrap core JavaScript-->
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/popper.min.js"></script>

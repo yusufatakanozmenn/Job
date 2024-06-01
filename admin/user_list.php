@@ -1,30 +1,18 @@
 <?php
+include '../libs/ayar.php';
 include '../libs/vars.php';
 include 'admin_check.php';
-// Veritabanı bağlantısı için gerekli bilgileri ekleyin
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
 
-try {
-    // PDO kullanarak veritabanı bağlantısını oluştur
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Kullanıcıları veritabanından çek
+$query = "SELECT * FROM users";
+$result = mysqli_query($connection, $query);
 
-    // Veritabanından iş listesini çek
-    $sql = "SELECT * FROM team";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+if ($result) {
+    $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    die("Error: " . mysqli_error($connection));
 }
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +23,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Team List</title>
+    <title>User List</title>
     <!-- loader-->
     <link href="assets/css/pace.min.css" rel="stylesheet" />
     <script src="assets/js/pace.min.js"></script>
@@ -81,40 +69,53 @@ try {
 
         <div class="clearfix"></div>
 
+
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Team List</h2>
+                        <h2 class="card-title">User List</h2>
                         <div class="card">
                             <div class="card-body">
-
-                                <div class="d-flex justify-content-end mb-3">
-                                    <a href="create_team.php" class="btn btn-primary">Create Team</a>
+                                <?php if (isset($_GET['status'])): ?>
+                                <div class="alert alert-success">
+                                    <?php
+                                        if ($_GET['status'] === 'deleted') echo "User deleted successfully";
+                                        if ($_GET['status'] === 'updated') echo "User updated successfully";
+                                        if ($_GET['status'] === 'password_changed') echo "Password changed successfully";
+                                        if ($_GET['status'] === 'notfound') echo "User not found";
+                                        if ($_GET['status'] === 'error') echo "An error occurred";
+                                        ?>
                                 </div>
+                                <?php endif; ?>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Position</th>
-                                                <th scope="col">Social Media</th>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Created At</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($teams as $team): ?>
+                                            <?php foreach ($users as $user): ?>
                                             <tr>
-                                                <th scope="row"><?php echo $team['id']; ?></th>
-                                                <td><?php echo $team['name']; ?></td>
-                                                <td><?php echo $team['position']; ?></td>
-                                                <td><?php echo $team['social_media']; ?></td>
+                                                <th scope="row"><?php echo $user['id']; ?></th>
+                                                <td><?php echo htmlspecialchars($user['username']); ?></td>
+                                                <td><?php echo htmlspecialchars($user['email']); ?></td>
+                                                <td><?php echo htmlspecialchars($user['role']); ?></td>
+                                                <td><?php echo htmlspecialchars($user['date']); ?></td>
                                                 <td>
-                                                    <a href="update_team.php?id=<?php echo $team['id']; ?>"
-                                                        class="btn btn-primary">Edit</a>
-                                                    <a href="delete_team.php?id=<?php echo $team['id']; ?>"
-                                                        class="btn btn-danger">Delete</a>
+                                                    <a href="edit_user.php?id=<?php echo $user['id']; ?>"
+                                                        class="btn btn-primary btn-sm">Edit</a>
+                                                    <a href="delete_user.php?id=<?php echo $user['id']; ?>"
+                                                        class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                                                    <a href="change_password.php?id=<?php echo $user['id']; ?>"
+                                                        class="btn btn-warning btn-sm">Change Password</a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>
@@ -125,17 +126,11 @@ try {
                         </div>
                     </div>
                 </div>
-                <!--End Row-->
 
-                <!--start overlay-->
                 <div class="overlay toggle-menu"></div>
-                <!--end overlay-->
 
             </div>
-            <!-- End container-fluid-->
-
         </div>
-
 
 
 
@@ -143,11 +138,9 @@ try {
         <!--Start Back To Top Button-->
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
         <!--End Back To Top Button-->
-
         <!--Start footer-->
         <?php include 'include/footer.php'; ?>
         <!--End footer-->
-
     </div>
     <!--End wrapper-->
 

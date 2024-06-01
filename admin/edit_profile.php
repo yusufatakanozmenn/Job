@@ -3,13 +3,6 @@ require_once '../libs/ayar.php';
 include '../libs/vars.php';
 include 'admin_check.php';
 
-session_start();
-
-// Kullanıcı oturumu kontrolü
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit;
-}
 
 // Oturumdaki kullanıcı adını al
 $username = $_SESSION['username'];

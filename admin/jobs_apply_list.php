@@ -121,11 +121,9 @@ try {
 
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
 
-        <footer class="footer">
-            <div class="container">
-                <div class="text-center">Copyright © 2024 Yusuf Atakan Özmen</div>
-            </div>
-        </footer>
+         <!--Start footer-->
+         <?php include 'include/footer.php'; ?>
+        <!--End footer-->
     </div>
 
     <script src="assets/js/jquery.min.js"></script>

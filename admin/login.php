@@ -165,6 +165,9 @@ if (isset($_POST['login'])) {
 
     </div>
     <!--wrapper-->
+    <!--Start footer-->
+    <?php include 'include/footer.php'; ?>
+    <!--End footer-->
 
     <!-- Bootstrap core JavaScript-->
     <script src="./assets/js/jquery.min.js"></script>

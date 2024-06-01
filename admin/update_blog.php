@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Create About</title>
+    <title>Update About</title>
     <!-- loader-->
     <link href="./assets/css/pace.min.css" rel="stylesheet" />
     <script src="./assets/js/pace.min.js"></script>
@@ -191,15 +191,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!--Start Back To Top Button-->
                 <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
                 <!--End Back To Top Button-->
-
                 <!--Start footer-->
-                <!--Start footer-->
-                <footer class="footer">
-                    <div class="container">
-                        <div class="text-center">Copyright © 2024 Yusuf Atakan Özmen</div>
-                    </div>
-                </footer>
-                <!--End footer-->
+                <?php include 'include/footer.php'; ?>
                 <!--End footer-->
 
             </div>
