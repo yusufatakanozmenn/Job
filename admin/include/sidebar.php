@@ -2,7 +2,8 @@
     <div class="brand-logo">
         <a href="index.php">
             <img src="./assets/images/logo-icon.png" class="logo-icon" alt="logo icon" />
-            <h5 class="logo-text">Dashtreme Admin</h5>
+            <h5 class="logo-text"> Job Pursuit
+            </h5>
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">

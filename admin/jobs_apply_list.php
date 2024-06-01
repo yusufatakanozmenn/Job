@@ -16,6 +16,13 @@ try {
         $stmt = $conn->prepare("UPDATE job_applications SET read_status = 'read' WHERE id = ?");
         $stmt->execute([$_GET['mark_as_read']]);
     }
+    
+    // If there is a 'delete' parameter in the URL, delete the corresponding application
+    if (isset($_GET['delete'])) {
+        $stmt = $conn->prepare("DELETE FROM job_applications WHERE id = ?");
+        $stmt->execute([$_GET['delete']]);
+    }
+
 
     $stmt = $conn->prepare("SELECT * FROM job_applications ORDER BY application_date DESC");
     $stmt->execute();
@@ -88,14 +95,13 @@ try {
                                             <?php foreach ($job_applications as $job_application): ?>
                                             <tr>
                                                 <td><?php echo $job_application['id']; ?></td>
-                                                <td><a
-                                                        href="../src/job_details.php?id=<?php echo $job_application['job_id']; ?>"><?php echo $job_application['job_id']; ?></a>
+                                                <td><?php echo $job_application['job_id']; ?>
                                                 </td>
                                                 <td><?php echo $job_application['name']; ?></td>
                                                 <td><?php echo $job_application['email']; ?></td>
                                                 <td><?php echo $job_application['phone']; ?></td>
                                                 <td><?php echo $job_application['cover_letter']; ?></td>
-                                                <td><a href="../uploads/<?php echo $job_application['resume']; ?>"
+                                                <td><a href="../admin/uploads/<?php echo $job_application['resume']; ?>"
                                                         target="_blank">View Resume</a></td>
                                                 <td><?php echo $job_application['application_date']; ?></td>
                                                 <td>
@@ -103,8 +109,10 @@ try {
                                                     <a href="jobs_apply_list.php?mark_as_read=<?php echo $job_application['id']; ?>"
                                                         class="btn btn-primary">Mark as Read</a>
                                                     <?php else: ?>
-                                                    Read
+                                                    <span class="btn btn-success">Read</span>
                                                     <?php endif; ?>
+                                                    <a href="jobs_apply_list.php?delete=<?php echo $job_application['id']; ?>"
+                                                        class="btn btn-danger">Delete</a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>
@@ -121,8 +129,8 @@ try {
 
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
 
-         <!--Start footer-->
-         <?php include 'include/footer.php'; ?>
+        <!--Start footer-->
+        <?php include 'include/footer.php'; ?>
         <!--End footer-->
     </div>
 

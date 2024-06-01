@@ -8,8 +8,8 @@ $database = "jobs";
 
 $connection = mysqli_connect($server, $username, $password, $database);
 mysqli_set_charset($connection, "UTF8");
-if (mysqli_connect_errno() > 0) {
-    die("error: " . mysqli_connect_errno());
+if (mysqli_connect_errno()) {
+    die("error: " . mysqli_connect_error());
 }
 
 if (isset($_COOKIE['user_id'])) {
@@ -46,10 +46,20 @@ $query = "INSERT INTO job_applications (job_id, name, email, phone, cover_letter
 $stmt = $connection->prepare($query);
 
 if ($stmt) {
-    // Başarılı olduğunda job_details.php sayfasına yönlendir
-    header("Location: jobs.php");
-    exit;
+    $stmt->bind_param('issssss', $job_id, $name, $email, $phone, $cover_letter, $hashed_filename, $application_date);
+    if ($stmt->execute()) {
+        // Redirect on success
+        header("Location: jobs.php");
+        exit;
+    } else {
+        // Error executing statement
+        echo "Error executing query: " . $stmt->error;
+    }
+    $stmt->close();
 } else {
-    // Hata mesajı
-    echo "Error: " . $stmt->error;
+    // Error preparing statement
+    echo "Error preparing query: " . $connection->error;
 }
+
+$connection->close();
+?>
