@@ -1,5 +1,5 @@
 <?php
-include '../libs/vars.php';
+
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";
 $username = "root";

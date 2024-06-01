@@ -1,5 +1,6 @@
 <?php
 require_once '../libs/ayar.php';
+include '../libs/vars.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];

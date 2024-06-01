@@ -1,5 +1,5 @@
 <?php
-require_once '../libs/ayar.php';
+include '../libs/ayar.php';
 // Bildirimleri çekme
 $query = "SELECT * FROM notifications WHERE is_read = 0 ORDER BY created_at DESC LIMIT 5";
 $result = mysqli_query($connection, $query);
@@ -32,10 +32,19 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
                     href="javascript:void();">
                     <i class="fa fa-bell-o"></i>
-                    <span class="badge badge-pill badge-danger" id="notification-count">0</span>
+                    <span class="badge badge-pill badge-danger"><?php echo count($notifications); ?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div id="notification-list"></div>
+                    <?php if (count($notifications) > 0): ?>
+                    <?php foreach ($notifications as $notification): ?>
+                    <a class="dropdown-item mark-as-read" href="#" data-id="<?php echo $notification['id']; ?>">
+                        <i class="fa fa-check"></i>
+                        <?php echo $notification['message']; ?>
+                    </a>
+                    <?php endforeach; ?>
+                    <?php else: ?>
+                    <a class="dropdown-item" href="#">No new notifications</a>
+                    <?php endif; ?>
                 </div>
             </li>
             <li class="nav-item language">
@@ -94,30 +103,32 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </nav>
 </header>
 
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
-    function fetchNotifications() {
+    $(".mark-as-read").click(function(e) {
+        e.preventDefault();
+        var notificationId = $(this).data('id');
+
+        // AJAX isteği gönderme
         $.ajax({
-            url: 'notifications_api.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                if (data.length > 0) {
-                    data.forEach(function(notification) {
-                        alert(notification.message);
-                    });
-                }
+            url: 'mark_as_read.php',
+            method: 'POST',
+            data: {
+                id: notificationId
+            },
+            success: function(response) {
+                // Bildirim işaretlendikten sonra sayfayı yenileme veya bildirimi DOM'dan kaldırma işlemleri yapılabilir.
+                alert('Notification marked as read');
+                //sayayıda yenilemek için
+                location.reload();
+                // Örneğin, bildirimi DOM'dan kaldırabiliriz
+                $(this).remove();
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
-    }
-
-    // Sayfa yüklendiğinde bildirimleri getir
-    fetchNotifications();
-
-    // Her 60 saniyede bir bildirimleri kontrol et
-    setInterval(fetchNotifications, 60000);
+    });
 });
 </script>
