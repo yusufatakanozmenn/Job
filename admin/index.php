@@ -1,8 +1,55 @@
 <?php
 include '../libs/vars.php';
 include 'admin_check.php';
+// Veritabanı bağlantısı için gerekli bilgileri ekleyin
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "jobs";
 
+try {
+    // PDO kullanarak veritabanı bağlantısını oluştur
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Veritabanından iş listesini çek
+    $sql = "SELECT * FROM jobs";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // İş başvurularının sayısını çek
+    $stmt = $conn->prepare("SELECT COUNT(*) as total_applications FROM job_applications");
+    $stmt->execute();
+    $total_applications = $stmt->fetch(PDO::FETCH_ASSOC)['total_applications'];
+
+    // Blogların sayısını çek
+    $stmt = $conn->prepare("SELECT COUNT(*) as total_blogs FROM blog_posts");
+    $stmt->execute();
+    $total_blogs = $stmt->fetch(PDO::FETCH_ASSOC)['total_blogs'];
+
+    // Yorumların sayısını çek
+    $stmt = $conn->prepare("SELECT COUNT(*) as total_comments FROM comments");
+    $stmt->execute();
+    $total_comments = $stmt->fetch(PDO::FETCH_ASSOC)['total_comments'];
+
+    // Contact Message sayısını çek
+    $stmt = $conn->prepare("SELECT COUNT(*) as total_messages FROM contact_messages");
+    $stmt->execute();
+    $total_messages = $stmt->fetch(PDO::FETCH_ASSOC)['total_messages'];
+
+    // En yüksek değeri bulmak için toplamları al
+    $max_value = max($total_applications, $total_blogs, $total_comments, $total_messages);
+
+    // Progress bar genişliğini hesapla
+    $applications_width = ($total_applications / $max_value) * 100;
+    $blogs_width = ($total_blogs / $max_value) * 100;
+    $comments_width = ($total_comments / $max_value) * 100;
+    $messages_width = ($total_messages / $max_value) * 100;
+
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -52,350 +99,128 @@ include 'admin_check.php';
         <div class="content-wrapper">
             <div class="container-fluid">
                 <!--Start Dashboard Content-->
-
                 <div class="card mt-3">
                     <div class="card-content">
                         <div class="row row-group m-0">
                             <div class="col-12 col-lg-6 col-xl-3 border-light">
                                 <div class="card-body">
                                     <h5 class="text-white mb-0">
-                                        9526
-                                        <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
+                                        <?php echo $total_applications; ?>
+                                        <span class="float-right"><i class="fa fa-briefcase"></i></span>
                                     </h5>
                                     <div class="progress my-3" style="height: 3px">
-                                        <div class="progress-bar" style="width: 55%"></div>
+                                        <div class="progress-bar" style="width: <?php echo $applications_width; ?>%">
+                                        </div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Total Orders
-                                        <span class="float-right">+4.2% <i class="zmdi zmdi-long-arrow-up"></i></span>
+                                        Total Applications
                                     </p>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 col-xl-3 border-light">
                                 <div class="card-body">
                                     <h5 class="text-white mb-0">
-                                        8323
-                                        <span class="float-right"><i class="fa fa-usd"></i></span>
+                                        <?php echo $total_blogs; ?>
+                                        <span class="float-right"><i class="fa fa-pencil"></i></span>
                                     </h5>
                                     <div class="progress my-3" style="height: 3px">
-                                        <div class="progress-bar" style="width: 55%"></div>
+                                        <div class="progress-bar" style="width: <?php echo $blogs_width; ?>%"></div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Total Revenue
-                                        <span class="float-right">+1.2% <i class="zmdi zmdi-long-arrow-up"></i></span>
+                                        Total Blogs
                                     </p>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 col-xl-3 border-light">
                                 <div class="card-body">
                                     <h5 class="text-white mb-0">
-                                        6200
-                                        <span class="float-right"><i class="fa fa-eye"></i></span>
+                                        <?php echo $total_comments; ?>
+                                        <span class="float-right"><i class="fa fa-comments"></i></span>
                                     </h5>
                                     <div class="progress my-3" style="height: 3px">
-                                        <div class="progress-bar" style="width: 55%"></div>
+                                        <div class="progress-bar" style="width: <?php echo $comments_width; ?>%"></div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Visitors
-                                        <span class="float-right">+5.2% <i class="zmdi zmdi-long-arrow-up"></i></span>
+                                        Total Comments
                                     </p>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 col-xl-3 border-light">
                                 <div class="card-body">
                                     <h5 class="text-white mb-0">
-                                        5630
-                                        <span class="float-right"><i class="fa fa-envira"></i></span>
+                                        <?php echo $total_messages; ?>
+                                        <span class="float-right"><i class="fa fa-envelope"></i></span>
                                     </h5>
                                     <div class="progress my-3" style="height: 3px">
-                                        <div class="progress-bar" style="width: 55%"></div>
+                                        <div class="progress-bar" style="width: <?php echo $messages_width; ?>%"></div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Messages
-                                        <span class="float-right">+2.2% <i class="zmdi zmdi-long-arrow-up"></i></span>
+                                        Total Messages
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--End Dashboard Content-->
 
-                <div class="row">
-                    <div class="col-12 col-lg-8 col-xl-8">
-                        <div class="card">
-                            <div class="card-header">
-                                Site Traffic
-                                <div class="card-action">
-                                    <div class="dropdown">
-                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
-                                            data-toggle="dropdown">
-                                            <i class="icon-options"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void();">Action</a>
-                                            <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                            <a class="dropdown-item" href="javascript:void();">Something else here</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="javascript:void();">Separated link</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <i class="fa fa-circle mr-2 text-white"></i>New Visitor
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <i class="fa fa-circle mr-2 text-light"></i>Old Visitor
-                                    </li>
-                                </ul>
-                                <div class="chart-container-1">
-                                    <canvas id="chart1"></canvas>
-                                </div>
-                            </div>
+                <!--Start Job List Content-->
+                <div class="clearfix"></div>
 
-                            <div class="row m-0 row-group text-center border-top border-light-3">
-                                <div class="col-12 col-lg-4">
-                                    <div class="p-3">
-                                        <h5 class="mb-0">45.87M</h5>
-                                        <small class="mb-0">Overall Visitor
-                                            <span>
-                                                <i class="fa fa-arrow-up"></i> 2.43%</span></small>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-4">
-                                    <div class="p-3">
-                                        <h5 class="mb-0">15:48</h5>
-                                        <small class="mb-0">Visitor Duration
-                                            <span>
-                                                <i class="fa fa-arrow-up"></i> 12.65%</span></small>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-4">
-                                    <div class="p-3">
-                                        <h5 class="mb-0">245.65</h5>
-                                        <small class="mb-0">Pages/Visit
-                                            <span>
-                                                <i class="fa fa-arrow-up"></i> 5.62%</span></small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-12 col-lg-4 col-xl-4">
-                        <div class="card">
-                            <div class="card-header">
-                                Weekly sales
-                                <div class="card-action">
-                                    <div class="dropdown">
-                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
-                                            data-toggle="dropdown">
-                                            <i class="icon-options"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void();">Action</a>
-                                            <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                            <a class="dropdown-item" href="javascript:void();">Something else here</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="javascript:void();">Separated link</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container-2">
-                                    <canvas id="chart2"></canvas>
-                                </div>
+                <div class="col-lg-12">
+                    <h2 class="card-title">Job List</h2>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-end mb-3">
+                                <a href="create_job.php" class="btn btn-primary">Create Job</a>
                             </div>
                             <div class="table-responsive">
-                                <table class="table align-items-center">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <i class="fa fa-circle text-white mr-2"></i> Direct
-                                            </td>
-                                            <td>$5856</td>
-                                            <td>+55%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <i class="fa fa-circle text-light-1 mr-2"></i>Affiliate
-                                            </td>
-                                            <td>$2602</td>
-                                            <td>+25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <i class="fa fa-circle text-light-2 mr-2"></i>E-mail
-                                            </td>
-                                            <td>$1802</td>
-                                            <td>+15%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <i class="fa fa-circle text-light-3 mr-2"></i>Other
-                                            </td>
-                                            <td>$1105</td>
-                                            <td>+5%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--End Row-->
-
-                <div class="row">
-                    <div class="col-12 col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                Recent Order Tables
-                                <div class="card-action">
-                                    <div class="dropdown">
-                                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret"
-                                            data-toggle="dropdown">
-                                            <i class="icon-options"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void();">Action</a>
-                                            <a class="dropdown-item" href="javascript:void();">Another action</a>
-                                            <a class="dropdown-item" href="javascript:void();">Something else here</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="javascript:void();">Separated link</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table align-items-center table-flush table-borderless">
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Photo</th>
-                                            <th>Product ID</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
-                                            <th>Shipping</th>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Sector</th>
+                                            <th scope="col">City</th>
+                                            <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php foreach ($jobs as $job): ?>
                                         <tr>
-                                            <td>Iphone 5</td>
-                                            <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img"
-                                                    alt="product img" />
+                                            <th scope="row"><?php echo $job['id']; ?></th>
+                                            <td><?php echo $job['title']; ?></td>
+                                            <td><?php echo substr($job['description'], 0, 70) . (strlen($job['description']) > 50 ? '...' : ''); ?>
                                             </td>
-                                            <td>#9405822</td>
-                                            <td>$ 1250.00</td>
-                                            <td>03 Aug 2017</td>
+                                            <td><?php echo $job['sector']; ?></td>
+                                            <td><?php echo $job['city']; ?></td>
                                             <td>
-                                                <div class="progress shadow" style="height: 3px">
-                                                    <div class="progress-bar" role="progressbar" style="width: 90%">
-                                                    </div>
-                                                </div>
+                                                <a href="edit_job.php?id=<?php echo $job['id']; ?>"
+                                                    class="btn btn-primary">Edit</a>
+                                                <a href="delete_job.php?id=<?php echo $job['id']; ?>"
+                                                    class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td>Earphone GL</td>
-                                            <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img"
-                                                    alt="product img" />
-                                            </td>
-                                            <td>#9405820</td>
-                                            <td>$ 1500.00</td>
-                                            <td>03 Aug 2017</td>
-                                            <td>
-                                                <div class="progress shadow" style="height: 3px">
-                                                    <div class="progress-bar" role="progressbar" style="width: 60%">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>HD Hand Camera</td>
-                                            <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img"
-                                                    alt="product img" />
-                                            </td>
-                                            <td>#9405830</td>
-                                            <td>$ 1400.00</td>
-                                            <td>03 Aug 2017</td>
-                                            <td>
-                                                <div class="progress shadow" style="height: 3px">
-                                                    <div class="progress-bar" role="progressbar" style="width: 70%">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Clasic Shoes</td>
-                                            <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img"
-                                                    alt="product img" />
-                                            </td>
-                                            <td>#9405825</td>
-                                            <td>$ 1200.00</td>
-                                            <td>03 Aug 2017</td>
-                                            <td>
-                                                <div class="progress shadow" style="height: 3px">
-                                                    <div class="progress-bar" role="progressbar" style="width: 100%">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Hand Watch</td>
-                                            <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img"
-                                                    alt="product img" />
-                                            </td>
-                                            <td>#9405840</td>
-                                            <td>$ 1800.00</td>
-                                            <td>03 Aug 2017</td>
-                                            <td>
-                                                <div class="progress shadow" style="height: 3px">
-                                                    <div class="progress-bar" role="progressbar" style="width: 40%">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Clasic Shoes</td>
-                                            <td>
-                                                <img src="https://via.placeholder.com/110x110" class="product-img"
-                                                    alt="product img" />
-                                            </td>
-                                            <td>#9405825</td>
-                                            <td>$ 1200.00</td>
-                                            <td>03 Aug 2017</td>
-                                            <td>
-                                                <div class="progress shadow" style="height: 3px">
-                                                    <div class="progress-bar" role="progressbar" style="width: 100%">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+
+                        <!--End Row-->
+
+                        <!--start overlay-->
+                        <div class="overlay toggle-menu"></div>
+                        <!--end overlay-->
+
                     </div>
+                    <!-- End container-fluid-->
+
                 </div>
-                <!--End Row-->
-
-                <!--End Dashboard Content-->
-
-                <!--start overlay-->
-                <div class="overlay toggle-menu"></div>
-                <!--end overlay-->
+                <!--End Job List Content-->
             </div>
             <!-- End container-fluid-->
         </div>
