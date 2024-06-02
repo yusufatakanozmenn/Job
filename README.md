@@ -2,7 +2,7 @@
 
 ## Proje Hakkında
 
-**Job Pursuit**, People Box şirketi için geliştirilen bir iş yönetim ve iş başvuru takip sistemidir. Bu proje, kullanıcıların iş ilanlarını görüntülemesini, başvuru yapmasını ve yönetim ekibinin iş ilanlarını yönetmesini sağlar. Proje, yönetici, insan kaynakları (IK) ve çalışan rollerine göre farklı yetkilere sahip kullanıcıların giriş yapmasını ve sistemdeki görevlerini gerçekleştirmesini sağlar.
+**Job Pursuit**, People Box şirketi için geliştirilen bitirme projem, bir iş yönetim ve iş başvuru takip sistemidir. Bu proje, kullanıcıların iş ilanlarını görüntülemesini, başvuru yapmasını ve yönetim ekibinin iş ilanlarını yönetmesini sağlar. Proje, yönetici, insan kaynakları (IK) ve çalışan rollerine göre farklı yetkilere sahip kullanıcıların giriş yapmasını ve sistemdeki görevlerini gerçekleştirmesini sağlar.
 
 ## Özellikler
 
@@ -76,10 +76,6 @@
 - `delete_job.php`: İş ilanı silme sayfası
 - `ayar.php`: Veritabanı bağlantı ayarları
 - `assets/`: CSS, JS ve resim dosyaları
-
-## Katkıda Bulunanlar
-
-- [Adınız Soyadınız] - [email@example.com]
 
 ## Lisans
 
