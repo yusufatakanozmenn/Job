@@ -1,33 +1,37 @@
 <?php
 include '../libs/vars.php';
 include 'admin_check.php';
-// Veritabanı bağlantısı için gerekli bilgileri ekleyin
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
+// Include database connection and any other necessary files
+require_once '../libs/ayar.php';
 
-try {
-    // PDO kullanarak veritabanı bağlantısını oluştur
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Query to select comments from the database
+$sql = "SELECT * FROM comments";
+$result = $connection->query($sql);
 
-    // Veritabanından blog gönderilerini çek
-    $stmt = $conn->prepare("SELECT * FROM blog_posts");
-    $stmt->execute();
-    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC); // Değişiklik burada yapıldı
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+// Check if there are any comments
+if ($result->num_rows > 0) {
+    // Initialize an empty array to store comments
+    $comments = [];
+
+    // Fetch comments from the result set
+    while ($row = $result->fetch_assoc()) {
+        // Add each comment to the comments array
+        $comments[] = $row;
+    }
+} else {
+    // No comments found
+    echo "No comments available.";
+    exit;
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Blog List</title>
+    <title>Comments List</title>
+
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -59,37 +63,30 @@ try {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Blog List</h2>
+                        <h2 class="card-title">Comments</h2>
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-flex justify-content-end mb-3">
-                                    <a href="create_post.php" class="btn btn-primary">Create Post</a>
-                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Content</th>
-                                                <th scope="col">Author</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Blog Id</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Subject</th>
+                                                <th scope="col">Comment</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($posts as $post): ?>
+                                            <?php foreach ($comments as $comment): ?>
                                             <tr>
-                                                <th scope="row"><?php echo $post['id']; ?></th>
-                                                <td><?php echo $post['title']; ?></td>
-                                                <td><?php echo substr($post['content'], 0, 70) . (strlen($post['content']) > 70 ? '...' : ''); ?>
-                                                </td>
-                                                <td><?php echo $post['author_id']; ?></td>
-                                                <td>
-                                                    <a href="update_blog.php?id=<?php echo $post['id']; ?>"
-                                                        class="btn btn-primary">Edit</a>
-                                                    <a href="delete_post.php?id=<?php echo $post['id']; ?>"
-                                                        class="btn btn-danger">Delete</a>
-                                                </td>
+                                                <th scope="row"><?php echo $comment['id']; ?></th>
+                                                <td><?php echo $comment['author']; ?></td>
+                                                <td><?php echo $comment['blog_id']; ?></td>
+                                                <td><?php echo $comment['email']; ?></td>
+                                                <td><?php echo $comment['subject']; ?></td>
+                                                <td><?php echo $comment['comment']; ?></td>
                                             </tr>
                                             <?php endforeach; ?>
                                         </tbody>
@@ -100,23 +97,16 @@ try {
                     </div>
                 </div>
                 <!--End Row-->
-
                 <!--start overlay-->
                 <div class="overlay toggle-menu"></div>
                 <!--end overlay-->
-
             </div>
             <!-- End container-fluid-->
         </div>
-
-
-
-
         <!--End content-wrapper-->
         <!--Start Back To Top Button-->
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
         <!--End Back To Top Button-->
-
         <!--Start footer-->
         <?php include 'include/footer.php'; ?>
         <!--End footer-->

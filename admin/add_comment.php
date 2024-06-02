@@ -1,20 +1,7 @@
 <?php
 include '../libs/vars.php';
 include 'admin_check.php';
-
-// Veritabanı bağlantısı için gerekli bilgileri ekleyin
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
-
-// MySQL bağlantısını oluştur
-$connection = mysqli_connect($servername, $username, $password, $dbname);
-
-// Bağlantı hatası var mı kontrol et
-if (!$connection) {
-    die("Veritabanı bağlantısı kurulamadı: " . mysqli_connect_error());
-}
+include '../libs/ayar.php';
 
 if (isset($_POST['id'])) {
     $notifId = $_POST['id'];

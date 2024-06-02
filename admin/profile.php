@@ -8,10 +8,19 @@ include 'admin_check.php';
 $username = $_SESSION['username'];
 
 // Kullanıcı bilgilerini veritabanından çekme
-$stmt = $connection->prepare("SELECT username, email FROM users WHERE username = ?");
+$stmt = $connection->prepare("SELECT username, email , role FROM users WHERE username = ?");
 $stmt->bind_param('s', $username);
 $stmt->execute();
 $result = $stmt->get_result();
+
+//contact_info
+$stmt2 = $connection->prepare("SELECT * FROM contact_info");
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+$contact = $result2->fetch_assoc();
+
+
+
 
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
@@ -30,31 +39,8 @@ $stmt->close();
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Dashboard</title>
-    <!-- loader-->
-    <link href="./assets/css/pace.min.css" rel="stylesheet" />
-    <script src="./assets/js/pace.min.js"></script>
-    <!--favicon-->
-    <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon" />
-    <!-- Vector CSS -->
-    <link href="./assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-    <!-- simplebar CSS-->
-    <link href="./assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
-    <!-- Bootstrap core CSS-->
-    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- animate CSS-->
-    <link href="./assets/css/animate.css" rel="stylesheet" type="text/css" />
-    <!-- Icons CSS-->
-    <link href="./assets/css/icons.css" rel="stylesheet" type="text/css" />
-    <!-- Sidebar CSS-->
-    <link href="./assets/css/sidebar-menu.css" rel="stylesheet" />
-    <!-- Custom Style-->
-    <link href="./assets/css/app-style.css" rel="stylesheet" />
+    <?php include 'include/head.php'; ?>
+    <title>Profile</title>
 </head>
 
 
@@ -85,16 +71,22 @@ $stmt->close();
                             </div>
                             <div class="card-body pt-5">
                                 <img src="https://via.placeholder.com/110x110" alt="profile-image" class="profile">
-                                <h4 class="card-title"><?php echo $_COOKIE["auth"]["username"]; ?></h4>
+                                <h4 class="card-title"><i class="fa fa-user"></i>
+                                    <?php echo $_COOKIE["auth"]["username"]; ?> ||
+                                    <?php echo $_COOKIE["auth"]["role"]; ?></h4>
                                 <p class="card-text">Some quick example text to build on the card title and make up the
                                     bulk of the card's content.</p>
                                 <div class="icon-block">
-                                    <a href="javascript:void();"> <i
+                                    <a href="<?php echo $contact['linkedin_link'] ?>" target="_blank"> <i
                                             class="fa fa-linkedin bg-linkedin text-white"></i></a>
+                                    <a href="mailto:<?php echo $contact['email_address'] ?>" target="_blank"> <i
+                                            class="fa fa-envelope bg-email text-white"></i></a>
+                                    <a href="<?php echo $contact['facebook_link'] ?>" target="_blank"> <i
+                                            class="fa fa-facebook bg-facebook text-white"></i></a>
+                                    <a href="<?php echo $contact['twitter_link'] ?>" target="_blank"> <i
+                                            class="fa fa-twitter bg-twitter text-white"></i></a>
                                 </div>
                             </div>
-
-
                         </div>
 
                     </div>
@@ -119,53 +111,24 @@ $stmt->close();
                                         <h5 class="mb-3">User Profile</h5>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h6>About</h6>
+                                                <h5>Username</h5>
                                                 <p>
-                                                    Web Designer, UI/UX Engineer
+                                                    <?php echo htmlspecialchars($user['username']); ?>
                                                 </p>
-                                                <h6>Hobbies</h6>
+                                                <h5>Email</h5>
                                                 <p>
-                                                    Indie music, skiing and hiking. I love the great outdoors.
+                                                    <?php echo htmlspecialchars($user['email']); ?>
+                                                </p>
+                                                <h5>Date</h5>
+                                                <h5>Phone Number</h5>
+                                                <p>
+                                                    <?php echo htmlspecialchars($contact['phone_number']); ?>
                                                 </p>
                                             </div>
-
-
                                         </div>
                                         <!--/row-->
                                     </div>
-                                    <div class="tab-pane" id="edit">
-                                        <form action="update_profile.php" method="POST">
-                                            <div class="form-group row">
-                                                <label
-                                                    class="col-lg-3 col-form-label form-control-label">Username</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="text" name="username"
-                                                        value="<?php echo htmlspecialchars($user['username']); ?>"
-                                                        readonly>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="email" name="email"
-                                                        value="<?php echo htmlspecialchars($user['email']); ?>">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label
-                                                    class="col-lg-3 col-form-label form-control-label">Password</label>
-                                                <div class="col-lg-9">
-                                                    <input class="form-control" type="password" name="password">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-lg-9 offset-lg-3">
-                                                    <input type="reset" class="btn btn-secondary" value="Cancel">
-                                                    <input type="submit" class="btn btn-primary" value="Save Changes">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    <!-- Rest of the code... -->
                                 </div>
                             </div>
                         </div>

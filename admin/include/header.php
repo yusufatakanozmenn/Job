@@ -55,13 +55,7 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <i class="flag-icon flag-icon-gb mr-2"></i> English
                     </li>
                     <li class="dropdown-item">
-                        <i class="flag-icon flag-icon-fr mr-2"></i> French
-                    </li>
-                    <li class="dropdown-item">
-                        <i class="flag-icon flag-icon-cn mr-2"></i> Chinese
-                    </li>
-                    <li class="dropdown-item">
-                        <i class="flag-icon flag-icon-de mr-2"></i> German
+                        <i class="flag-icon flag-icon-tr mr-2"></i> Turkey
                     </li>
                 </ul>
             </li>
