@@ -36,11 +36,11 @@ if (isset($_POST['change_password'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Change Password</title>
+    <title><?php echo $lang['change_password']; ?></title>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -72,7 +72,7 @@ if (isset($_POST['change_password'])) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Change Password</h2>
+                        <h2 class="card-title"><?php echo $lang['change_password']; ?></h2>
                         <div class="card">
                             <div class="card-body">
                                 <?php if (isset($password_error)): ?>
@@ -80,17 +80,17 @@ if (isset($_POST['change_password'])) {
                                 <?php endif; ?>
                                 <form action="change_password.php?id=<?php echo $user_id; ?>" method="POST">
                                     <div class="form-group">
-                                        <label for="new_password">New Password</label>
+                                        <label for="new_password"><?php echo $lang['new_password']; ?></label>
                                         <input type="password" name="new_password" id="new_password"
                                             class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="confirm_password">Confirm Password</label>
+                                        <label for="confirm_password"><?php echo $lang['confirm_password']; ?></label>
                                         <input type="password" name="confirm_password" id="confirm_password"
                                             class="form-control" required>
                                     </div>
-                                    <button type="submit" name="change_password" class="btn btn-primary">Change
-                                        Password</button>
+                                    <button type="submit" name="change_password"
+                                        class="btn btn-primary"><?php echo $lang['change_password']; ?></button>
                                 </form>
                             </div>
                         </div>

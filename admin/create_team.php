@@ -71,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Create Team Member</title>
+    <title><?php echo $lang['create_team']; ?></title>
 </head>
 
 
@@ -98,20 +98,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Add Team Member</h1>
+                        <h1><?php echo $lang['add_team']; ?></h1>
                         <div class="card">
                             <div class="card-body">
                                 <form action="create_team.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <label for="name"
-                                            class="col-lg-3 col-form-label form-control-label">Name:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['name']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="name" name="name" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="position"
-                                            class="col-lg-3 col-form-label form-control-label">Position:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['position']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="position" name="position" class="form-control"
                                                 required>
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                     <div class="form-group row">
                                         <label for="social_media"
-                                            class="col-lg-3 col-form-label form-control-label">Social Media:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['social_media']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="social_media" name="social_media"
                                                 class="form-control" required>
@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                     <div class="form-group row">
                                         <label for="image"
-                                            class="col-lg-3 col-form-label form-control-label">Image:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['image']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="file" id="image" name="image" accept="image/*"
                                                 class="form-control-file" required>
@@ -135,7 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Add Team Member</button>
+                                            <button type="submit"
+                                                class="btn btn-primary"><?php echo $lang['add_team']; ?></button>
                                         </div>
                                     </div>
                                 </form>

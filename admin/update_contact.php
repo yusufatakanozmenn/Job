@@ -71,11 +71,11 @@ $conn = null;
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Update Contact Information</title>
+    <title><?php echo $lang['update_contact']; ?></title>
 
     <script>
     window.onload = function() {
@@ -112,41 +112,42 @@ $conn = null;
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Update Contact Information</h1>
+                        <h1><?php echo $lang['update_contact']; ?></h1>
                         <div class="card">
                             <div class="card-body">
                                 <form action="update_contact.php" method="POST">
                                     <div class="form-group">
-                                        <label for="phone_number">Phone Number</label>
+                                        <label for="phone_number"><?php echo $lang['phone_number']; ?></label>
                                         <input type="text" name="phone_number" class="form-control"
                                             value="<?php echo $contact ? $contact['phone_number'] : ''; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email_address">Email Address</label>
+                                        <label for="email_address"><?php echo $lang['email']; ?></label>
                                         <input type="email" name="email_address" class="form-control"
                                             value="<?php echo $contact ? $contact['email_address'] : ''; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="google_maps_embed">Google Maps Embed Code</label>
+                                        <label for="google_maps_embed"><?php echo $lang['google_maps_embed']; ?></label>
                                         <textarea name="google_maps_embed" class="form-control"
                                             required><?php echo $contact ? $contact['google_maps_embed'] : ''; ?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="facebook_link">Facebook Link</label>
+                                        <label for="facebook_link"><?php echo $lang['facebook_link']; ?></label>
                                         <input type="text" name="facebook_link" class="form-control"
                                             value="<?php echo $contact ? $contact['facebook_link'] : ''; ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="twitter_link">Twitter Link</label>
+                                        <label for="twitter_link"><?php echo $lang['twitter_link']; ?></label>
                                         <input type="text" name="twitter_link" class="form-control"
                                             value="<?php echo $contact ? $contact['twitter_link'] : ''; ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="linkedin_link">LinkedIn Link</label>
+                                        <label for="linkedin_link"><?php echo $lang['linkedin_link']; ?></label>
                                         <input type="text" name="linkedin_link" class="form-control"
                                             value="<?php echo $contact ? $contact['linkedin_link'] : ''; ?>">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit"
+                                        class="btn btn-primary"><?php echo $lang['update']; ?></button>
                                 </form>
                             </div>
                         </div>

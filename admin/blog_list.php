@@ -23,11 +23,11 @@ try {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Blog List</title>
+    <title><?php echo $lang['blog_list']; ?></title>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -59,21 +59,22 @@ try {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Blog List</h2>
+                        <h2 class="card-title"><?php echo $lang['blogs']; ?></h2>
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-end mb-3">
-                                    <a href="create_post.php" class="btn btn-primary">Create Post</a>
+                                    <a href="create_post.php"
+                                        class="btn btn-primary"><?php echo $lang['add_blog']; ?></a>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Content</th>
-                                                <th scope="col">Author</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col"><?php echo $lang['title']; ?></th>
+                                                <th scope="col"><?php echo $lang['content']; ?></th>
+                                                <th scope="col"><?php echo $lang['author']; ?></th>
+                                                <th scope="col"><?php echo $lang['actions']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -86,9 +87,9 @@ try {
                                                 <td><?php echo $post['author_id']; ?></td>
                                                 <td>
                                                     <a href="update_blog.php?id=<?php echo $post['id']; ?>"
-                                                        class="btn btn-primary">Edit</a>
+                                                        class="btn btn-primary"><?php echo $lang['edit_blog']; ?></a>
                                                     <a href="delete_post.php?id=<?php echo $post['id']; ?>"
-                                                        class="btn btn-danger">Delete</a>
+                                                        class="btn btn-danger"><?php echo $lang['delete_blog']; ?></a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>

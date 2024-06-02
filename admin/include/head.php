@@ -22,3 +22,16 @@
 <link href="./assets/css/sidebar-menu.css" rel="stylesheet" />
 <!-- Custom Style-->
 <link href="./assets/css/app-style.css" rel="stylesheet" />
+<script>
+function changeLanguage(language) {
+    fetch('change_language.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'language=' + language
+    }).then(function() {
+        location.reload();
+    });
+}
+</script>

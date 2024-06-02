@@ -51,17 +51,17 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
                     href="javascript:void();"><i class="fa fa-flag"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li class="dropdown-item">
+                    <li class="dropdown-item" onclick="changeLanguage('en')">
                         <i class="flag-icon flag-icon-gb mr-2"></i> English
                     </li>
-                    <li class="dropdown-item">
-                        <i class="flag-icon flag-icon-tr mr-2"></i> Turkey
+                    <li class="dropdown-item" onclick="changeLanguage('tr')">
+                        <i class="flag-icon flag-icon-tr mr-2"></i> Turkish
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
-                    <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle"
+                    <span class="user-profile"><img src="../admin/assets/images/admin-logo.jpg" class="img-circle"
                             alt="user avatar" /></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
@@ -70,7 +70,7 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <a href="javaScript:void();">
                             <div class="media">
                                 <div class="avatar">
-                                    <img class="align-self-start mr-3" src="https://via.placeholder.com/110x110"
+                                    <img class="align-self-start mr-3" src="../admin/assets/images/admin-logo.jpg"
                                         alt="user avatar" />
                                 </div>
                                 <div class="media-body">
@@ -97,32 +97,16 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </nav>
 </header>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function() {
-    $(".mark-as-read").click(function(e) {
-        e.preventDefault();
-        var notificationId = $(this).data('id');
-
-        // AJAX isteği gönderme
-        $.ajax({
-            url: 'mark_as_read.php',
-            method: 'POST',
-            data: {
-                id: notificationId
-            },
-            success: function(response) {
-                // Bildirim işaretlendikten sonra sayfayı yenileme veya bildirimi DOM'dan kaldırma işlemleri yapılabilir.
-                alert('Notification marked as read');
-                //sayayıda yenilemek için
-                location.reload();
-                // Örneğin, bildirimi DOM'dan kaldırabiliriz
-                $(this).remove();
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
+function changeLanguage(language) {
+    fetch('change_language.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'language=' + language
+    }).then(function() {
+        location.reload();
     });
-});
+}
 </script>

@@ -47,11 +47,11 @@ if (isset($_POST['update'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Edit User</title>
+    <title><?php echo $lang['edit_profile']; ?></title>
 
 </head>
 
@@ -85,7 +85,7 @@ if (isset($_POST['update'])) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Edit User</h2>
+                        <h2 class="card-title"><?php echo $lang['edit_profile']; ?></h2>
                         <div class="card">
                             <div class="card-body">
                                 <?php if (isset($update_error)): ?>
@@ -93,12 +93,12 @@ if (isset($_POST['update'])) {
                                 <?php endif; ?>
                                 <form action="edit_user.php?id=<?php echo $user['id']; ?>" method="POST">
                                     <div class="form-group">
-                                        <label for="username">Username</label>
+                                        <label for="username"><?php echo $lang['username']; ?></label>
                                         <input type="text" name="username" id="username" class="form-control"
                                             value="<?php echo htmlspecialchars($user['username']); ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">Email</label>
+                                        <label for="email"><?php echo $lang['email']; ?></label>
                                         <input type="email" name="email" id="email" class="form-control"
                                             value="<?php echo htmlspecialchars($user['email']); ?>" required>
                                     </div>
@@ -106,18 +106,21 @@ if (isset($_POST['update'])) {
                                         <label for="role">Role</label>
                                         <select name="role" id="role" class="form-control" required>
                                             <option value="admin"
-                                                <?php echo $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin
+                                                <?php echo $user['role'] === 'admin' ? 'selected' : ''; ?>>
+                                                <?php echo $lang['admin']; ?>
                                             </option>
                                             <option value="IK" <?php echo $user['role'] === 'IK' ? 'selected' : ''; ?>>
-                                                IK</option>
+                                                <?php echo $lang['IK']; ?></option>
                                             <option value="employee"
-                                                <?php echo $user['role'] === 'employee' ? 'selected' : ''; ?>>Employee
+                                                <?php echo $user['role'] === 'employee' ? 'selected' : ''; ?>>
+                                                <?php echo $lang['employee']; ?>
                                             </option>
                                         </select>
                                     </div>
-                                    <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                    <button type="submit" name="update"
+                                        class="btn btn-primary"><?php echo $lang['update']; ?></button>
                                     <button type="button" onclick="history.back();"
-                                        class="btn btn-secondary">Cancel</button>
+                                        class="btn btn-secondary"><?php echo $lang['cancel']; ?></button>
                                 </form>
                             </div>
                         </div>

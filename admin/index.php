@@ -51,13 +51,12 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Dashboard</title>
+    <title><?php echo $lang['dashboard']; ?></title>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -90,7 +89,7 @@ try {
                                         </div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Total Applications
+                                        <?php echo $lang['total_applications']; ?>
                                     </p>
                                 </div>
                             </div>
@@ -104,7 +103,7 @@ try {
                                         <div class="progress-bar" style="width: <?php echo $blogs_width; ?>%"></div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Total Blogs
+                                        <?php echo $lang['total_blogs']; ?>
                                     </p>
                                 </div>
                             </div>
@@ -118,7 +117,7 @@ try {
                                         <div class="progress-bar" style="width: <?php echo $comments_width; ?>%"></div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Total Comments
+                                        <?php echo $lang['total_comments']; ?>
                                     </p>
                                 </div>
                             </div>
@@ -132,7 +131,7 @@ try {
                                         <div class="progress-bar" style="width: <?php echo $messages_width; ?>%"></div>
                                     </div>
                                     <p class="mb-0 text-white small-font">
-                                        Total Messages
+                                        <?php echo $lang['total_messages']; ?>
                                     </p>
                                 </div>
                             </div>
@@ -146,23 +145,23 @@ try {
 
 
                 <div class="col-lg-12">
-                    <h2 class="card-title">Job List</h2>
+                    <h2 class="card-title"><?php echo $lang['job_list']; ?></h2>
                     <div class="card">
                         <div class="card-body">
 
                             <div class="d-flex justify-content-end mb-3">
-                                <a href="create_job.php" class="btn btn-primary">Create Job</a>
+                                <a href="create_job.php" class="btn btn-primary"><?php echo $lang['create_job']; ?></a>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Sector</th>
-                                            <th scope="col">City</th>
-                                            <th scope="col">Actions</th>
+                                            <th scope="col"><?php echo $lang['title']; ?></th>
+                                            <th scope="col"><?php echo $lang['description']; ?></th>
+                                            <th scope="col"><?php echo $lang['sector']; ?></th>
+                                            <th scope="col"><?php echo $lang['city']; ?></th>
+                                            <th scope="col"><?php echo $lang['actions']; ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -176,9 +175,9 @@ try {
                                             <td><?php echo $job['city']; ?></td>
                                             <td>
                                                 <a href="edit_job.php?id=<?php echo $job['id']; ?>"
-                                                    class="btn btn-primary">Edit</a>
+                                                    class="btn btn-primary"><?php echo $lang['edit']; ?></a>
                                                 <a href="delete_job.php?id=<?php echo $job['id']; ?>"
-                                                    class="btn btn-danger">Delete</a>
+                                                    class="btn btn-danger"><?php echo $lang['delete']; ?></a>
                                             </td>
                                         </tr>
                                         <?php endforeach; ?>
@@ -203,8 +202,7 @@ try {
         </div>
         <!--End content-wrapper-->
         <!--Start Back To Top Button-->
-        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i>
-        </a>
+        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
         <!--End Back To Top Button-->
 
         <!--Start footer-->
@@ -227,9 +225,7 @@ try {
     <!-- Custom scripts -->
     <script src="./assets/js/app-script.js"></script>
     <!-- Chart js -->
-
     <script src="./assets/plugins/Chart.js/Chart.min.js"></script>
-
     <!-- Index js -->
     <script src="./assets/js/index.js"></script>
 </body>

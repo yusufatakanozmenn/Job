@@ -101,11 +101,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Register</title>
+    <title><?php echo $lang['register']; ?></title>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="card-body">
                             <form action="register.php" method="POST" novalidate>
                                 <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
+                                    <label for="username" class="form-label"><?php echo $lang['username']; ?></label>
                                     <input type="text"
                                         class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : '' ?>"
                                         value="<?php echo htmlspecialchars($username); ?>" name="username"
@@ -126,14 +126,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <span class="invalid-feedback"><?php echo $username_err; ?></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
+                                    <label for="email" class="form-label"><?php echo $lang['email']; ?></label>
                                     <input type="text"
                                         class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : '' ?>"
                                         value="<?php echo htmlspecialchars($email); ?>" name="email" id="email">
                                     <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label"><?php echo $lang['password']; ?></label>
                                     <input type="password"
                                         class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : '' ?>"
                                         value="<?php echo htmlspecialchars($password); ?>" name="password"
@@ -141,15 +141,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="role" class="form-label">Role</label>
+                                    <label for="role" class="form-label"><?php echo $lang['role']; ?></label>
                                     <select class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : '' ?>"
                                         name="role" id="role">
-                                        <option value="">Select Role</option>
-                                        <option value="IK" <?php echo ($role === 'IK') ? 'selected' : ''; ?>>IK</option>
-                                        <option value="Admin" <?php echo ($role === 'Admin') ? 'selected' : ''; ?>>Admin
+                                        <option value=""><?php echo $lang['select_role']; ?></option>
+                                        <option value="IK" <?php echo ($role === 'IK') ? 'selected' : ''; ?>>
+                                            <?php echo $lang['IK']; ?></option>
+                                        <option value="Admin" <?php echo ($role === 'Admin') ? 'selected' : ''; ?>>
+                                            <?php echo $lang['admin']; ?>
                                         </option>
                                         <option value="Calisan" <?php echo ($role === 'Employee') ? 'selected' : ''; ?>>
-                                            Calisan</option>
+                                            <?php echo $lang['employee']; ?></option>
                                     </select>
                                     <span class="invalid-feedback"><?php echo $role_err; ?></span>
                                 </div>

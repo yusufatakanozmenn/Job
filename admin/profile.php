@@ -36,11 +36,11 @@ $stmt->close();
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Profile</title>
+    <title><?php echo $lang['profile']; ?></title>
 </head>
 
 
@@ -67,15 +67,13 @@ $stmt->close();
                     <div class="col-lg-4">
                         <div class="card profile-card-2">
                             <div class="card-img-block">
-                                <img class="img-fluid" src="https://via.placeholder.com/800x500" alt="Card image cap">
+                                <img class="img-fluid" src="assets/images/admin-logo.jpg" alt="Card image cap">
                             </div>
                             <div class="card-body pt-5">
-                                <img src="https://via.placeholder.com/110x110" alt="profile-image" class="profile">
+                                <img src="assets/images/admin-logo.jpg" alt="profile-image" class="profile">
                                 <h4 class="card-title"><i class="fa fa-user"></i>
                                     <?php echo $_COOKIE["auth"]["username"]; ?> ||
                                     <?php echo $_COOKIE["auth"]["role"]; ?></h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
                                 <div class="icon-block">
                                     <a href="<?php echo $contact['linkedin_link'] ?>" target="_blank"> <i
                                             class="fa fa-linkedin bg-linkedin text-white"></i></a>
@@ -88,9 +86,7 @@ $stmt->close();
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-body">
@@ -98,29 +94,28 @@ $stmt->close();
                                     <li class="nav-item">
                                         <a href="javascript:void();" data-target="#profile" data-toggle="pill"
                                             class="nav-link active"><i class="icon-user"></i> <span
-                                                class="hidden-xs">Profile</span></a>
+                                                class="hidden-xs"><?php echo $lang['profile']; ?></span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="javascript:void();" data-target="#edit" data-toggle="pill"
                                             class="nav-link"><i class="icon-note"></i> <span
-                                                class="hidden-xs">Edit</span></a>
+                                                class="hidden-xs"><?php echo $lang['edit']; ?></span></a>
                                     </li>
                                 </ul>
                                 <div class="tab-content p-3">
                                     <div class="tab-pane active" id="profile">
-                                        <h5 class="mb-3">User Profile</h5>
+                                        <h5 class="mb-3"><?php echo $lang['user_profile']; ?></h5>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h5>Username</h5>
+                                                <h5><?php echo $lang['username']; ?></h5>
                                                 <p>
                                                     <?php echo htmlspecialchars($user['username']); ?>
                                                 </p>
-                                                <h5>Email</h5>
+                                                <h5><?php echo $lang['email']; ?></h5>
                                                 <p>
                                                     <?php echo htmlspecialchars($user['email']); ?>
                                                 </p>
-                                                <h5>Date</h5>
-                                                <h5>Phone Number</h5>
+                                                <h5><?php echo $lang['phone_number']; ?></h5>
                                                 <p>
                                                     <?php echo htmlspecialchars($contact['phone_number']); ?>
                                                 </p>

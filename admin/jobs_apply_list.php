@@ -33,11 +33,11 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Job Applications</title>
+    <title><?php echo $lang['job_applications']; ?></title>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -60,7 +60,7 @@ try {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Job Applications</h2>
+                        <h2 class="card-title"><?php echo $lang['job_applications']; ?></h2>
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -68,14 +68,14 @@ try {
                                         <thead>
                                             <tr>
                                                 <th scope="col">ID</th>
-                                                <th scope="col">Job ID</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Phone</th>
-                                                <th scope="col">Cover Letter</th>
-                                                <th scope="col">Resume</th>
-                                                <th scope="col">Application Date</th>
-                                                <th scope="col">Read Status</th>
+                                                <th scope="col"><?php echo $lang['job_id']; ?></th>
+                                                <th scope="col"><?php echo $lang['name']; ?></th>
+                                                <th scope="col"><?php echo $lang['email']; ?></th>
+                                                <th scope="col"><?php echo $lang['phone_number']; ?></th>
+                                                <th scope="col"><?php echo $lang['cover_letter']; ?></th>
+                                                <th scope="col"><?php echo $lang['resume']; ?></th>
+                                                <th scope="col"><?php echo $lang['app_date']; ?></th>
+                                                <th scope="col"><?php echo $lang['read_status']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,17 +89,17 @@ try {
                                                 <td><?php echo $job_application['phone']; ?></td>
                                                 <td><?php echo $job_application['cover_letter']; ?></td>
                                                 <td><a href="../admin/uploads/<?php echo $job_application['resume']; ?>"
-                                                        target="_blank">View Resume</a></td>
+                                                        target="_blank"><?php echo $lang['view_resume']; ?></a></td>
                                                 <td><?php echo $job_application['application_date']; ?></td>
                                                 <td>
                                                     <?php if ($job_application['read_status'] == 'unread'): ?>
                                                     <a href="jobs_apply_list.php?mark_as_read=<?php echo $job_application['id']; ?>"
-                                                        class="btn btn-primary">Mark as Read</a>
+                                                        class="btn btn-primary"><?php echo $lang['mark_as_read']; ?></a>
                                                     <?php else: ?>
-                                                    <span class="btn btn-success">Read</span>
+                                                    <span class="btn btn-success"><?php echo $lang['read']; ?></span>
                                                     <?php endif; ?>
                                                     <a href="jobs_apply_list.php?delete=<?php echo $job_application['id']; ?>"
-                                                        class="btn btn-danger">Delete</a>
+                                                        class="btn btn-danger"><?php echo $lang['delete']; ?></a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>

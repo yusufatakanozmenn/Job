@@ -22,6 +22,8 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $row['password'])) {
             $_SESSION['username'] = $row['username'];
             $_SESSION['role'] = $row['role'];
+            $_SESSION['lang'] = $row['lang'];
+
 
             // Regenerate session ID to prevent session fixation
             session_regenerate_id(true);
@@ -149,7 +151,11 @@ if (isset($_POST['login'])) {
     </div>
     <!--wrapper-->
     <!--Start footer-->
-    <?php include 'include/footer.php'; ?>
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">© 2024 Yusuf Atakan Özmen. Tüm Hakları Saklıdır.</div>
+        </div>
+    </footer>
     <!--End footer-->
 
     <!-- Bootstrap core JavaScript-->

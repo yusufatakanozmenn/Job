@@ -26,11 +26,11 @@ if ($result->num_rows > 0) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Comments List</title>
+    <title><?php echo $lang['comments']; ?></title>
 
 </head>
 
@@ -63,7 +63,7 @@ if ($result->num_rows > 0) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Comments</h2>
+                        <h2 class="card-title"><?php echo $lang['comments']; ?></h2>
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -71,11 +71,11 @@ if ($result->num_rows > 0) {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Blog Id</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Subject</th>
-                                                <th scope="col">Comment</th>
+                                                <th scope="col"><?php echo $lang['name']; ?></th>
+                                                <th scope="col"><?php echo $lang['blog_id']; ?></th>
+                                                <th scope="col"><?php echo $lang['email']; ?></th>
+                                                <th scope="col"><?php echo $lang['subject']; ?></th>
+                                                <th scope="col"><?php echo $lang['comment']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>

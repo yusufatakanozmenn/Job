@@ -15,11 +15,11 @@ if ($result) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>User List</title>
+    <title><?php echo $lang['user_list']; ?></title>
 
 </head>
 
@@ -53,7 +53,7 @@ if ($result) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">User List</h2>
+                        <h2 class="card-title"><?php echo $lang['user_list']; ?></h2>
                         <div class="card">
                             <div class="card-body">
                                 <?php if (isset($_GET['status'])): ?>
@@ -72,11 +72,11 @@ if ($result) {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Username</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Role</th>
-                                                <th scope="col">Created At</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col"><?php echo $lang['username']; ?></th>
+                                                <th scope="col"><?php echo $lang['email']; ?></th>
+                                                <th scope="col"><?php echo $lang['role']; ?></th>
+                                                <th scope="col"><?php echo $lang['create_at']; ?></th>
+                                                <th scope="col"><?php echo $lang['actions']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,12 +89,12 @@ if ($result) {
                                                 <td><?php echo htmlspecialchars($user['date']); ?></td>
                                                 <td>
                                                     <a href="edit_user.php?id=<?php echo $user['id']; ?>"
-                                                        class="btn btn-primary btn-sm">Edit</a>
+                                                        class="btn btn-primary btn-sm"><?php echo $lang['edit']; ?></a>
                                                     <a href="delete_user.php?id=<?php echo $user['id']; ?>"
                                                         class="btn btn-danger btn-sm"
                                                         onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
                                                     <a href="change_password.php?id=<?php echo $user['id']; ?>"
-                                                        class="btn btn-warning btn-sm">Change Password</a>
+                                                        class="btn btn-warning btn-sm"><?php echo $lang['change_password']; ?></a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>

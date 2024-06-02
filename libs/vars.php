@@ -13,5 +13,13 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 
 }
+if (!isset($_SESSION['language'])) {
+    $_SESSION['language'] = 'en'; // Varsayılan dil
+}
 
+if (isset($_GET['lang'])) {
+    $_SESSION['language'] = $_GET['lang'];
+}
+
+include 'lang_' . $_SESSION['language'] . '.php';
 ?>

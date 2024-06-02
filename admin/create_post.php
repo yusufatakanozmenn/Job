@@ -71,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Create Blog</title>
+    <title><?php echo $lang['add_blog']; ?></title>
 </head>
 
 
@@ -101,21 +101,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="col-lg-8 offset-lg-2">
                         <div class="card">
                             <div class="card-body">
-                                <h2>Create Blog</h2>
+                                <h2><?php echo $lang['add_blog']; ?></h2>
                                 <form action="create_post.php" method="POST" enctype="multipart/form-data">
                                     <div class="form-group">
-                                        <label for="title">Başlık</label>
+                                        <label for="title"><?php echo $lang['blog_title']; ?></label>
                                         <input type="text" name="title" class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="content">İçerik</label>
+                                        <label for="content"><?php echo $lang['content']; ?></label>
                                         <textarea name="content" class="form-control" required></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="img">Resim</label>
+                                        <label for="img"><?php echo $lang['image']; ?></label>
                                         <input type="file" name="img" class="form-control" required>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Gönderiyi Oluştur</button>
+                                    <button type="submit"
+                                        class="btn btn-primary"><?php echo $lang['create_blog']; ?></button>
                                 </form>
                             </div>
                         </div>

@@ -24,12 +24,12 @@ $stmt->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
+    <title><?php echo $lang['edit_profile']; ?></title>
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -38,21 +38,21 @@ $stmt->close();
         <div class="tab-pane" id="edit">
             <form id="editProfileForm">
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                    <label class="col-lg-3 col-form-label form-control-label"><?php echo $lang['username']; ?></label>
                     <div class="col-lg-9">
                         <input class="form-control" type="text" name="username"
                             value="<?php echo htmlspecialchars($user['username']); ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                    <label class="col-lg-3 col-form-label form-control-label"><?php echo $lang['email']; ?></label>
                     <div class="col-lg-9">
                         <input class="form-control" type="email" name="email"
                             value="<?php echo htmlspecialchars($user['email']); ?>">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                    <label class="col-lg-3 col-form-label form-control-label"><?php echo $lang['password']; ?></label>
                     <div class="col-lg-9">
                         <input class="form-control" type="password" name="password">
                     </div>

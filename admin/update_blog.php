@@ -93,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Update Blog</title>
+    <title><?php echo $lang['edit_blog']; ?></title>
 
     <script>
     window.onload = function() {
@@ -138,25 +138,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Update Blog</h2>
+                        <h2 class="card-title"><?php echo $lang['edit_blog']; ?></h2>
                         <div class="card">
                             <div class="card-body">
                                 <form action="update_blog.php?id=<?php echo $post_id; ?>" method="POST">
                                     <div class="form-group">
-                                        <label for="title">Title</label>
+                                        <label for="title"><?php echo $lang['title']; ?></label>
                                         <input type="text" name="title" class="form-control"
                                             value="<?php echo $post['title']; ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="content">Content</label>
+                                        <label for="content"><?php echo $lang['content']; ?></label>
                                         <textarea name="content" class="form-control"
                                             required><?php echo $post['content']; ?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="image">Image</label>
+                                        <label for="image"><?php echo $lang['image']; ?></label>
                                         <input type="file" name="image" class="form-control-file">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit"
+                                        class="btn btn-primary"><?php echo $lang['update']; ?></button>
                                 </form>
                             </div>
                         </div>

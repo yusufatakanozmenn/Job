@@ -72,11 +72,11 @@ $conn = null;
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Create About</title>
+    <title><?php echo $lang['create_about']; ?></title>
 </head>
 
 
@@ -100,13 +100,13 @@ $conn = null;
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Create About</h1>
+                        <h1><?php echo $lang['create_about']; ?></h1>
                         <div class="card">
                             <div class="card-body">
                                 <form action="create_about.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <label for="text"
-                                            class="col-lg-3 col-form-label form-control-label">Text:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['text']; ?></label>
                                         <div class="col-lg-9">
                                             <textarea name="text" id="text" cols="30" rows="10"
                                                 class="form-control"></textarea>
@@ -114,14 +114,15 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <label for="image"
-                                            class="col-lg-3 col-form-label form-control-label">Image:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['image']; ?></label>
                                         <div class="col-lg-9">
                                             <input type="file" name="image" id="image" class="form-control-file">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Create</button>
+                                            <button type="submit"
+                                                class="btn btn-primary"><?php echo $lang['edit_about']; ?></button>
                                         </div>
                                     </div>
                                 </form>

@@ -93,11 +93,11 @@ $conn = null;
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Update About</title>
+    <title><?php echo $lang['edit_about']; ?></title>
     <script>
     window.onload = function() {
         // URL parametrelerini kontrol et
@@ -136,33 +136,34 @@ $conn = null;
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Update About</h1>
+                        <h1><?php echo $lang['edit_about']; ?></h1>
                         <div class="card">
                             <div class="card-body">
                                 <form action="update_about.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <label for="text"
-                                            class="col-lg-3 col-form-label form-control-label">Text:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['text']; ?></label>
                                         <div class="col-lg-9">
                                             <textarea name="text" id="text" cols="30" rows="10"
                                                 class="form-control"><?php echo htmlspecialchars($about['text']); ?></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="image" class="col-lg-3 col-form-label form-control-label">Current
-                                            Image:</label>
+                                        <label for="image"
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['image']; ?></label>
                                         <div class="col-lg-9">
                                             <?php if ($about['image_path']) : ?>
                                             <img src="<?php echo $about['image_path']; ?>" alt="Current Image"
                                                 style="max-width: 200px;"><br><br>
                                             <?php endif; ?>
-                                            <label for="image">Upload New Image:</label><br>
+                                            <label for="image"><?php echo $lang['new_image']; ?>:</label><br>
                                             <input type="file" name="image" id="image" class="form-control-file">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <button type="submit"
+                                                class="btn btn-primary"><?php echo $lang['update']; ?></button>
                                         </div>
                                     </div>
                                 </form>

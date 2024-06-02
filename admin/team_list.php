@@ -27,11 +27,11 @@ try {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Team List</title>
+    <title><?php echo $lang['team_list']; ?></title>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -63,22 +63,23 @@ try {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Team List</h2>
+                        <h2 class="card-title"><?php echo $lang['team_list']; ?></h2>
                         <div class="card">
                             <div class="card-body">
 
                                 <div class="d-flex justify-content-end mb-3">
-                                    <a href="create_team.php" class="btn btn-primary">Create Team</a>
+                                    <a href="create_team.php"
+                                        class="btn btn-primary"><?php echo $lang['create_team']; ?></a>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Position</th>
-                                                <th scope="col">Social Media</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col"><?php echo $lang['title']; ?></th>
+                                                <th scope="col"><?php echo $lang['position']; ?></th>
+                                                <th scope="col"><?php echo $lang['social_media']; ?></th>
+                                                <th scope="col"><?php echo $lang['actions']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -90,9 +91,9 @@ try {
                                                 <td><?php echo $team['social_media']; ?></td>
                                                 <td>
                                                     <a href="update_team.php?id=<?php echo $team['id']; ?>"
-                                                        class="btn btn-primary">Edit</a>
+                                                        class="btn btn-primary"><?php echo $lang['edit']; ?></a>
                                                     <a href="delete_team.php?id=<?php echo $team['id']; ?>"
-                                                        class="btn btn-danger">Delete</a>
+                                                        class="btn btn-danger"><?php echo $lang['delete']; ?></a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>

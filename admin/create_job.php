@@ -88,11 +88,11 @@ $conn = null;
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Create Job</title>
+    <title><?php echo $lang['create_job']; ?></title>
 </head>
 
 
@@ -116,20 +116,20 @@ $conn = null;
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Create Job</h1>
+                        <h1><?php echo $lang['create_job']; ?></h1>
                         <div class="card">
                             <div class="card-body">
                                 <form action="create_job.php" method="POST" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <label for="title"
-                                            class="col-lg-3 col-form-label form-control-label">Title:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['title']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="title" name="title" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="description"
-                                            class="col-lg-3 col-form-label form-control-label">Description:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['description']; ?>:</label>
                                         <div class="col-lg-9">
                                             <textarea id="description" name="description" cols="30" rows="10"
                                                 class="form-control" required></textarea>
@@ -137,14 +137,14 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <label for="email"
-                                            class="col-lg-3 col-form-label form-control-label">Email:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['email']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="email" name="email" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="company_name"
-                                            class="col-lg-3 col-form-label form-control-label">Company Name:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['company_name']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="company_name" name="company_name"
                                                 class="form-control" required>
@@ -152,21 +152,21 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <label for="sector"
-                                            class="col-lg-3 col-form-label form-control-label">Sector:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['sector']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="sector" name="sector" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="city"
-                                            class="col-lg-3 col-form-label form-control-label">City:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['city']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="city" name="city" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="image"
-                                            class="col-lg-3 col-form-label form-control-label">Image:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['image']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="file" id="image" name="image" class="form-control-file"
                                                 required>
@@ -174,7 +174,8 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit"
+                                                class="btn btn-primary"><?php echo $lang['submit']; ?></button>
                                         </div>
                                     </div>
                                 </form>

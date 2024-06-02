@@ -97,11 +97,11 @@ $conn = null;
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Edit Team Member</title>
+    <title><?php echo $lang['edit_team']; ?></title>
     <script>
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -134,7 +134,7 @@ $conn = null;
             <div class="container-fluid">
                 <div class="row mt-3">
                     <div class="col-lg-8 offset-lg-2">
-                        <h1>Edit Team Member</h1>
+                        <h1><?php echo $lang['edit_team']; ?></h1>
                         <div class="card">
                             <div class="card-body">
                                 <?php if (isset($_GET['error'])) { ?>
@@ -150,7 +150,7 @@ $conn = null;
                                         value="<?php echo $team['image_path']; ?>">
                                     <div class="form-group row">
                                         <label for="name"
-                                            class="col-lg-3 col-form-label form-control-label">Name:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['name']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="name" name="name" class="form-control"
                                                 value="<?php echo $team['name']; ?>" required>
@@ -158,7 +158,7 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <label for="position"
-                                            class="col-lg-3 col-form-label form-control-label">Position:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['position']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="position" name="position" class="form-control"
                                                 value="<?php echo $team['position']; ?>" required>
@@ -166,7 +166,7 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <label for="social_media"
-                                            class="col-lg-3 col-form-label form-control-label">Social Media:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['social_media']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="text" id="social_media" name="social_media"
                                                 class="form-control" value="<?php echo $team['social_media']; ?>"
@@ -175,7 +175,7 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <label for="image"
-                                            class="col-lg-3 col-form-label form-control-label">Image:</label>
+                                            class="col-lg-3 col-form-label form-control-label"><?php echo $lang['image']; ?>:</label>
                                         <div class="col-lg-9">
                                             <input type="file" id="image" name="image" accept="image/*"
                                                 class="form-control-file">
@@ -183,8 +183,10 @@ $conn = null;
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-9 offset-lg-3">
-                                            <button type="submit" class="btn btn-primary">Update Team Member</button>
-                                            <a href="team_list.php" class="btn btn-secondary">Cancel</a>
+                                            <button type="submit"
+                                                class="btn btn-primary"><?php echo $lang['edit_team']; ?></button>
+                                            <a href="team_list.php"
+                                                class="btn btn-secondary"><?php echo $lang['cancel']; ?></a>
                                         </div>
                                     </div>
                                 </form>

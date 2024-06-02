@@ -27,11 +27,11 @@ try {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title>Job List</title>
+    <title><?php echo $lang['job_list']; ?></title>
 
 </head>
 
@@ -64,23 +64,24 @@ try {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="card-title">Job List</h2>
+                        <h2 class="card-title"><?php echo $lang['job_list']; ?></h2>
                         <div class="card">
                             <div class="card-body">
 
                                 <div class="d-flex justify-content-end mb-3">
-                                    <a href="create_job.php" class="btn btn-primary">Create Job</a>
+                                    <a href="create_job.php"
+                                        class="btn btn-primary"><?php echo $lang['create_job']; ?></a>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Sector</th>
-                                                <th scope="col">City</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col"><?php echo $lang['title']; ?></th>
+                                                <th scope="col"><?php echo $lang['description']; ?></th>
+                                                <th scope="col"><?php echo $lang['sector']; ?></th>
+                                                <th scope="col"><?php echo $lang['city']; ?></th>
+                                                <th scope="col"><?php echo $lang['actions']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -94,9 +95,9 @@ try {
                                                 <td><?php echo $job['city']; ?></td>
                                                 <td>
                                                     <a href="edit_job.php?id=<?php echo $job['id']; ?>"
-                                                        class="btn btn-primary">Edit</a>
+                                                        class="btn btn-primary"><?php echo $lang['edit']; ?></a>
                                                     <a href="delete_job.php?id=<?php echo $job['id']; ?>"
-                                                        class="btn btn-danger">Delete</a>
+                                                        class="btn btn-danger"><?php echo $lang['delete']; ?></a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>
