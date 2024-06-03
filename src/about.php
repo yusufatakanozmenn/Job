@@ -18,10 +18,10 @@ try {
     $stmt->execute();
     $about = $stmt->fetch(PDO::FETCH_ASSOC);
     
-     // Veritabanından iletişim bilgilerini çek
-     $stmt = $conn->prepare("SELECT * FROM contact_info LIMIT 1");
-     $stmt->execute();
-     $contact = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Veritabanından iletişim bilgilerini çek
+    $stmt = $conn->prepare("SELECT * FROM contact_info LIMIT 1");
+    $stmt->execute();
+    $contact = $stmt->fetch(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -36,7 +36,6 @@ $conn = null;
 <head>
     <?php include '../includes/_header.php'; ?>
     <title><?php echo $lang['about']; ?></title>
-
 </head>
 
 <body>
@@ -53,7 +52,8 @@ $conn = null;
 
     <!-- Header -->
     <header class="">
-        <?php include '../includes/_navbar.php'; ?>
+        <?php include '../includes/_navbar.php'; 
+        ?>
     </header>
 
     <!-- Page Content -->
@@ -81,7 +81,8 @@ $conn = null;
                 <div class="col-lg-12">
                     <?php if ($about) : ?>
                     <img src="<?php echo '../admin/' . $about['image_path']; ?>" alt="">
-                    <p><?php echo $about['text']; ?></p>
+                    <p><?php echo htmlspecialchars_decode($about["text"]) ?></p>
+
                     <?php else : ?>
                     <p><?php echo $lang['about_section']; ?>.</p>
                     <?php endif; ?>
@@ -101,9 +102,7 @@ $conn = null;
         </div>
     </section>
 
-
     <?php include '../includes/_footer.php'; ?>
-
 
     <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>

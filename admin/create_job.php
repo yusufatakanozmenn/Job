@@ -217,6 +217,9 @@ $conn = null;
     <script src="./assets/plugins/simplebar/js/simplebar.js"></script>
     <!-- sidebar-menu js -->
     <script src="./assets/js/sidebar-menu.js"></script>
+    <script>
+    CKEDITOR.replace('description');
+    </script>
 
     <!-- Custom scripts -->
     <script src="./assets/js/app-script.js"></script>

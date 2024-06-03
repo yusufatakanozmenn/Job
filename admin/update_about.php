@@ -1,12 +1,16 @@
 <?php
-
 include '../libs/vars.php';
 include 'admin_check.php';
+
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "jobs";
+
+function sanitizeInput($input) {
+    return htmlspecialchars(stripslashes(trim($input)));
+}
 
 try {
     // PDO kullanarak veritabanı bağlantısını oluştur
@@ -22,7 +26,7 @@ try {
     // Form gönderildiyse veriyi güncelle
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['text'])) {
-            $text = $_POST['text'];
+            $text = sanitizeInput($_POST['text']);
 
             // Yeni bir resim yüklendi mi kontrol et
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
@@ -90,38 +94,17 @@ try {
 $conn = null;
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include 'include/head.php'; ?>
     <title><?php echo $lang['edit_about']; ?></title>
-    <script>
-    window.onload = function() {
-        // URL parametrelerini kontrol et
-        const urlParams = new URLSearchParams(window.location.search);
-        const successMessage = urlParams.get('success');
-        const errorMessage = urlParams.get('error');
-
-        // Eğer hata veya başarı mesajı varsa göster
-        if (successMessage) {
-            alert(successMessage);
-        } else if (errorMessage) {
-            alert(errorMessage);
-        }
-    }
-    </script>
 </head>
 
-
 <body class="bg-theme bg-theme1">
-
-
     <!-- Start wrapper-->
     <div id="wrapper">
-
         <!--Start sidebar-wrapper-->
         <?php include 'include/sidebar.php'; ?>
         <!--End sidebar-wrapper-->
@@ -186,7 +169,6 @@ $conn = null;
     </div>
     <!--End wrapper-->
 
-
     <!-- Bootstrap core JavaScript-->
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/popper.min.js"></script>
@@ -199,6 +181,27 @@ $conn = null;
 
     <!-- Custom scripts -->
     <script src="./assets/js/app-script.js"></script>
+
+    <!-- CKEditor -->
+    <script src="path/to/ckeditor.js"></script>
+    <script>
+    window.onload = function() {
+        // URL parametrelerini kontrol et
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('success');
+        const errorMessage = urlParams.get('error');
+
+        // Eğer hata veya başarı mesajı varsa göster
+        if (successMessage) {
+            alert(successMessage);
+        } else if (errorMessage) {
+            alert(errorMessage);
+        }
+
+        // CKEditor'u textarea'ya uygula
+        CKEDITOR.replace('text');
+    }
+    </script>
 
 </body>
 
