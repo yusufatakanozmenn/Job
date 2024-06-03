@@ -32,7 +32,7 @@ $lang = array(
     "create_at" => "Oluşturulma Tarihi",
     "go_page" => "Sayfaya Git",
     "no_new_notification" => "Yeni bildirim yok.",
-    
+    "close" => "Kapat",
     // Header
     "home" => "Ana Sayfa",
     "about" => "Hakkımızda",
@@ -54,6 +54,7 @@ $lang = array(
     // Jobs
     "create_job" => "İş Oluştur",
     "job_applications" => "İş Başvuruları",
+    "job_detail" => "İş Detayı",
     "application_form" => "Başvuru Formu",
     "submit_application" => "Başvuruyu Gönder",
     "job_id" => "İş Id",

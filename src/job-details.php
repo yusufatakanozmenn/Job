@@ -63,7 +63,7 @@ try {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4><?php echo $lang['job_details']; ?></h4>
+                            <h4><?php echo $lang['job_detail']; ?></h4>
                             <h2><?php echo htmlspecialchars($jobs_post['title']); ?></h2>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ try {
                 <div class="col-lg-8">
                     <div class="sidebar-item contact-form">
                         <div class="sidebar-heading">
-                            <h2><?php echo $lang['applicaiton_form']; ?></h2>
+                            <h2><?php echo $lang['application_form']; ?></h2>
                         </div>
                         <div class="content">
                             <form action="apply.php" method="POST" enctype="multipart/form-data">

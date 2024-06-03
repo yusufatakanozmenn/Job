@@ -1,7 +1,7 @@
 <?php
 // Veritabanı bağlantısı ve gerekli dosyaların dahil edilmesi
 require_once '../libs/ayar.php';
-require_once '../libs/vars.php';
+
 
 include '../libs/language.php';
 

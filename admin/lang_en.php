@@ -53,6 +53,7 @@ $lang = array(
     "job_applications" => "Job Applications",
     "application_form" => "Application Form",
     "job_id" => "Job Id",
+    "job_detail" => "Job Detail",
     "company_name" => "Company Name",
     "job_list" => "Job List",
     "title" => "Title",
@@ -76,6 +77,7 @@ $lang = array(
     "company_info" => "Company Info",
     "view_job" => "View Job",
     "our_team" => "Our Team",
+    "close" => "Close",
 
     // Blog
     "blog" => "Blog",

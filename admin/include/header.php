@@ -14,12 +14,7 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <i class="icon-menu menu-icon"></i>
                 </a>
             </li>
-            <li class="nav-item">
-                <form class="search-bar">
-                    <input type="text" class="form-control" placeholder="Enter keywords" />
-                    <a href="javascript:void();"><i class="icon-magnifier"></i></a>
-                </form>
-            </li>
+
         </ul>
 
         <ul class="navbar-nav align-items-center right-nav-link">
@@ -38,12 +33,12 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <?php if (count($notifications) > 0): ?>
                     <?php foreach ($notifications as $notification): ?>
                     <a class="dropdown-item mark-as-read" href="#" data-id="<?php echo $notification['id']; ?>">
-                        <i class="fa fa-check"></i>
+                        <i class="fa fa-bell-o" aria-hidden="true"></i>
                         <?php echo $notification['message']; ?>
                     </a>
                     <?php endforeach; ?>
                     <?php else: ?>
-                    <a class="dropdown-item" href="#"><?php echo $lang['no_new_notification']; ?></a>
+                    <a class="dropdown-item" href="#">No new notifications</a>
                     <?php endif; ?>
                 </div>
             </li>
@@ -109,4 +104,39 @@ function changeLanguage(language) {
         location.reload();
     });
 }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const notificationItems = document.querySelectorAll('.dropdown-item.mark-as-read');
+    const badge = document.querySelector('.badge-danger');
+
+    notificationItems.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            const notificationId = this.getAttribute('data-id');
+
+            fetch('mark_as_read.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'id=' + notificationId
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.remove(); // Remove the notification from the list
+                        const newCount = parseInt(badge.textContent) - 1;
+                        badge.textContent = newCount > 0 ? newCount :
+                            ''; // Update the badge count
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+});
 </script>
