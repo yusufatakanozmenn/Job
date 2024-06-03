@@ -1,4 +1,6 @@
 <?php
+
+include '../libs/language.php';
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";
 $username = "root";
@@ -21,29 +23,11 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link
-        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
-        rel="stylesheet">
-
-    <title>Contact</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="../assets/css/fontawesome.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/owl.css">
-
+    <?php include '../includes/_header.php'; ?>
+    <title><?php echo $lang['contact_us']; ?></title>
 </head>
 
 <body>
@@ -71,8 +55,8 @@ try {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>contact us</h4>
-                            <h2>let’s stay in touch!</h2>
+                            <h4><?php echo $lang['contact_us']; ?></h4>
+                            <h2><?php echo $lang['let_stay']; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -93,34 +77,34 @@ try {
                             <div class="col-lg-8">
                                 <div class="sidebar-item contact-form">
                                     <div class="sidebar-heading">
-                                        <h2>Send us a message</h2>
+                                        <h2><?php echo $lang['send_message']; ?></h2>
                                     </div>
                                     <div class="content">
                                         <form id="contact" action="../admin/contact_process.php" method="post">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-12">
                                                     <fieldset>
-                                                        <input name="name" type="text" id="name" placeholder="Your name"
-                                                            required="">
+                                                        <input name="name" type="text" id="name"
+                                                            placeholder="<?php echo $lang['name']; ?>" required="">
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-md-6 col-sm-12">
                                                     <fieldset>
                                                         <input name="email" type="text" id="email"
-                                                            placeholder="Your email" required="">
+                                                            placeholder="<?php echo $lang['email']; ?>" required="">
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <fieldset>
                                                         <textarea name="message" rows="6" id="message"
-                                                            placeholder="Your Message" required=""></textarea>
+                                                            placeholder="<?php echo $lang['message']; ?>"
+                                                            required=""></textarea>
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <fieldset>
                                                         <button type="submit" id="form-submit" class="main-button"
-                                                            value="Submit">Send
-                                                            Message</button>
+                                                            value="Submit"><?php echo $lang['send_message']; ?></button>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -131,17 +115,17 @@ try {
                             <div class="col-lg-4">
                                 <div class="sidebar-item contact-information">
                                     <div class="sidebar-heading">
-                                        <h2>contact information</h2>
+                                        <h2><?php echo $lang['contact_info']; ?></h2>
                                     </div>
                                     <div class="content">
                                         <ul>
                                             <li>
                                                 <h5><?php echo $contact['phone_number']; ?></h5>
-                                                <span>PHONE NUMBER</span>
+                                                <span><?php echo $lang['phone_number']; ?></span>
                                             </li>
                                             <li>
                                                 <h5><?php echo $contact['email_address']; ?></h5>
-                                                <span>EMAIL ADDRESS</span>
+                                                <span><?php echo $lang['email']; ?></span>
                                             </li>
                                         </ul>
                                     </div>

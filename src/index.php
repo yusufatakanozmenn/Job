@@ -5,6 +5,8 @@ $username = "root";
 $password = "";
 $dbname = "jobs";
 
+
+include '../libs/language.php';
 try {
     // PDO kullanarak veritabanı bağlantısını oluştur
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -36,10 +38,12 @@ $conn = null;
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include '../includes/_header.php'; ?>
+    <title>Job Pursuit</title>
+
 </head>
 
 <body>
@@ -86,7 +90,7 @@ $conn = null;
                 </div>
                 <?php endforeach; ?>
                 <?php else : ?>
-                <p>No jobs available.</p>
+                <p><?php echo $lang['no_jobs']; ?></p>
                 <?php endif; ?>
             </div>
         </div>
@@ -103,9 +107,9 @@ $conn = null;
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>about us</h4>
+                            <h4><?php echo $lang['about_us']; ?></h4>
                             <a href="about.php">
-                                <h2>more about us!</h2>
+                                <h2><?php echo $lang['more_about_us']; ?></h2>
                             </a>
                         </div>
                     </div>
@@ -118,7 +122,7 @@ $conn = null;
     <section class="blog-posts grid-system">
         <div class="container">
             <div class="all-blog-posts">
-                <h2 class="text-center">Featured Jobs</h2>
+                <h2 class="text-center"><?php echo $lang['featured_jobs']; ?></h2>
                 <br>
                 <div class="row">
                     <?php if ($jobs) : ?>
@@ -139,7 +143,8 @@ $conn = null;
                                         <div class="col-lg-12">
                                             <ul class="post-tags">
                                                 <li><i class="fa fa-bullseye"></i></li>
-                                                <li><a href="job-details.php?id=<?php echo $job['id']; ?>">View Job</a>
+                                                <li><a
+                                                        href="job-details.php?id=<?php echo $job['id']; ?>"><?php echo $lang['view_job']; ?></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -150,7 +155,7 @@ $conn = null;
                     </div>
                     <?php endforeach; ?>
                     <?php else : ?>
-                    <p>No jobs available.</p>
+                    <p><?php echo $lang['no_jobs']; ?></p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -164,12 +169,11 @@ $conn = null;
                     <div class="main-content">
                         <div class="row">
                             <div class="col-lg-8">
-                                <span>Lorem ipsum dolor sit amet.</span>
-                                <h4>Sed doloribus accusantium reiciendis et officiis.</h4>
+                                <h4><?php echo $lang['for_more_info']; ?></h4>
                             </div>
                             <div class="col-lg-4">
                                 <div class="main-button">
-                                    <a href="contact.php">Contact Us</a>
+                                    <a href="contact.php"><?php echo $lang['contact_us']; ?></a>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +186,7 @@ $conn = null;
     <section class="blog-posts grid-system">
         <div class="container">
             <div class="all-blog-posts">
-                <h2 class="text-center">Blog</h2>
+                <h2 class="text-center"><?php echo $lang['blog']; ?></h2>
                 <br>
                 <div class="row">
                     <?php foreach ($posts as $post): ?>

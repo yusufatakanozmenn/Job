@@ -35,8 +35,8 @@ try {
             <div class="col-lg-12">
                 <div class="copyright-text">
                     <p>
-                        Copyright © 2024 Company Name
-                        | Template by: <a href="https://www.yusufatakanozmen.com/">Yusuf Atakan Özmen</a>
+                        <?php echo $lang['footer_text']; ?>
+                        || Template by: <a href="https://www.yusufatakanozmen.com/">Yusuf Atakan Özmen</a>
                     </p>
                 </div>
             </div>

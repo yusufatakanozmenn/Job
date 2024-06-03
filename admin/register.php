@@ -74,13 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     //Content
                     $mail->isHTML(true);
-                    $mail->Subject = 'Kayıt Başarılı';
-                    $mail->Body = "Merhaba $username,<br><br>Kayıt işleminiz başarıyla tamamlandı.<br><br>Rolünüz: $role";
+                    $mail->Subject = 'Kayıt Basarili';
+                    $mail->Body = "Merhaba $username,<br><br>Kayit işleminiz başariyla tamamlandi.<br><br>Rolünüz: $role";
 
                     $mail->send();
-                    echo 'Kayıt başarılı, e-posta gönderildi.';
+                    echo 'Kayit başarili, e-posta gönderildi.';
                 } catch (Exception $e) {
-                    echo "Kayıt başarılı ancak e-posta gönderilemedi. Mailer Error: {$mail->ErrorInfo}";
+                    echo "Kayit basarili ancak e-posta gönderilemedi. Mailer Error: {$mail->ErrorInfo}";
                 }
 
                 // Redirect to login page
@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <?php include 'include/head.php'; ?>
-    <title><?php echo $lang['register']; ?></title>
+    <title>Register</title>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="card-body">
                             <form action="register.php" method="POST" novalidate>
                                 <div class="mb-3">
-                                    <label for="username" class="form-label"><?php echo $lang['username']; ?></label>
+                                    <label for="username" class="form-label">Username</label>
                                     <input type="text"
                                         class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : '' ?>"
                                         value="<?php echo htmlspecialchars($username); ?>" name="username"
@@ -126,14 +126,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <span class="invalid-feedback"><?php echo $username_err; ?></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="email" class="form-label"><?php echo $lang['email']; ?></label>
+                                    <label for="email" class="form-label">Email</label>
                                     <input type="text"
                                         class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : '' ?>"
                                         value="<?php echo htmlspecialchars($email); ?>" name="email" id="email">
                                     <span class="invalid-feedback"><?php echo $email_err; ?></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="password" class="form-label"><?php echo $lang['password']; ?></label>
+                                    <label for="password" class="form-label">Password</label>
                                     <input type="password"
                                         class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : '' ?>"
                                         value="<?php echo htmlspecialchars($password); ?>" name="password"
@@ -141,17 +141,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="role" class="form-label"><?php echo $lang['role']; ?></label>
+                                    <label for="role" class="form-label">Role</label>
                                     <select class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : '' ?>"
                                         name="role" id="role">
-                                        <option value=""><?php echo $lang['select_role']; ?></option>
+                                        <option value="">Select Role</option>
                                         <option value="IK" <?php echo ($role === 'IK') ? 'selected' : ''; ?>>
-                                            <?php echo $lang['IK']; ?></option>
+                                            HR</option>
                                         <option value="Admin" <?php echo ($role === 'Admin') ? 'selected' : ''; ?>>
-                                            <?php echo $lang['admin']; ?>
+                                            Admin
                                         </option>
                                         <option value="Calisan" <?php echo ($role === 'Employee') ? 'selected' : ''; ?>>
-                                            <?php echo $lang['employee']; ?></option>
+                                            Employee </option>
                                     </select>
                                     <span class="invalid-feedback"><?php echo $role_err; ?></span>
                                 </div>
@@ -166,10 +166,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <!--wrapper-->
 
-    <!--Start footer-->
-    <?php include 'include/footer.php'; ?>
-    <!--End footer-->
-
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">© 2024 Yusuf Atakan Özmen. All Rights Reserved.</div>
+        </div>
+    </footer>
     <!-- Bootstrap core JavaScript-->
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/popper.min.js"></script>

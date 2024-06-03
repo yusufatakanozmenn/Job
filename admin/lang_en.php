@@ -31,8 +31,12 @@ $lang = array(
     // Header
     "home" => "Home",
     "about" => "About",
+    "about_us" => "About Us",
+    "more_about_us" => "More About Us",
+    "about_section" => "About Section is not available.",
     "contact" => "Contact",
     "blog_list" => "Blog List",
+    "contact_us" => "Contact Us",
     // User Profile
     "user_profile" => "User Profile",
     "profile" => "Profile",
@@ -45,6 +49,7 @@ $lang = array(
     // Jobs
     "create_job" => "Create Job",
     "job_applications" => "Job Applications",
+    "application_form" => "Application Form",
     "job_id" => "Job Id",
     "company_name" => "Company Name",
     "job_list" => "Job List",
@@ -61,10 +66,21 @@ $lang = array(
     "resume" => "Resume",
     "user_list" => "User List",
     "create_at" => "Create At",
-    
+    "no_jobs" => "No jobs yet.",
+    "featured_jobs" => "Featured Jobs",
+    "to_apply_for" => "To apply for this position, please click the button below:",
+    "apply_job" => "Apply Job",
+    "submit_application" => "Submit Application",
+    "company_info" => "Company Info",
+    "view_job" => "View Job",
+    "our_team" => "Our Team",
 
     // Blog
+    "blog" => "Blog",
     "blogs" => "Blogs",
+    "recent_blogs" => "Recent Blogs",
+    "blog_detail" => "Blog Details",
+    "our_recent_blogs" => "Our Recent Blogs",
     "add_blog" => "Add Blog",
     "content" => "Content",
     "no_blogs" => "No blogs yet.",
@@ -80,6 +96,9 @@ $lang = array(
     // Comments
     "comments" => "Comments List",
     "comment" => "Comment",
+    "your_comment" => "Your Comment",
+    "type_comment" => "Type your comment here...",
+    
     "name" => "Name",
     "subject" => "Subject",
     "add_comment" => "Add Comment",
@@ -132,5 +151,15 @@ $lang = array(
     "dashboard" => "Dashboard",
     "main_navigation" => "Main Navigation",
     "jobs" => "Jobs",
+
+    // Contact
+    "let_stay" => "let’s stay in touch!",
+    "message" => "Message",
+    "address" => "Address", 
+    "website" => "Website",
+    "contact_info" => "Contact Information",
+    "contact_detail" => "Contact Details",
+    "send_message" => "Send us a message",
+    "for_more_info" => "For more information, please contact us.",
 );
 ?>

@@ -1,4 +1,6 @@
 <?php
+
+include '../libs/language.php';
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";
 $username = "root";
@@ -38,10 +40,11 @@ try {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include '../includes/_header.php'; ?>
+    <title><?php echo $lang['blog_detail']; ?></title>
 </head>
 
 <body>
@@ -60,7 +63,7 @@ try {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>Post Details</h4>
+                            <h4><?php echo $lang['blog_detail']; ?> </h4>
                             <h2><?php echo htmlspecialchars($blog_post['title']); ?></h2>
                         </div>
                     </div>
@@ -118,7 +121,7 @@ try {
                             <div class="col-lg-12">
                                 <div class="sidebar-item comments">
                                     <div class="sidebar-heading">
-                                        <h2><?php echo count($comments); ?> comments</h2>
+                                        <h2><?php echo count($comments); ?> <?php echo $lang['comments']; ?></h2>
                                     </div>
                                     <div class="content">
                                         <ul>
@@ -141,7 +144,7 @@ try {
                             <div class="col-lg-12">
                                 <div class="sidebar-item submit-comment">
                                     <div class="sidebar-heading">
-                                        <h2>Your comment</h2>
+                                        <h2><?php echo $lang['your_comment']; ?></h2>
                                     </div>
                                     <div class="content">
                                         <form id="comment" action="../admin/add_comment.php" method="post">
@@ -150,31 +153,32 @@ try {
                                                 <div class="col-md-6 col-sm-12">
                                                     <fieldset>
                                                         <input name="author" type="text" id="author"
-                                                            placeholder="Your name" required="">
+                                                            placeholder="<?php echo $lang['name']; ?>" required="">
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-md-6 col-sm-12">
                                                     <fieldset>
                                                         <input name="email" type="email" id="email"
-                                                            placeholder="Your email" required="">
+                                                            placeholder="<?php echo $lang['email']; ?>" required="">
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12">
                                                     <fieldset>
                                                         <input name="subject" type="text" id="subject"
-                                                            placeholder="Subject">
+                                                            placeholder="<?php echo $lang['subject']; ?>">
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <fieldset>
                                                         <textarea name="comment" rows="6" id="comment"
-                                                            placeholder="Type your comment" required=""></textarea>
+                                                            placeholder="<?php echo $lang['type_comment']; ?>"
+                                                            required=""></textarea>
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <fieldset>
                                                         <button type="submit" id="form-submit"
-                                                            class="main-button">Submit</button>
+                                                            class="main-button"><?php echo $lang['submit']; ?></button>
                                                     </fieldset>
                                                 </div>
                                             </div>
@@ -199,7 +203,7 @@ try {
                             <div class="col-lg-12">
                                 <div class="sidebar-item recent-posts">
                                     <div class="sidebar-heading">
-                                        <h2>Recent Posts</h2>
+                                        <h2><?php echo $lang['recent_blogs']; ?></h2>
                                     </div>
                                     <div class="content">
                                         <ul>

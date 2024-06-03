@@ -1,4 +1,6 @@
 <?php
+
+include '../libs/language.php';
 // Database connection details
 $servername = "localhost";
 $username = "root";
@@ -24,10 +26,11 @@ $conn = null;
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include '../includes/_header.php'; ?>
+    <title><?php echo $lang['team']; ?></title>
 </head>
 
 <body>
@@ -55,8 +58,8 @@ $conn = null;
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>Team</h4>
-                            <h2>our awesome members!</h2>
+                            <h4><?php echo $lang['team']; ?></h4>
+                            <h2><?php echo $lang['our_team']; ?></h2>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,8 @@ $username = "root";
 $password = "";
 $dbname = "jobs";
 
+include '../libs/language.php';
+
 try {
     // PDO kullanarak veritabanı bağlantısını oluştur
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -29,10 +31,11 @@ $conn = null;
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include '../includes/_header.php'; ?>
+    <title><?php echo $lang['about']; ?></title>
 
 </head>
 
@@ -61,8 +64,8 @@ $conn = null;
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>about us</h4>
-                            <h2>more about us!</h2>
+                            <h4><?php echo $lang['about_us']; ?></h4>
+                            <h2><?php echo $lang['more_about_us']; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -80,7 +83,7 @@ $conn = null;
                     <img src="<?php echo '../admin/' . $about['image_path']; ?>" alt="">
                     <p><?php echo $about['text']; ?></p>
                     <?php else : ?>
-                    <p>About section is not available.</p>
+                    <p><?php echo $lang['about_section']; ?>.</p>
                     <?php endif; ?>
                 </div>
             </div>

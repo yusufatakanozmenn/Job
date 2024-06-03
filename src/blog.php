@@ -1,5 +1,8 @@
 <?php
 
+
+include '../libs/language.php';
+
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";
 $username = "root";
@@ -21,10 +24,11 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include '../includes/_header.php'; ?>
+    <title><?php echo $lang['blog']; ?></title>
 </head>
 
 <body>
@@ -52,8 +56,8 @@ try {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>Blog</h4>
-                            <h2>Our Recent Blog Posts</h2>
+                            <h4><?php echo $lang['blog']; ?></h4>
+                            <h2><?php echo $lang['our_recent_blogs']; ?></h2>
                         </div>
                     </div>
                 </div>

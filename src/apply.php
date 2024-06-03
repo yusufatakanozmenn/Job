@@ -1,6 +1,8 @@
 <?php
 include '../libs/vars.php';
 
+include '../libs/language.php';
+
 $server = "localhost";
 $username = "root";
 $password = "";

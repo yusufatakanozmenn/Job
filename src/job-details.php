@@ -1,4 +1,6 @@
 <?php
+
+include '../libs/language.php';
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
 $servername = "localhost";
 $username = "root";
@@ -29,10 +31,11 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include '../includes/_header.php'; ?>
+    <title><?php echo $lang['job_details']; ?></title>
 </head>
 
 <body>
@@ -60,7 +63,7 @@ try {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>Job Details</h4>
+                            <h4><?php echo $lang['job_details']; ?></h4>
                             <h2><?php echo htmlspecialchars($jobs_post['title']); ?></h2>
                         </div>
                     </div>
@@ -95,7 +98,7 @@ try {
                         </div>
 
                         <div class="content">
-                            <p>To apply for this position, please click the button below:</p>
+                            <p><?php echo $lang['to_apply_for']; ?></p>
                         </div>
                     </div>
 
@@ -105,8 +108,7 @@ try {
                         <div class="col-sm-4">
                             <div class="main-button">
                                 <button style="width: 150px; height: 40px; color:white; background-color: #023863;"
-                                    onclick="document.getElementById('applyForm').style.display='block'">Apply for
-                                    this Job</button>
+                                    onclick="document.getElementById('applyForm').style.display='block'"><?php echo $lang['apply_job']; ?></button>
                             </div>
                         </div>
                     </div>
@@ -124,7 +126,7 @@ try {
                 <div class="col-lg-8">
                     <div class="sidebar-item contact-form">
                         <div class="sidebar-heading">
-                            <h2>Application Form</h2>
+                            <h2><?php echo $lang['applicaiton_form']; ?></h2>
                         </div>
                         <div class="content">
                             <form action="apply.php" method="POST" enctype="multipart/form-data">
@@ -132,20 +134,20 @@ try {
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12">
                                         <fieldset>
-                                            <input name="name" type="text" id="name" placeholder="Your Name"
-                                                required="">
+                                            <input name="name" type="text" id="name"
+                                                placeholder="<?php echo $lang['name']; ?>" required="">
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <fieldset>
-                                            <input name="email" type="email" id="email" placeholder="Your Email"
-                                                required="">
+                                            <input name="email" type="email" id="email"
+                                                placeholder="<?php echo $lang['email']; ?>" required="">
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <fieldset>
-                                            <input name="phone" type="text" id="phone" placeholder="Your Phone"
-                                                required="">
+                                            <input name="phone" type="text" id="phone"
+                                                placeholder="<?php echo $lang['phone_number']; ?>" required="">
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6 col-sm-12">
@@ -157,16 +159,17 @@ try {
                                     <div class="col-md-12 col-sm-12">
                                         <fieldset>
                                             <textarea name="cover_letter" rows="6" id="cover_letter"
-                                                placeholder="Cover Letter" required=""></textarea>
+                                                placeholder="<?php echo $lang['cover_letter']; ?>"
+                                                required=""></textarea>
                                         </fieldset>
                                     </div>
                                     <div class="col-lg-12 d-flex justify-content-between">
                                         <fieldset>
-                                            <button type="submit" id="form-submit" class="main-button">Submit
-                                                Application</button>
+                                            <button type="submit" id="form-submit"
+                                                class="main-button"><?php echo $lang['submit_application']; ?></button>
                                         </fieldset>
                                         <button onclick="document.getElementById('applyForm').style.display='none'"
-                                            class="main-button">Close</button>
+                                            class="main-button"><?php echo $lang['close']; ?></button>
                                     </div>
 
                                 </div>
@@ -186,7 +189,7 @@ try {
                     <div class="sidebar-item recent-posts">
                         <br><br>
                         <div class="sidebar-heading">
-                            <h2>Company Information</h2>
+                            <h2><?php echo $lang['company_info']; ?></h2>
                         </div>
 
                         <div class="content">
@@ -207,12 +210,12 @@ try {
                     <div class="sidebar-item recent-posts">
                         <br><br>
                         <div class="sidebar-heading">
-                            <h2>Contact Details</h2>
+                            <h2><?php echo $lang['contact_detail']; ?></h2>
                         </div>
 
                         <div class="content">
                             <p>
-                                <span>Address</span>
+                                <span><?php echo $lang['address']; ?></span>
 
                                 <br>
 
@@ -222,7 +225,7 @@ try {
                             </p>
 
                             <p>
-                                <span>Email</span>
+                                <span><?php echo $lang['email']; ?></span>
 
                                 <br>
 
@@ -234,7 +237,7 @@ try {
                             </p>
 
                             <p>
-                                <span>Website</span>
+                                <span><?php echo $lang['website']; ?></span>
 
                                 <br>
 

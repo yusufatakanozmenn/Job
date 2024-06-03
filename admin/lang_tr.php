@@ -34,8 +34,12 @@ $lang = array(
     // Header
     "home" => "Ana Sayfa",
     "about" => "Hakkımızda",
+    "about_us" => "Hakkımızda",
+    "more_about_us" => "Daha Fazla Hakkımızda",
+    "about_section" => "Hakkımızda bölümü henüz mevcut değil.",
     "contact" => "İletişim",
     "blog_list" => "Blog Listesi",
+    "contact_us" => "Bize Ulaşın",
     // User Profile
     "user_profile" => "Kullanıcı Profili",
     "profile" => "Profil",
@@ -48,8 +52,11 @@ $lang = array(
     // Jobs
     "create_job" => "İş Oluştur",
     "job_applications" => "İş Başvuruları",
+    "application_form" => "Başvuru Formu",
+    "submit_application" => "Başvuruyu Gönder",
     "job_id" => "İş Id",
     "company_name" => "Şirket Adı",
+    "company_info" => "Şirket Bilgileri",
     "job_list" => "İş Listesi",
     "title" => "Başlık",
     "description" => "Açıklama",
@@ -62,8 +69,19 @@ $lang = array(
     "delete" => "Sil",
     "cover_letter" => "Ön Yazı",
     "resume" => "Özgeçmiş",
+    "no_jobs" => "Henüz iş yok.",
+    "featured_jobs" => "Öne Çıkan İşler",
+    "to_apply_for" => "Başvurmak için Tıklayınız.",
+    "apply_job" => "İş Başvurusu Yap",
+    "view_job" => "İşi Görüntüle",
+    "our_team" => "Takımımız",
+
     // Blog
+    "blog" => "Blog",
     "blogs" => "Bloglar",
+    "recent_blogs" => "Son Bloglar",
+    "our_recent_blogs" => "Son Bloglarımız",
+    "blog_detail" => "Blog Detayları",
     "add_blog" => "Blog Ekle",
     "blog_id" => "Blog Id",
     "content" => "İçerik",
@@ -79,6 +97,8 @@ $lang = array(
     // Comments
     "comments" => "Yorumlar",
     "comment" => "Yorum",
+    "your_comment" => "Yorumunuz",
+    "type_comment" => "Yorumunuzu buraya yazın...",
     "name" => "Ad",
     "add_comment" => "Yorum Ekle",
     "subject" => "Konu",
@@ -91,7 +111,7 @@ $lang = array(
     "info" => "Bilgi",
     "warning" => "Uyarı",
     // Footer
-    "footer_text" => "© 2024 Yusuf Atakan Özmen. Tüm Hakları Saklıdır.",
+    "footer_text" => "Copyright © 2024 Job Pursuit. Tüm Hakları Saklıdır.",
     // Other
     "language" => "Dil",
     "english" => "İngilizce",
@@ -130,5 +150,15 @@ $lang = array(
     "dashboard" => "Gösterge Paneli",
     "main_navigation" => "Ana Menü",
     "jobs" => "İşler",
+
+    // Contact
+    "let_stay" => "Bizimle iletişimde kalın!",
+    "message" => "Mesaj",
+    "address" => "Adres",
+    "website" => "Web Sitesi",
+    "contact_info" => "İletişim Bilgileri",
+    "contact_detail" => "İletişim Detayları",
+    "send_message" => "Bize mesaj gönderin",
+    "for_more_info" => "Daha fazla bilgi için bize ulaşın",
 );
 ?>

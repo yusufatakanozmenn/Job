@@ -3,6 +3,8 @@
 require_once '../libs/ayar.php';
 require_once '../libs/vars.php';
 
+include '../libs/language.php';
+
 // İş ilanlarını veritabanından çekme
 if (isset($_POST['type'])) {
     $type = $_POST['type'];
@@ -23,10 +25,11 @@ $result = $stmt->get_result();
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
     <?php include '../includes/_header.php'; ?>
+    <title><?php echo $lang['jobs']; ?></title>
 </head>
 
 <body>
@@ -55,8 +58,8 @@ $result = $stmt->get_result();
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>Jobs</h4>
-                            <h2>Choose the perfect job!</h2>
+                            <h4><?php echo $lang['jobs']; ?></h4>
+                            <h2><?php echo $lang['featured_jobs']; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -93,8 +96,9 @@ $result = $stmt->get_result();
                                                 <div class="col-lg-12">
                                                     <ul class="post-tags">
                                                         <li><i class="fa fa-bullseye"></i></li>
-                                                        <li><a href="job-details.php?id=<?php echo $row['id']; ?>">View
-                                                                Job</a></li>
+                                                        <li><a
+                                                                href="job-details.php?id=<?php echo $row['id']; ?>"><?php echo $lang['view_job']; ?></a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
