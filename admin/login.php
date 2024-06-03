@@ -57,6 +57,30 @@ if (isset($_POST['login'])) {
 <head>
     <?php include 'include/head.php'; ?>
     <title>Login</title>
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const usernameInput = document.getElementById('username');
+        const rememberMeCheckbox = document.getElementById('remember-me');
+
+        // Check if the cookie exists and set the username
+        if (document.cookie.includes('username=')) {
+            const username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+            usernameInput.value = decodeURIComponent(username);
+            rememberMeCheckbox.checked = true;
+        }
+
+        // Set the cookie when the form is submitted
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            if (rememberMeCheckbox.checked) {
+                const username = usernameInput.value;
+                document.cookie = "username=" + encodeURIComponent(username) + "; path=/; max-age=" +
+                    60 * 60 * 24 * 30; // 30 days
+            } else {
+                document.cookie = "username=; path=/; max-age=0"; // Delete cookie
+            }
+        });
+    });
+    </script>
 </head>
 
 <body class="bg-theme bg-theme1">
@@ -118,12 +142,14 @@ if (isset($_POST['login'])) {
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <div class="icheck-material-white">
-                                    <input type="checkbox" id="user-checkbox" checked="" />
-                                    <label for="user-checkbox">Remember me</label>
+                                    <input type="checkbox" id="remember-me" name="remember-me" />
+                                    <label for="remember-me">Remember me</label>
                                 </div>
                             </div>
                             <div class="form-group col-6 text-right">
-                                <a href="reset.php">Reset Password</a>
+                                <div class="icheck-material-white">
+                                    <a href="reset.php">Reset Password</a>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" name="login" class="btn btn-light btn-block">Sign In</button>

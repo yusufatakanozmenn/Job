@@ -28,6 +28,8 @@ $lang = array(
     "view_resume" => "View Resume",
     "mark_as_read" => "Mark as Read",
     "read" => "Read",
+    "go_page" => "Go to Page",
+    "no_new_notification" => "No new notifications.",
     // Header
     "home" => "Home",
     "about" => "About",

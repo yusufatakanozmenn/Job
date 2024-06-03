@@ -30,6 +30,8 @@ $lang = array(
     "mark_as_read" => "Okundu Olarak İşaretle",
     "user_list" => "Kullanıcı Listesi",
     "create_at" => "Oluşturulma Tarihi",
+    "go_page" => "Sayfaya Git",
+    "no_new_notification" => "Yeni bildirim yok.",
     
     // Header
     "home" => "Ana Sayfa",

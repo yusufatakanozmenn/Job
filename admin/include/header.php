@@ -25,7 +25,7 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <ul class="navbar-nav align-items-center right-nav-link">
             <li class="nav-item dropdown-lg">
                 <a class="nav-link waves-effect btn btn-primary" target="_blank" href="../src/index.php">
-                    <i class="fa fa-home"></i> Sayfaya Git
+                    <i class="fa fa-home"></i><?php echo $lang['go_page']; ?>
                 </a>
             </li>
             <li class="nav-item dropdown-lg">
@@ -43,7 +43,7 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </a>
                     <?php endforeach; ?>
                     <?php else: ?>
-                    <a class="dropdown-item" href="#">No new notifications</a>
+                    <a class="dropdown-item" href="#"><?php echo $lang['no_new_notification']; ?></a>
                     <?php endif; ?>
                 </div>
             </li>
@@ -52,10 +52,10 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     href="javascript:void();"><i class="fa fa-flag"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li class="dropdown-item" onclick="changeLanguage('en')">
-                        <i class="flag-icon flag-icon-gb mr-2"></i> English
+                        <i class="flag-icon flag-icon-gb mr-2"></i> <?php echo $lang['english']; ?>
                     </li>
                     <li class="dropdown-item" onclick="changeLanguage('tr')">
-                        <i class="flag-icon flag-icon-tr mr-2"></i> Turkish
+                        <i class="flag-icon flag-icon-tr mr-2"></i> <?php echo $lang['turkish']; ?>
                     </li>
                 </ul>
             </li>
@@ -84,11 +84,11 @@ $notifications = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </li>
                     <li class="dropdown-divider"></li>
                     <li class="dropdown-item">
-                        <a href="profile.php"><i class="zmdi zmdi-account mr-2"></i> Profile</a>
+                        <a href="profile.php"><i class="zmdi zmdi-account mr-2"></i> <?php echo $lang['profile']; ?></a>
                     </li>
                     <li class="dropdown-divider"></li>
                     <li class="dropdown-item">
-                        <a href="logout.php"><i class="icon-power mr-2"></i> Logout</a>
+                        <a href="logout.php"><i class="icon-power mr-2"></i> <?php echo $lang['logout']; ?></a>
                     </li>
                     <?php endif; ?>
                 </ul>

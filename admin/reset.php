@@ -100,14 +100,14 @@ function generateRandomString($length = 10) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $lang['reset_pass']; ?></title>
+    <title>Reset Password</title>
 </head>
 
 <body>
-    <h2><?php echo $lang['reset_pass_form']; ?></h2>
+    <h2>Reset Password Form</h2>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div>
-            <label for="email"><?php echo $lang['email']; ?></label>
+            <label for="email">Email</label>
             <input type="email" name="email" required>
         </div>
         <div>
