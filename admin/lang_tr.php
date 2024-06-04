@@ -33,6 +33,7 @@ $lang = array(
     "go_page" => "Sayfaya Git",
     "no_new_notification" => "Yeni bildirim yok.",
     "close" => "Kapat",
+    "search" => "Ara...",
     // Header
     "home" => "Ana Sayfa",
     "about" => "Hakkımızda",

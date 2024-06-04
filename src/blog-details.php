@@ -26,6 +26,17 @@ try {
         die("Blog post not found.");
     }
 
+    if (isset($_POST['search'])) {
+        $search = $_POST['search'];
+        $stmt = $conn->prepare("SELECT * FROM blog_posts WHERE title LIKE ?");
+        $stmt->bindParam(1, $search, PDO::PARAM_STR);
+        $stmt->execute();
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM blog_posts");
+        $stmt->execute();
+    }
+
+
     // Yorumları veritabanından çek
     $stmt = $conn->prepare("SELECT * FROM comments WHERE blog_id = :blog_id ORDER BY date DESC");
     $stmt->bindParam(':blog_id', $blog_id, PDO::PARAM_INT);
@@ -36,7 +47,6 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -194,11 +204,19 @@ try {
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="sidebar-item search">
-                                    <form id="search_form" name="gs" method="GET" action="#">
-                                        <input type="text" name="q" class="searchText" placeholder="type to search..."
-                                            autocomplete="on">
-                                    </form>
+                                    <div class="sidebar-heading">
+                                        <h2><?php echo $lang['search']; ?></h2>
+                                    </div>
+                                    <div class="content">
+                                        <form id="search" name="search" method="post" action="">
+                                            <input type="text" name="search" class="search-text"
+                                                placeholder="Search Blog">
+                                            <button type="submit" class="search-button"><i
+                                                    class="fa fa-search"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="col-lg-12">
                                 <div class="sidebar-item recent-posts">

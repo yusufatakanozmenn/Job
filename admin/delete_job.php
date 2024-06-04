@@ -13,11 +13,14 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  
-
     // İş ilanı id'sini al
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
+
+        // İş ilanıyla ilişkili başvuruları sil
+        $stmt = $conn->prepare("DELETE FROM job_applications WHERE job_id = :job_id");
+        $stmt->bindParam(':job_id', $id);
+        $stmt->execute();
 
         // İş ilanını veritabanından sil
         $stmt = $conn->prepare("DELETE FROM jobs WHERE id = :id");

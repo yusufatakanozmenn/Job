@@ -1,8 +1,6 @@
 <?php
 // Veritabanı bağlantısı ve gerekli dosyaların dahil edilmesi
 require_once '../libs/ayar.php';
-
-
 include '../libs/language.php';
 
 // İş ilanlarını veritabanından çekme
@@ -103,6 +101,7 @@ $result = $stmt->get_result();
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

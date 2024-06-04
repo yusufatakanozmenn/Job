@@ -30,6 +30,7 @@ $lang = array(
     "read" => "Read",
     "go_page" => "Go to Page",
     "no_new_notification" => "No new notifications.",
+    "search" => "Search...",
     // Header
     "home" => "Home",
     "about" => "About",
