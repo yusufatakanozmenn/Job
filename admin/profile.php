@@ -3,7 +3,6 @@ require_once '../libs/ayar.php';
 include '../libs/vars.php';
 include 'admin_check.php';
 
-
 // Oturumdaki kullanıcı adını al
 $username = $_SESSION['username'];
 
@@ -13,14 +12,11 @@ $stmt->bind_param('s', $username);
 $stmt->execute();
 $result = $stmt->get_result();
 
-//contact_info
+// contact_info
 $stmt2 = $connection->prepare("SELECT * FROM contact_info");
 $stmt2->execute();
 $result2 = $stmt2->get_result();
 $contact = $result2->fetch_assoc();
-
-
-
 
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
@@ -30,10 +26,29 @@ if ($result->num_rows > 0) {
 }
 
 $stmt->close();
+
+$updateMessage = '';
+
+// Kullanıcı bilgilerini güncelle
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $new_username = $_POST['username'];
+    $new_email = $_POST['email'];
+    $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    $update_stmt = $connection->prepare("UPDATE users SET username = ?, email = ?, password = ? WHERE username = ?");
+    $update_stmt->bind_param('ssss', $new_username, $new_email, $new_password, $username);
+
+    if ($update_stmt->execute()) {
+        $updateMessage = "Bilgiler başarıyla güncellendi.";
+        // Oturumdaki kullanıcı adını güncelle
+        $_SESSION['username'] = $new_username;
+    } else {
+        $updateMessage = "Güncelleme sırasında hata oluştu.";
+    }
+
+    $update_stmt->close();
+}
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['language']; ?>">
@@ -41,11 +56,14 @@ $stmt->close();
 <head>
     <?php include 'include/head.php'; ?>
     <title><?php echo $lang['profile']; ?></title>
+    <script type="text/javascript">
+    <?php if (!empty($updateMessage)) { ?>
+    alert("<?php echo $updateMessage; ?>");
+    <?php } ?>
+    </script>
 </head>
 
-
 <body class="bg-theme bg-theme1">
-
 
     <!-- Start wrapper-->
     <div id="wrapper">
@@ -123,6 +141,28 @@ $stmt->close();
                                         </div>
                                         <!--/row-->
                                     </div>
+                                    <div class="tab-pane" id="edit">
+                                        <h5 class="mb-3"><?php echo $lang['edit_profile']; ?></h5>
+                                        <form method="post" action="">
+                                            <div class="form-group">
+                                                <label for="username"><?php echo $lang['username']; ?></label>
+                                                <input type="text" class="form-control" id="username" name="username"
+                                                    value="<?php echo htmlspecialchars($user['username']); ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email"><?php echo $lang['email']; ?></label>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password"><?php echo $lang['password']; ?></label>
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" required>
+                                            </div>
+                                            <button type="submit"
+                                                class="btn btn-primary"><?php echo $lang['save_changes']; ?></button>
+                                        </form>
+                                    </div>
                                     <!-- Rest of the code... -->
                                 </div>
                             </div>
@@ -148,7 +188,6 @@ $stmt->close();
         <!--End footer-->
     </div>
     <!--End wrapper-->
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="./assets/js/jquery.min.js"></script>
