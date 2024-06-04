@@ -2,10 +2,7 @@
 include '../libs/vars.php';
 include 'admin_check.php';
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
+include '../libs/database.php';
 
 try {
     // PDO kullanarak veritabanı bağlantısını oluştur

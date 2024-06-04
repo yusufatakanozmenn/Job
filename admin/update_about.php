@@ -1,12 +1,8 @@
 <?php
 include '../libs/vars.php';
 include 'admin_check.php';
+include '../libs/database.php';
 
-// Veritabanı bağlantısı için gerekli bilgileri ekleyin
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
 
 function sanitizeInput($input) {
     return htmlspecialchars(stripslashes(trim($input)));

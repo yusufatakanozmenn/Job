@@ -2,10 +2,7 @@
 
 include '../libs/language.php';
 // Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
+include '../libs/database.php';
 
 try {
     // Create database connection using PDO

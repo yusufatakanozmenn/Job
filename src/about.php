@@ -1,9 +1,6 @@
 <?php
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
+include '../libs/database.php';
 
 include '../libs/language.php';
 

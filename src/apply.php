@@ -1,13 +1,7 @@
 <?php
 include '../libs/vars.php';
-
+include '../libs/database.php';
 include '../libs/language.php';
-
-$server = "localhost";
-$username = "root";
-$password = "";
-$database = "jobs";
-
 $connection = mysqli_connect($server, $username, $password, $database);
 mysqli_set_charset($connection, "UTF8");
 if (mysqli_connect_errno()) {

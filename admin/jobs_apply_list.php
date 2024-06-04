@@ -1,11 +1,7 @@
 <?php
 include '../libs/vars.php';
 include 'admin_check.php';
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
+include '../libs/database.php';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);

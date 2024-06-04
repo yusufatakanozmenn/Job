@@ -1,11 +1,8 @@
 <?php
 include '../libs/vars.php';
 include 'admin_check.php';
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
+include '../libs/database.php';
+
 
 try {
     // Create database connection using PDO

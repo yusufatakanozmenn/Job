@@ -2,11 +2,7 @@
 
 include '../libs/language.php';
 // Veritabanı bağlantısı için gerekli bilgileri ekleyin
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "jobs";
-
+include '../libs/database.php';
 try {
     // PDO kullanarak veritabanı bağlantısını oluştur
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
