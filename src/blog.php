@@ -1,9 +1,5 @@
 <?php
-
-
 include '../libs/language.php';
-
-// Veritabanı bağlantısı için gerekli bilgileri ekleyin
 include '../libs/database.php';
 
 try {
@@ -11,10 +7,15 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Veritabanından blog gönderilerini çek
-    $stmt = $conn->prepare("SELECT * FROM blog_posts");
+    // Blog gönderileri ve yorum sayılarını çek
+    $stmt = $conn->prepare("
+        SELECT blog_posts.*, COUNT(comments.id) AS comment_count
+        FROM blog_posts
+        LEFT JOIN comments ON blog_posts.id = comments.blog_id
+        GROUP BY blog_posts.id
+    ");
     $stmt->execute();
-    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC); // Değişiklik burada yapıldı
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
@@ -29,7 +30,6 @@ try {
 </head>
 
 <body>
-
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -73,18 +73,24 @@ try {
                             <div class="col-lg-4">
                                 <div class="blog-post">
                                     <div class="blog-thumb">
-                                        <img src="../admin/uploads/<?php echo $post['img']; ?>" alt="">
+                                        <img src="../admin/<?php echo $post['img']; ?>" alt="">
                                     </div>
                                     <div class="down-content">
                                         <a href="blog-details.php?id=<?php echo $post['id']; ?>">
-                                            <h4><?php echo $post['title']; ?></h4>
+                                            <h4><?php echo htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </h4>
                                         </a>
-                                        <p><?php echo substr($post['content'], 0, 150) . (strlen($post['content']) > 150 ? '...' : ''); ?>
+                                        <p><?php echo htmlspecialchars(substr($post['content'], 0, 150), ENT_QUOTES, 'UTF-8') . (strlen($post['content']) > 150 ? '...' : ''); ?>
                                         </p>
                                         <ul class="post-info">
-                                            <li><a href="#"><?php echo $post['author_id']; ?></a></li>
-                                            <li><a href="#"><?php echo $post['created_at']; ?></a></li>
-                                            <li><a href="#"><i class="fa fa-comments" title="Comments"></i> 12</a></li>
+                                            <li><a
+                                                    href="#"><?php echo htmlspecialchars($post['author_id'], ENT_QUOTES, 'UTF-8'); ?></a>
+                                            </li>
+                                            <li><a
+                                                    href="#"><?php echo htmlspecialchars($post['created_at'], ENT_QUOTES, 'UTF-8'); ?></a>
+                                            </li>
+                                            <li><a href="#"><i class="fa fa-comments" title="Comments"></i>
+                                                    <?php echo $post['comment_count']; ?></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -93,11 +99,10 @@ try {
                         </div>
                     </div>
                 </div>
+            </div>
     </section>
 
     <?php include '../includes/_footer.php'; ?>
-
-
 
     <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>

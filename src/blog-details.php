@@ -89,7 +89,7 @@ try {
                             <div class="col-lg-12">
                                 <div class="blog-post">
                                     <div class="blog-thumb">
-                                        <img src="<?php echo '../admin/uploads/' . $blog_post['img']; ?>" alt="">
+                                        <img src="<?php echo '../admin/' . $blog_post['img']; ?>" alt="">
                                     </div>
                                     <div class="down-content">
                                         <a href="blog-details.php?id=<?php echo $blog_post['id']; ?>">

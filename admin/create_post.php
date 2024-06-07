@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param('sssi', $title, $content, $img, $user_id);
 
         if ($stmt->execute()) {
-            header('Location: index.php');
+            header('Location: blog_list.php');
             exit;
         } else {
             echo "Blog gönderisi eklenirken bir hata oluştu.";

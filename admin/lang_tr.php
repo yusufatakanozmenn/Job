@@ -97,7 +97,7 @@ $lang = array(
     "create_blog" => "Blog Oluştur",
     "edit_blog" => "Blog Düzenle",
     "delete_blog" => "Blog Sil",
-    
+    "job_details" => "İş Detayları",
     // Comments
     "comments" => "Yorumlar",
     "comment" => "Yorum",
