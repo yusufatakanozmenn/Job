@@ -34,6 +34,8 @@ $lang = array(
     "search_jobs" => "Search Jobs",
     "applications" => "Application",
     "job_details" => "Job Details",
+    "created_at" => "Created At",
+    "contact_messages"=> "Contact Messages",
     // Header
     "home" => "Home",
     "about" => "About",

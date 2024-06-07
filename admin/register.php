@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 // Send email
                 $mail = new PHPMailer(true);
+                $mail->CharSet = 'UTF-8'; // Türkçe karakter desteği
                 try {
                     //Server settings
                     $mail->isSMTP();
@@ -110,60 +111,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="bg-theme bg-theme1">
     <!-- Start wrapper-->
-    <div id="wrapper">
-        <div class="container my-3">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="register.php" method="POST" novalidate>
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text"
-                                        class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : '' ?>"
-                                        value="<?php echo htmlspecialchars($username); ?>" name="username"
-                                        id="username">
-                                    <span class="invalid-feedback"><?php echo $username_err; ?></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text"
-                                        class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : '' ?>"
-                                        value="<?php echo htmlspecialchars($email); ?>" name="email" id="email">
-                                    <span class="invalid-feedback"><?php echo $email_err; ?></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password"
-                                        class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : '' ?>"
-                                        value="<?php echo htmlspecialchars($password); ?>" name="password"
-                                        id="password">
-                                    <span class="invalid-feedback"><?php echo $password_err; ?></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="role" class="form-label">Role</label>
-                                    <select class="form-control <?php echo (!empty($role_err)) ? 'is-invalid' : '' ?>"
-                                        name="role" id="role">
-                                        <option value="">Select Role</option>
-                                        <option value="IK" <?php echo ($role === 'IK') ? 'selected' : ''; ?>>
-                                            HR</option>
-                                        <option value="Admin" <?php echo ($role === 'Admin') ? 'selected' : ''; ?>>
-                                            Admin
-                                        </option>
-                                        <option value="Calisan" <?php echo ($role === 'Employee') ? 'selected' : ''; ?>>
-                                            Employee </option>
-                                    </select>
-                                    <span class="invalid-feedback"><?php echo $role_err; ?></span>
-                                </div>
-
-                                <input type="submit" name="register" value="Submit" class="btn btn-primary">
-                            </form>
-                        </div>
-                    </div>
+    <!-- Start wrapper-->
+    <div class="card card-authentication1 mx-auto my-5">
+        <div class="card-body">
+            <div class="card-content p-2">
+                <div class="text-center">
+                    <img src="./assets/images/logo_ysf.png" width="100" height="100" alt="logo icon">
                 </div>
+                <div class="card-title text-uppercase text-center py-3">Register</div>
+                <form action="register.php" method="POST" novalidate>
+                    <div class="form-group">
+                        <label for="username" class="sr-only">Username</label>
+                        <div class="position-relative has-icon-right">
+                            <input type="text" id="username" name="username" class="form-control input-shadow"
+                                placeholder="Enter Username" value="<?php echo htmlspecialchars($username); ?>"
+                                required>
+                            <div class="form-control-position">
+                                <i class="icon-user"></i>
+                            </div>
+                        </div>
+                        <span class="invalid-feedback"><?php echo $username_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email</label>
+                        <div class="position-relative has-icon-right">
+                            <input type="text" id="email" name="email" class="form-control input-shadow"
+                                placeholder="Enter Email" value="<?php echo htmlspecialchars($email); ?>" required>
+                            <div class="form-control-position">
+                                <i class="icon-envelope"></i>
+                            </div>
+                        </div>
+                        <span class="invalid-feedback"><?php echo $email_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="sr-only">Password</label>
+                        <div class="position-relative has-icon-right">
+                            <input type="password" id="password" name="password" class="form-control input-shadow"
+                                placeholder="Enter Password" value="<?php echo htmlspecialchars($password); ?>"
+                                required>
+                            <div class="form-control-position">
+                                <i class="icon-lock"></i>
+                            </div>
+                        </div>
+                        <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="sr-only">Role</label>
+                        <div class="position-relative has-icon-right">
+                            <select class="form-control input-shadow" name="role" id="role" required>
+                                <option value="">Select Role</option>
+                                <option value="IK" <?php echo ($role === 'IK') ? 'selected' : ''; ?>>HR</option>
+                                <option value="Calisan" <?php echo ($role === 'Employee') ? 'selected' : ''; ?>>Employee
+                                </option>
+                            </select>
+                            <div class="form-control-position">
+                                <i class="icon-briefcase"></i>
+                            </div>
+                        </div>
+                        <span class="invalid-feedback"><?php echo $role_err; ?></span>
+                    </div>
+                    <button type="submit" name="register" class="btn btn-light btn-block">Submit</button>
+                </form>
             </div>
         </div>
     </div>
+    <!--wrapper-->
     <!--wrapper-->
 
     <footer class="footer">

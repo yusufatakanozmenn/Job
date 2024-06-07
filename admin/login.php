@@ -110,7 +110,7 @@ if (isset($_POST['login'])) {
             <div class="card-body">
                 <div class="card-content p-2">
                     <div class="text-center">
-                        <img src="./assets/images/logo-icon.png" alt="logo icon">
+                        <img src="./assets/images/logo_ysf.png" width="100" height="100" alt="logo icon">
                     </div>
                     <div class="card-title text-uppercase text-center py-3">Sign In</div>
                     <form action="login.php" method="POST">
@@ -153,12 +153,12 @@ if (isset($_POST['login'])) {
                             </div>
                         </div>
                         <button type="submit" name="login" class="btn btn-light btn-block">Sign In</button>
-                        <div class="form-row mt-4">
+                        <!-- <div class="form-row mt-4">
                             <div class="form-group mb-0 col-4 text-right">
                                 <button type="button" class="btn btn-light btn-block"><i class="fa fa-google"></i>
                                     Google</button>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="form-row mt-4">
                             <div class="form-group mb-0 col-6">
                                 <button type="button" class="btn btn-light btn-block"><i class="fa fa-facebook-square"></i> Facebook</button>

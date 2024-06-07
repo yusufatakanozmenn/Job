@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($stmt->execute()) {
                         // PHPMailer ile e-posta gönderin
                         $mail = new PHPMailer(true);
+                        $mail->CharSet = 'UTF-8'; // Türkçe karakter desteği
                         try {
                             //Server settings
                             $mail->isSMTP();
@@ -95,25 +96,55 @@ function generateRandomString($length = 10) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $_SESSION['language']; ?>">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include 'include/head.php'; ?>
+
     <title>Reset Password</title>
 </head>
 
-<body>
-    <h2>Reset Password Form</h2>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" required>
+<body class="bg-theme bg-theme1">
+    <div class="card card-authentication1 mx-auto my-5">
+        <div class="card-body">
+            <div class="card-content p-2">
+                <div class="text-center">
+                    <img src="./assets/images/logo_ysf.png" width="100" height="100" alt="logo icon">
+                </div>
+                <div class="card-title text-uppercase text-center py-3">Reset Password</div>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email</label>
+                        <div class="position-relative has-icon-right">
+                            <input type="email" id="email" name="email" class="form-control input-shadow"
+                                placeholder="Enter Email" required>
+                            <div class="form-control-position">
+                                <i class="icon-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-light btn-block">Reset Password</button>
+                </form>
+            </div>
         </div>
-        <div>
-            <input type="submit" value="Şifreyi Sıfırla">
+        <div class="card-footer text-center py-3">
+            <p class="text-warning mb-0">Remembered your password? <a href="login.php"> Sign In here</a></p>
         </div>
-    </form>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">© 2024 Yusuf Atakan Özmen. All Rights Reserved.</div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JavaScript-->
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!-- sidebar-menu js -->
+    <script src="./assets/js/sidebar-menu.js"></script>
+    <!-- Custom scripts -->
+    <script src="./assets/js/app-script.js"></script>
 </body>
+
 
 </html>

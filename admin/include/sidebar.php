@@ -53,6 +53,11 @@
                 <i class="zmdi zmdi-email"></i> <span><?php echo $lang['contact']; ?></span>
             </a>
         </li>
+        <li>
+            <a href="contact_messages.php">
+                <i class="zmdi zmdi-notifications"></i> <span><?php echo $lang['contact_messages']; ?></span>
+            </a>
+        </li>
         <?php if (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin')): ?>
         <li>
             <a href="user_list.php">

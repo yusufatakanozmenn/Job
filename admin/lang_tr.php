@@ -80,7 +80,8 @@ $lang = array(
     "view_job" => "İşi Görüntüle",
     "our_team" => "Takımımız",
     "search_jobs" => "İş Ara",
-
+    "contact_messages"=> "İletişim Mesajları",
+    "created_at" => "Oluşturulma Tarihi",
     // Blog
     "blog" => "Blog",
     "blogs" => "Bloglar",
