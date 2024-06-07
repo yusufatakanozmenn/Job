@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } else {
             $imageNewName = uniqid('', true) . "." . $imageExt;
-            $imageDestination = $imageNewName;
+            $imageDestination = 'uploads/' . $imageNewName;
 
             if (move_uploaded_file($imageTmpName, $imageDestination)) {
                 // Eski resmi sil

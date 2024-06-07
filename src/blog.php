@@ -82,6 +82,7 @@ try {
                                         </a>
                                         <p><?php echo htmlspecialchars(substr($post['content'], 0, 150), ENT_QUOTES, 'UTF-8') . (strlen($post['content']) > 150 ? '...' : ''); ?>
                                         </p>
+                                        </p>
                                         <ul class="post-info">
                                             <li><a
                                                     href="#"><?php echo htmlspecialchars($post['author_id'], ENT_QUOTES, 'UTF-8'); ?></a>

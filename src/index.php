@@ -190,13 +190,14 @@ $conn = null;
                     <div class="col-md-4 col-sm-6">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                                <img src="<?php echo '../admin/uploads/' . $post['img']; ?>" alt="">
+                                <img src="<?php echo '../admin/' . $post['img']; ?>" alt="">
                             </div>
                             <div class="down-content">
                                 <a href="blog-details.php?id=<?php echo $post['id']; ?>">
                                     <h3><?php echo $post['title']; ?></h3>
                                 </a>
-                                <p><?php echo substr($post['content'], 0, 70) . (strlen($post['content']) > 70 ? '...' : ''); ?>
+                                <p><?php echo htmlspecialchars(substr($post['content'], 0, 70)) . (strlen($post['content']) > 70 ? '...' : ''); ?>
+                                </p>
                                 </p>
                                 <ul class="post-info">
                                     <li><?php echo $post['author_id']; ?></li>
