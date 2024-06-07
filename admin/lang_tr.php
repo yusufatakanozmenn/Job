@@ -79,6 +79,7 @@ $lang = array(
     "apply_job" => "İş Başvurusu Yap",
     "view_job" => "İşi Görüntüle",
     "our_team" => "Takımımız",
+    "search_jobs" => "İş Ara",
 
     // Blog
     "blog" => "Blog",
@@ -98,6 +99,7 @@ $lang = array(
     "edit_blog" => "Blog Düzenle",
     "delete_blog" => "Blog Sil",
     "job_details" => "İş Detayları",
+    "applications" => "Başvurular",
     // Comments
     "comments" => "Yorumlar",
     "comment" => "Yorum",

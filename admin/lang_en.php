@@ -31,6 +31,8 @@ $lang = array(
     "go_page" => "Go to Page",
     "no_new_notification" => "No new notifications.",
     "search" => "Search...",
+    "search_jobs" => "Search Jobs",
+    "applications" => "Application",
     "job_details" => "Job Details",
     // Header
     "home" => "Home",

@@ -3,24 +3,41 @@
 require_once '../libs/ayar.php';
 include '../libs/language.php';
 
-// İş ilanlarını veritabanından çekme
+// İş ilanlarını ve başvuru sayılarını veritabanından çekme
+$search_query = "";
 if (isset($_POST['type'])) {
     $type = $_POST['type'];
-    $stmt = $connection->prepare("SELECT * FROM jobs WHERE type = ?");
+    $stmt = $connection->prepare("
+        SELECT jobs.*, COUNT(job_applications.id) AS application_count 
+        FROM jobs 
+        LEFT JOIN job_applications ON jobs.id = job_applications.job_id 
+        WHERE jobs.type = ?
+        GROUP BY jobs.id
+    ");
     $stmt->bind_param("s", $type);
 } else if (isset($_POST['search'])) {
-    $search = $_POST['search'];
-    $stmt = $connection->prepare("SELECT * FROM jobs WHERE title LIKE ?");
+    $search_query = $_POST['search'];
+    $search = '%' . $search_query . '%';
+    $stmt = $connection->prepare("
+        SELECT jobs.*, COUNT(job_applications.id) AS application_count 
+        FROM jobs 
+        LEFT JOIN job_applications ON jobs.id = job_applications.job_id 
+        WHERE jobs.title LIKE ?
+        GROUP BY jobs.id
+    ");
     $stmt->bind_param("s", $search);
 } else {
-    $stmt = $connection->prepare("SELECT * FROM jobs");
+    $stmt = $connection->prepare("
+        SELECT jobs.*, COUNT(job_applications.id) AS application_count 
+        FROM jobs 
+        LEFT JOIN job_applications ON jobs.id = job_applications.job_id 
+        GROUP BY jobs.id
+    ");
 }
 
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['language']; ?>">
@@ -31,11 +48,9 @@ $result = $stmt->get_result();
 </head>
 
 <body>
-
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
-            <div></div>
             <div></div>
             <div></div>
         </div>
@@ -46,7 +61,6 @@ $result = $stmt->get_result();
     <header class="">
         <?php include '../includes/_navbar.php'; ?>
     </header>
-
 
     <!-- Page Content -->
     <!-- Banner Starts Here -->
@@ -64,8 +78,25 @@ $result = $stmt->get_result();
             </div>
         </section>
     </div>
-
     <!-- Banner Ends Here -->
+
+    <!-- Search Form -->
+    <section class="search-form">
+        <div class="container">
+            <form action="jobs.php" method="POST">
+                <div class="row">
+                    <div class="col-md-10 col-xs-12">
+                        <input type="text" name="search" class="form-control"
+                            placeholder="<?php echo $lang['search_jobs']; ?>"
+                            value="<?php echo htmlspecialchars($search_query, ENT_QUOTES, 'UTF-8'); ?>">
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <button type="submit" class="btn btn-primary btn-block"><?php echo $lang['search']; ?></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
 
     <section class="blog-posts grid-system">
         <div class="container">
@@ -81,14 +112,15 @@ $result = $stmt->get_result();
                                 <div class="blog-post1">
                                     <div class="blog-thumb">
                                         <!-- İş ilanı resmi buraya gelecek -->
-                                        <img src="../admin/<?php echo $row['img']; ?>" alt="">
+                                        <img src="../admin/<?php echo htmlspecialchars($row['img'], ENT_QUOTES, 'UTF-8'); ?>"
+                                            alt="">
                                     </div>
                                     <div class="down-content">
-                                        <span><?php echo $row['city']; ?></span>
+                                        <span><?php echo htmlspecialchars($row['city'], ENT_QUOTES, 'UTF-8'); ?></span>
                                         <a href="job-details.php?id=<?php echo $row['id']; ?>">
-                                            <h4><?php echo $row['title']; ?></h4>
+                                            <h4><?php echo htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'); ?></h4>
                                         </a>
-                                        <p><?php echo $row['description']; ?></p>
+                                        <p><?php echo htmlspecialchars($row['description'], ENT_QUOTES, 'UTF-8'); ?></p>
                                         <div class="post-options">
                                             <div class="row">
                                                 <div class="col-lg-12">
@@ -97,11 +129,13 @@ $result = $stmt->get_result();
                                                         <li><a
                                                                 href="job-details.php?id=<?php echo $row['id']; ?>"><?php echo $lang['view_job']; ?></a>
                                                         </li>
+                                                        <li><i class="fa fa-users"></i>
+                                                            <?php echo $row['application_count']; ?>
+                                                            <?php echo $lang['applications']; ?></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -111,12 +145,9 @@ $result = $stmt->get_result();
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </section>
-
 
     <?php include '../includes/_footer.php'; ?>
 
