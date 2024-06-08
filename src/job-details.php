@@ -76,7 +76,8 @@ try {
             <div class="row">
                 <div class="col-md-4">
                     <div>
-                        <img src="<?php echo '../admin/' . $jobs_post['img']; ?>" alt="" class="img-fluid wc-image">
+                        <img src="<?php echo '../admin/uploads/' . $jobs_post['img']; ?>" alt=""
+                            class="img-fluid wc-image">
                     </div>
 
                     <br>

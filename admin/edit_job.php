@@ -8,7 +8,6 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-   
     // İş ilanı id'sini al
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -39,16 +38,33 @@ try {
         $company_name = $_POST['company_name'];
         $sector = $_POST['sector'];
         $city = $_POST['city'];
-    
+
+        // Eğer bir resim yüklendiyse
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+            $target_dir = "../admin/uploads/";
+            $file_info = pathinfo($_FILES['image']['name']);
+            $hashed_filename = hash('sha256', basename($_FILES['image']['name'])) . '.' . $file_info['extension'];
+            $target_file = $target_dir . $hashed_filename;
+            move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+
+            // Eski resmi sil (isteğe bağlı)
+            if (!empty($job['img'])) {
+                unlink($target_dir . $job['img']);
+            }
+        } else {
+            // Eğer resim yüklenmediyse, mevcut resmi kullan
+            $hashed_filename = $job['img'];
+        }
 
         // Veritabanında iş ilanını güncelle
-        $stmt = $conn->prepare("UPDATE jobs SET title = :title, description = :description, email = :email, company_name = :company_name, sector = :sector, city = :city WHERE id = :id");
+        $stmt = $conn->prepare("UPDATE jobs SET title = :title, description = :description, email = :email, company_name = :company_name, sector = :sector, city = :city, img = :img WHERE id = :id");
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':company_name', $company_name);
         $stmt->bindParam(':sector', $sector);
         $stmt->bindParam(':city', $city);
+        $stmt->bindParam(':img', $hashed_filename);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
 
@@ -63,7 +79,6 @@ try {
 $conn = null;
 ?>
 
-
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['language']; ?>">
 
@@ -72,9 +87,7 @@ $conn = null;
     <title><?php echo $lang['edit_job']; ?></title>
 </head>
 
-
 <body class="bg-theme bg-theme1">
-
 
     <!-- Start wrapper-->
     <div id="wrapper">
@@ -96,7 +109,7 @@ $conn = null;
                         <h2><?php echo $lang['edit_job']; ?></h2>
                         <div class="card">
                             <div class="card-body">
-                                <form method="POST">
+                                <form method="POST" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <label for="title"
                                             class="col-lg-3 col-form-label form-control-label"><?php echo $lang['title']; ?>:</label>
@@ -150,8 +163,11 @@ $conn = null;
                                         <label for="image"
                                             class="col-lg-3 col-form-label form-control-label"><?php echo $lang['image']; ?>:</label>
                                         <div class="col-lg-9">
-                                            <input type="file" id="image" name="image" class="form-control-file"
-                                                required>
+                                            <input type="file" id="image" name="image" class="form-control-file">
+                                            <?php if (!empty($job['img'])): ?>
+                                            <img src="../admin/uploads/<?php echo $job['img']; ?>"
+                                                alt="<?php echo $job['title']; ?>" width="100" height="100">
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -168,12 +184,6 @@ $conn = null;
             </div>
         </div>
 
-
-
-
-
-
-
         <!--End content-wrapper-->
         <!--Start Back To Top Button-->
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
@@ -186,20 +196,5 @@ $conn = null;
     </div>
     <!--End wrapper-->
 
-
     <!-- Bootstrap core JavaScript-->
-    <script src="./assets/js/jquery.min.js"></script>
-    <script src="./assets/js/popper.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-
-    <!-- simplebar js -->
-    <script src="./assets/plugins/simplebar/js/simplebar.js"></script>
-    <!-- sidebar-menu js -->
-    <script src="./assets/js/sidebar-menu.js"></script>
-
-    <!-- Custom scripts -->
-    <script src="./assets/js/app-script.js"></script>
-
-</body>
-
-</html>
+    <script src="./assets

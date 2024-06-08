@@ -112,7 +112,7 @@ $result = $stmt->get_result();
                                 <div class="blog-post1">
                                     <div class="blog-thumb">
                                         <!-- İş ilanı resmi buraya gelecek -->
-                                        <img src="../admin/<?php echo htmlspecialchars($row['img'], ENT_QUOTES, 'UTF-8'); ?>"
+                                        <img src="../admin/uploads/<?php echo htmlspecialchars($row['img'], ENT_QUOTES, 'UTF-8'); ?>"
                                             alt="">
                                     </div>
                                     <div class="down-content">
@@ -120,7 +120,7 @@ $result = $stmt->get_result();
                                         <a href="job-details.php?id=<?php echo $row['id']; ?>">
                                             <h4><?php echo htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'); ?></h4>
                                         </a>
-                                        <p><?php echo htmlspecialchars($row['description'], ENT_QUOTES, 'UTF-8'); ?></p>
+                                        <p><?php echo $row['description']; ?></p>
                                         <div class="post-options">
                                             <div class="row">
                                                 <div class="col-lg-12">
