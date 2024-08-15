@@ -66,7 +66,7 @@ $conn = null;
                 <?php if ($latest_jobs) : ?>
                 <?php foreach ($latest_jobs as $job) : ?>
                 <div class="item">
-                    <img src="<?php echo '../admin/uploads/' . $job['img']; ?>" alt="" />
+                    <img src="<?php echo '../admin/' . $job['img']; ?>" alt="" />
                     <div class="item-content">
                         <div class="main-content">
                             <div class="meta-category">
@@ -126,7 +126,7 @@ $conn = null;
                     <div class="col-md-4 col-sm-6">
                         <div class="blog-post">
                             <div class="blog-thumb">
-                                <img src="<?php echo '../admin/uploads/' . $job['img']; ?>" alt="">
+                                <img src="<?php echo '../admin/' . $job['img']; ?>" alt="">
                             </div>
                             <div class="down-content">
                                 <span><?php echo htmlspecialchars($job['sector']); ?></span>

@@ -112,7 +112,7 @@ $result = $stmt->get_result();
                                 <div class="blog-post1">
                                     <div class="blog-thumb">
                                         <!-- İş ilanı resmi buraya gelecek -->
-                                        <img src="../admin/uploads/<?php echo htmlspecialchars($row['img'], ENT_QUOTES, 'UTF-8'); ?>"
+                                        <img src="../admin/<?php echo htmlspecialchars($row['img'], ENT_QUOTES, 'UTF-8'); ?>"
                                             alt="">
                                     </div>
                                     <div class="down-content">
